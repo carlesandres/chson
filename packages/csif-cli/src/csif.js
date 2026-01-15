@@ -121,28 +121,26 @@ function renderMarkdownTable(csif) {
     }
 
     lines.push("");
-    lines.push("| Cheat | Description |");
+    lines.push("| Example | Description |");
     lines.push("| --- | --- |");
 
     const items = Array.isArray(section.items) ? section.items : [];
     for (const item of items) {
-      const cheatTitle = escapeMarkdown(item.title ?? "");
-      const cheatDescription = escapeMarkdown(item.description ?? "");
-
-      let comments = "";
-      if (item.comments !== undefined) {
-        if (typeof item.comments === "string") {
-          comments = item.comments;
+      let example = "";
+      if (item.example !== undefined) {
+        if (typeof item.example === "string") {
+          example = item.example;
         } else {
-          comments = JSON.stringify(item.comments, null, 2);
+          example = JSON.stringify(item.example, null, 2);
         }
+      } else if (item.title !== undefined) {
+        example = String(item.title);
       }
 
-      const rhs = comments
-        ? `${cheatDescription}<br/><br/><strong>Comments</strong><br/><pre>${escapeMarkdown(comments)}</pre>`
-        : cheatDescription;
+      const lhs = example ? `<pre>${escapeMarkdown(example)}</pre>` : "";
+      const rhs = escapeMarkdown(item.description ?? "");
 
-      lines.push(`| ${cheatTitle} | ${rhs} |`);
+      lines.push(`| ${lhs} | ${rhs} |`);
     }
   }
 
