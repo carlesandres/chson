@@ -5,7 +5,7 @@ import path from "node:path";
 import process from "node:process";
 import { fileURLToPath } from "node:url";
 
-import Ajv from "ajv";
+import Ajv from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
 function usage() {
@@ -54,11 +54,31 @@ function parseJsonFile(filePath) {
   }
 }
 
+function findUp(startDir, relativePath) {
+  let dir = startDir;
+  for (;;) {
+    const candidate = path.join(dir, relativePath);
+    if (fs.existsSync(candidate)) return candidate;
+
+    const parent = path.dirname(dir);
+    if (parent === dir) break;
+    dir = parent;
+  }
+
+  return null;
+}
+
 function loadSchema() {
   const thisFile = fileURLToPath(import.meta.url);
-  const packageDir = path.resolve(path.dirname(thisFile), "..", "..");
-  const repoRoot = path.resolve(packageDir, "..", "..");
-  const schemaPath = path.join(repoRoot, "schema", "v1", "csif.schema.json");
+  const startDir = path.dirname(thisFile);
+
+  const schemaPath = findUp(startDir, path.join("schema", "v1", "csif.schema.json"));
+  if (!schemaPath) {
+    throw new Error(
+      `Could not locate CSIF schema (expected schema/v1/csif.schema.json). Started from: ${startDir}`,
+    );
+  }
+
   return { schemaPath, schema: parseJsonFile(schemaPath) };
 }
 
@@ -154,16 +174,17 @@ function validateFiles(filePaths) {
   return ok;
 }
 
-function writeRenderedMarkdown(outputDir, inputFilePath, markdown) {
+function writeRenderedMarkdown(outputDir, inputFilePath, markdown, baseDir) {
   if (!outputDir) {
     process.stdout.write(markdown);
     return;
   }
 
-  fs.mkdirSync(outputDir, { recursive: true });
+  const relativePath = path.relative(baseDir, inputFilePath);
+  const relativeMarkdownPath = relativePath.replace(/\.csif\.json$/i, ".md");
+  const outPath = path.join(outputDir, relativeMarkdownPath);
 
-  const baseName = path.basename(inputFilePath).replace(/\.csif\.json$/i, "");
-  const outPath = path.join(outputDir, `${baseName}.md`);
+  fs.mkdirSync(path.dirname(outPath), { recursive: true });
   fs.writeFileSync(outPath, markdown, "utf8");
   console.log(outPath);
 }
@@ -225,7 +246,7 @@ function main(argv) {
       return 2;
     }
 
-    const filePaths = [];
+    const renderTargets = [];
     for (const input of inputs) {
       if (!fs.existsSync(input)) {
         console.error(`Path not found: ${input}`);
@@ -233,16 +254,18 @@ function main(argv) {
       }
       const stat = fs.statSync(input);
       if (stat.isDirectory()) {
-        filePaths.push(...collectCsifFiles(input));
+        for (const filePath of collectCsifFiles(input)) {
+          renderTargets.push({ filePath, baseDir: input });
+        }
       } else {
-        filePaths.push(input);
+        renderTargets.push({ filePath: input, baseDir: path.dirname(input) });
       }
     }
 
-    for (const filePath of filePaths) {
+    for (const { filePath, baseDir } of renderTargets) {
       const csif = parseJsonFile(filePath);
       const markdown = renderMarkdownTable(csif);
-      writeRenderedMarkdown(outputDir, filePath, markdown);
+      writeRenderedMarkdown(outputDir, filePath, markdown, baseDir);
     }
 
     return 0;

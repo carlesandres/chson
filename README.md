@@ -68,7 +68,7 @@ npm run render:docs
 Example cheatsheets live under `cheatsheets/` and are rendered into the docs site.
 
 - Example source file: `cheatsheets/git/core.csif.json`
-- Generated docs page: `website/docs/registry/git-core.md`
+- Generated docs page: `website/docs/registry/git/core.md`
 
 ## Documentation site (Docusaurus)
 

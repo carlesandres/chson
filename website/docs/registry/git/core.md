@@ -1,7 +1,3 @@
----
-sidebar_position: 1
----
-
 # git Core Cheats
 
 Version: 2.x
