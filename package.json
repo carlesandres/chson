@@ -1,0 +1,14 @@
+{
+  "name": "csif",
+  "private": true,
+  "workspaces": [
+    "packages/*"
+  ],
+  "scripts": {
+    "csif": "node packages/csif-cli/src/csif.js",
+    "validate": "node packages/csif-cli/src/csif.js validate cheatsheets",
+    "render": "node packages/csif-cli/src/csif.js render markdown cheatsheets",
+    "render:build": "node packages/csif-cli/src/csif.js render markdown cheatsheets --out build/registry-md",
+    "render:docs": "node packages/csif-cli/src/csif.js render markdown cheatsheets --out website/docs/registry"
+  }
+}

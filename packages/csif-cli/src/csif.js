@@ -1,0 +1,255 @@
+#!/usr/bin/env node
+
+import fs from "node:fs";
+import path from "node:path";
+import process from "node:process";
+import { fileURLToPath } from "node:url";
+
+import Ajv from "ajv";
+import addFormats from "ajv-formats";
+
+function usage() {
+  return [
+    "CSIF CLI",
+    "",
+    "Usage:",
+    "  csif validate <file-or-dir> [...more]",
+    "  csif render markdown <file-or-dir> [...more] [--out <dir>]",
+    "",
+    "Notes:",
+    "  - If a directory is provided, scans for *.csif.json recursively.",
+    "  - render outputs 2-column Markdown tables.",
+  ].join("\n");
+}
+
+function collectCsifFiles(inputPath) {
+  const results = [];
+
+  function walk(currentPath) {
+    const stat = fs.statSync(currentPath);
+
+    if (stat.isDirectory()) {
+      for (const entry of fs.readdirSync(currentPath)) {
+        walk(path.join(currentPath, entry));
+      }
+      return;
+    }
+
+    if (stat.isFile() && currentPath.endsWith(".csif.json")) {
+      results.push(currentPath);
+    }
+  }
+
+  walk(inputPath);
+  return results;
+}
+
+function parseJsonFile(filePath) {
+  const raw = fs.readFileSync(filePath, "utf8");
+  try {
+    return JSON.parse(raw);
+  } catch (error) {
+    const message = error instanceof Error ? error.message : String(error);
+    throw new Error(`Invalid JSON in ${filePath}: ${message}`);
+  }
+}
+
+function loadSchema() {
+  const thisFile = fileURLToPath(import.meta.url);
+  const packageDir = path.resolve(path.dirname(thisFile), "..", "..");
+  const repoRoot = path.resolve(packageDir, "..", "..");
+  const schemaPath = path.join(repoRoot, "schema", "v1", "csif.schema.json");
+  return { schemaPath, schema: parseJsonFile(schemaPath) };
+}
+
+function escapeMarkdown(text) {
+  return String(text)
+    .replaceAll("\\", "\\\\")
+    .replaceAll("|", "\\|")
+    .replaceAll("\r\n", "\n")
+    .replaceAll("\r", "\n")
+    .replaceAll("\n", "<br/>");
+}
+
+function renderMarkdownTable(csif) {
+  const lines = [];
+  lines.push(`# ${escapeMarkdown(csif.title ?? "")}`);
+  lines.push("");
+
+  if (csif.version) {
+    lines.push(`Version: ${escapeMarkdown(csif.version)}`);
+  }
+  if (csif.publicationDate) {
+    lines.push(`Published: ${escapeMarkdown(csif.publicationDate)}`);
+  }
+  if (csif.description) {
+    lines.push("");
+    lines.push(escapeMarkdown(csif.description));
+  }
+
+  const sections = Array.isArray(csif.sections) ? csif.sections : [];
+  for (const section of sections) {
+    lines.push("");
+    lines.push(`## ${escapeMarkdown(section.title ?? "")}`);
+
+    if (section.description) {
+      lines.push("");
+      lines.push(escapeMarkdown(section.description));
+    }
+
+    lines.push("");
+    lines.push("| Cheat | Description |");
+    lines.push("| --- | --- |");
+
+    const items = Array.isArray(section.items) ? section.items : [];
+    for (const item of items) {
+      const cheatTitle = escapeMarkdown(item.title ?? "");
+      const cheatDescription = escapeMarkdown(item.description ?? "");
+
+      let comments = "";
+      if (item.comments !== undefined) {
+        if (typeof item.comments === "string") {
+          comments = item.comments;
+        } else {
+          comments = JSON.stringify(item.comments, null, 2);
+        }
+      }
+
+      const rhs = comments
+        ? `${cheatDescription}<br/><br/><strong>Comments</strong><br/><pre>${escapeMarkdown(comments)}</pre>`
+        : cheatDescription;
+
+      lines.push(`| ${cheatTitle} | ${rhs} |`);
+    }
+  }
+
+  lines.push("");
+  return lines.join("\n");
+}
+
+function validateFiles(filePaths) {
+  const { schemaPath, schema } = loadSchema();
+  const ajv = new Ajv({ allErrors: true, strict: false });
+  addFormats(ajv);
+
+  const validate = ajv.compile(schema);
+
+  let ok = true;
+  for (const filePath of filePaths) {
+    const data = parseJsonFile(filePath);
+    const valid = validate(data);
+
+    if (!valid) {
+      ok = false;
+      console.error(`✗ ${filePath}`);
+      console.error(`  schema: ${schemaPath}`);
+      for (const err of validate.errors ?? []) {
+        console.error(`  - ${err.instancePath || "/"}: ${err.message}`);
+      }
+    } else {
+      console.log(`✓ ${filePath}`);
+    }
+  }
+
+  return ok;
+}
+
+function writeRenderedMarkdown(outputDir, inputFilePath, markdown) {
+  if (!outputDir) {
+    process.stdout.write(markdown);
+    return;
+  }
+
+  fs.mkdirSync(outputDir, { recursive: true });
+
+  const baseName = path.basename(inputFilePath).replace(/\.csif\.json$/i, "");
+  const outPath = path.join(outputDir, `${baseName}.md`);
+  fs.writeFileSync(outPath, markdown, "utf8");
+  console.log(outPath);
+}
+
+function main(argv) {
+  const [command, subcommand, ...rest] = argv;
+
+  if (!command || command === "-h" || command === "--help") {
+    console.log(usage());
+    return 0;
+  }
+
+  if (command === "validate") {
+    const inputs = [subcommand, ...rest].filter(Boolean);
+    if (inputs.length === 0) {
+      console.error(usage());
+      return 2;
+    }
+
+    const files = [];
+    for (const input of inputs) {
+      if (!fs.existsSync(input)) {
+        console.error(`Path not found: ${input}`);
+        return 2;
+      }
+      const stat = fs.statSync(input);
+      if (stat.isDirectory()) {
+        files.push(...collectCsifFiles(input));
+      } else {
+        files.push(input);
+      }
+    }
+
+    const ok = validateFiles(files);
+    return ok ? 0 : 1;
+  }
+
+  if (command === "render") {
+    if (subcommand !== "markdown") {
+      console.error("Only supported: csif render markdown ...");
+      return 2;
+    }
+
+    let outputDir;
+    const inputs = [];
+
+    for (let i = 0; i < rest.length; i++) {
+      const arg = rest[i];
+      if (arg === "--out") {
+        outputDir = rest[i + 1];
+        i++;
+        continue;
+      }
+      inputs.push(arg);
+    }
+
+    if (inputs.length === 0) {
+      console.error(usage());
+      return 2;
+    }
+
+    const filePaths = [];
+    for (const input of inputs) {
+      if (!fs.existsSync(input)) {
+        console.error(`Path not found: ${input}`);
+        return 2;
+      }
+      const stat = fs.statSync(input);
+      if (stat.isDirectory()) {
+        filePaths.push(...collectCsifFiles(input));
+      } else {
+        filePaths.push(input);
+      }
+    }
+
+    for (const filePath of filePaths) {
+      const csif = parseJsonFile(filePath);
+      const markdown = renderMarkdownTable(csif);
+      writeRenderedMarkdown(outputDir, filePath, markdown);
+    }
+
+    return 0;
+  }
+
+  console.error(usage());
+  return 2;
+}
+
+process.exitCode = main(process.argv.slice(2));

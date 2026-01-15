@@ -1,0 +1,44 @@
+{
+  "$schema": "https://csif.sh/schema/v1/csif.schema.json",
+  "title": "git Core Cheats",
+  "version": "2.x",
+  "publicationDate": "2026-01-15T00:00:00Z",
+  "description": "Common git commands for day-to-day work.",
+  "metadata": {
+    "homepage": "https://git-scm.com/",
+    "category": "cli"
+  },
+  "sections": [
+    {
+      "title": "Inspect",
+      "description": "Understand repo state and history.",
+      "items": [
+        {
+          "title": "Working tree status",
+          "description": "git status",
+          "comments": {
+            "example": "git status --porcelain"
+          }
+        },
+        {
+          "title": "Show last commits",
+          "description": "git log --oneline --decorate --graph --max-count 20"
+        }
+      ]
+    },
+    {
+      "title": "Changes",
+      "items": [
+        {
+          "title": "Stage everything (current directory)",
+          "description": "git add .",
+          "comments": "Stages all changes under the current directory."
+        },
+        {
+          "title": "Commit with message",
+          "description": "git commit -m \"message\""
+        }
+      ]
+    }
+  ]
+}
