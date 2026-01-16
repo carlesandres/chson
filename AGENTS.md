@@ -120,6 +120,10 @@ Applies to: `schema/**`, `cheatsheets/**`, `package.json` files.
 - Docusaurus docs live in `website/docs/`.
 - Registry pages are generated into `website/docs/registry/`.
   - Prefer changes in the source `.csif.json` + renderer, not manual edits.
+  - **MDX safety**: Docusaurus treats `*.md` as MDX, so generated content must not include unescaped JSX-like tokens.
+    - Escape `{` and `}` to avoid MDX expressions.
+    - Escape `<` and `>` to avoid placeholders like `<sha>` being parsed as JSX.
+    - When changing the renderer, verify with `cd website && npm run build`.
 - Use short, descriptive headings; avoid overly long pages.
 - Use fenced code blocks for commands (` ```bash `).
 
