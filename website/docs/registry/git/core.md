@@ -15,7 +15,7 @@ Set up identity and useful defaults.
 | <pre>git config --list<br/>git config --global --list<br/>git config user.email</pre> | Inspect Git configuration (all scopes or a single key). |
 | <pre>git config --global init.defaultBranch main</pre> | Make new repositories use `main` as the initial branch. |
 | <pre>git config --global push.autoSetupRemote true</pre> | Automatically set upstream when pushing a new branch (Git 2.37+). |
-| <pre># repo-local<br/>echo ".DS_Store" >> .gitignore<br/><br/># global (macOS example)<br/>git config --global core.excludesfile ~/.config/git/ignore</pre> | Ignore files in one repo via `.gitignore`, or globally via `core.excludesfile`. |
+| <pre># repo-local<br/>echo ".DS_Store" &gt;&gt; .gitignore<br/><br/># global (macOS example)<br/>git config --global core.excludesfile ~/.config/git/ignore</pre> | Ignore files in one repo via `.gitignore`, or globally via `core.excludesfile`. |
 
 ## Inspect
 
@@ -25,7 +25,7 @@ Understand repo state and history.
 | --- | --- |
 | <pre>git status<br/>git status --short<br/>git status --porcelain</pre> | Show staged/unstaged changes and untracked files. |
 | <pre>git log --oneline --decorate --graph --max-count 20<br/>git log --oneline --decorate --graph --all</pre> | Browse commit history in a compact, visual format. |
-| <pre>git show HEAD<br/>git show <sha><br/>git show <sha> --name-only</pre> | Display a commit, its patch, and optionally affected files. |
+| <pre>git show HEAD<br/>git show &lt;sha&gt;<br/>git show &lt;sha&gt; --name-only</pre> | Display a commit, its patch, and optionally affected files. |
 | <pre>git diff<br/>git diff --staged<br/>git diff main...HEAD</pre> | Compare working tree, index, or branches. |
 | <pre>git branch<br/>git branch -vv<br/>git branch -a</pre> | List local branches (and optionally remotes + upstream tracking). |
 | <pre>git remote -v<br/>git remote show origin</pre> | List remotes and inspect remote-tracking branches. |
@@ -44,7 +44,7 @@ Stage changes and create commits.
 | <pre>git restore path/to/file.ext<br/>git restore .</pre> | Discard working tree changes (use carefully; edits are lost). |
 | <pre>git commit -m "Add feature"<br/>git commit<br/># opens editor</pre> | Create a commit from staged changes. |
 | <pre>git commit --amend -m "Better message"</pre> | Update the most recent commit (avoid if already pushed/shared). |
-| <pre>git cherry-pick <sha><br/>git cherry-pick <sha1> <sha2></pre> | Apply commit(s) from elsewhere onto your current branch. |
+| <pre>git cherry-pick &lt;sha&gt;<br/>git cherry-pick &lt;sha1&gt; &lt;sha2&gt;</pre> | Apply commit(s) from elsewhere onto your current branch. |
 
 ## Branching
 
@@ -100,10 +100,10 @@ Safely back out changes and recover mistakes.
 
 | Example | Description |
 | --- | --- |
-| <pre>git revert <sha><br/>git revert HEAD</pre> | Create a new commit that undoes an existing commit. |
+| <pre>git revert &lt;sha&gt;<br/>git revert HEAD</pre> | Create a new commit that undoes an existing commit. |
 | <pre># keep changes staged<br/>git reset --soft HEAD~1<br/><br/># keep changes unstaged<br/>git reset --mixed HEAD~1<br/><br/># discard changes entirely (dangerous)<br/>git reset --hard HEAD~1</pre> | Move `HEAD`/branch to another commit (soft/mixed/hard control what happens to changes). |
-| <pre>git restore --source <sha> path/to/file.ext<br/># older equivalent<br/>git checkout <sha> -- path/to/file.ext</pre> | Bring back a previous version of a file without switching branches. |
-| <pre>git reflog<br/># then recover<br/>git branch recover/<name> <sha></pre> | Use reflog to locate old commit SHAs and create a recovery branch. |
+| <pre>git restore --source &lt;sha&gt; path/to/file.ext<br/># older equivalent<br/>git checkout &lt;sha&gt; -- path/to/file.ext</pre> | Bring back a previous version of a file without switching branches. |
+| <pre>git reflog<br/># then recover<br/>git branch recover/&lt;name&gt; &lt;sha&gt;</pre> | Use reflog to locate old commit SHAs and create a recovery branch. |
 
 ## Tags
 
@@ -111,7 +111,7 @@ Mark releases or important points in history.
 
 | Example | Description |
 | --- | --- |
-| <pre>git tag -a v1.2.3 -m "v1.2.3"<br/>git tag -a v1.2.3 <sha></pre> | Create a signed/annotated pointer to a commit (preferred for releases). |
+| <pre>git tag -a v1.2.3 -m "v1.2.3"<br/>git tag -a v1.2.3 &lt;sha&gt;</pre> | Create a signed/annotated pointer to a commit (preferred for releases). |
 | <pre>git tag<br/>git tag -l "v1.*"<br/>git show v1.2.3</pre> | Browse tags and inspect what they point to. |
 | <pre>git push origin v1.2.3<br/>git push origin --tags</pre> | Publish tags to the remote. |
 | <pre># local<br/>git tag -d v1.2.3<br/><br/># remote<br/>git push origin :refs/tags/v1.2.3</pre> | Remove a tag locally and/or from the remote. |

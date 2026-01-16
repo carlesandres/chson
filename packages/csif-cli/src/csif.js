@@ -86,9 +86,11 @@ function escapeMarkdown(text) {
   return String(text)
     .replaceAll("\\", "\\\\")
     .replaceAll("|", "\\|")
-    // Docusaurus treats .md as MDX; escape braces to avoid `{...}` expressions.
+    // Docusaurus treats .md as MDX; escape braces/angles to avoid MDX expressions/JSX.
     .replaceAll("{", "&#123;")
     .replaceAll("}", "&#125;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
     .replaceAll("\r\n", "\n")
     .replaceAll("\r", "\n")
     .replaceAll("\n", "<br/>");
