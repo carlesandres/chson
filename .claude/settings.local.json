@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run validate:*)",
+      "Bash(git add:*)"
+    ]
+  }
+}

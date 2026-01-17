@@ -1,47 +1,54 @@
 ---
 sidebar_position: 1
+slug: /
 ---
 
-# Tutorial Intro
+# What is CSIF?
 
-Let's discover **Docusaurus in less than 5 minutes**.
+**CSIF** (CheatSheet Interchange Format) is a simple JSON format for writing software cheatsheets in a consistent, tool-friendly way.
 
-## Getting Started
+## The Problem
 
-Get started by **creating a new site**.
+Developers constantly create and share cheatsheets, but they're scattered across PDFs, markdown files, images, and random websites. Each format has limitations:
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+- **PDFs** aren't searchable or easily updated
+- **Markdown** varies wildly in structure
+- **Images** can't be searched or copy-pasted
+- **Websites** often have ads, paywalls, or disappear
 
-### What you'll need
+## The Solution
 
-- [Node.js](https://nodejs.org/en/download/) version 20.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+CSIF provides a **standard JSON structure** that any tool can read, write, and transform. Write your cheatsheet once, then:
 
-## Generate a new site
+- Render it as a searchable website
+- Generate printable PDFs
+- Create flashcard decks for learning
+- Import into your personal knowledge base
+- Build custom tools on top of it
 
-Generate a new Docusaurus site using the **classic template**.
+## Quick Example
 
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
+```json
+{
+  "$schema": "https://csif.sh/schema/v1/csif.schema.json",
+  "title": "Git Essentials",
+  "publicationDate": "2026-01-16",
+  "description": "Essential git commands.",
+  "sections": [
+    {
+      "title": "Basics",
+      "items": [
+        {
+          "title": "Check status",
+          "example": "git status",
+          "description": "Show staged, unstaged, and untracked files."
+        }
+      ]
+    }
+  ]
+}
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+## Browse Cheatsheets
 
-The command also installs all necessary dependencies you need to run Docusaurus.
-
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+Check out the [Registry](/docs/registry) to see CSIF in action with real cheatsheets for Git, Docker, npm, Vim, and more.

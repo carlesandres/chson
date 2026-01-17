@@ -1,23 +1,205 @@
-/**
- * CSS files with the .module.css suffix will be treated as CSS modules
- * and scoped locally.
- */
-
 .heroBanner {
-  padding: 4rem 0;
+  padding: 6rem 0;
   text-align: center;
   position: relative;
   overflow: hidden;
+  background: linear-gradient(135deg, var(--ifm-color-primary-darker) 0%, var(--ifm-color-primary) 100%);
 }
 
 @media screen and (max-width: 996px) {
   .heroBanner {
-    padding: 2rem;
+    padding: 3rem 1rem;
   }
+}
+
+.heroTitle {
+  font-size: 3.5rem;
+  font-weight: 800;
+  color: #fff;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.02em;
+}
+
+@media screen and (max-width: 996px) {
+  .heroTitle {
+    font-size: 2.5rem;
+  }
+}
+
+.heroSubtitle {
+  font-size: 1.5rem;
+  color: rgba(255, 255, 255, 0.9);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.heroDescription {
+  font-size: 1.1rem;
+  color: rgba(255, 255, 255, 0.8);
+  margin-bottom: 2rem;
+  line-height: 1.6;
 }
 
 .buttons {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.buttons :global(.button--primary) {
+  background: #fff;
+  color: var(--ifm-color-primary-darker);
+  border: none;
+}
+
+.buttons :global(.button--primary):hover {
+  background: rgba(255, 255, 255, 0.9);
+}
+
+.buttons :global(.button--secondary) {
+  background: transparent;
+  color: #fff;
+  border: 2px solid rgba(255, 255, 255, 0.8);
+}
+
+.buttons :global(.button--secondary):hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: #fff;
+}
+
+.features {
+  padding: 4rem 0;
+  background: var(--ifm-background-color);
+}
+
+.featureCard {
+  padding: 2rem;
+  height: 100%;
+  border-radius: 12px;
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.featureCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+}
+
+.featureIcon {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--ifm-color-primary);
+  margin-bottom: 1rem;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.featureTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 0.75rem;
+}
+
+.featureDescription {
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.6;
+  margin: 0;
+}
+
+.exampleSection {
+  padding: 4rem 0;
+  background: var(--ifm-color-emphasis-100);
+}
+
+.sectionTitle {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-bottom: 2.5rem;
+}
+
+.exampleGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+  align-items: start;
+}
+
+@media (max-width: 768px) {
+  .exampleGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
+.exampleCode,
+.exampleOutput {
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--ifm-card-background-color);
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.codeHeader {
+  padding: 0.75rem 1rem;
+  background: var(--ifm-color-emphasis-200);
+  font-size: 0.85rem;
+  font-weight: 600;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+.codeBlock {
+  margin: 0;
+  padding: 1.5rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  overflow-x: auto;
+  background: var(--ifm-code-background);
+}
+
+.renderedExample {
+  padding: 1.5rem;
+}
+
+.renderedExample h4 {
+  margin: 0 0 0.25rem 0;
+  font-size: 1.25rem;
+}
+
+.renderedMeta {
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.9rem;
+  margin-bottom: 1rem;
+}
+
+.renderedExample h5 {
+  margin: 1rem 0 0.5rem 0;
+  font-size: 1rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.renderedTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9rem;
+}
+
+.renderedTable th,
+.renderedTable td {
+  padding: 0.5rem 0.75rem;
+  text-align: left;
+  border: 1px solid var(--ifm-color-emphasis-300);
+}
+
+.renderedTable th {
+  background: var(--ifm-color-emphasis-100);
+  font-weight: 600;
+}
+
+.renderedTable code {
+  font-size: 0.85em;
+  padding: 0.15em 0.4em;
+  border-radius: 4px;
+  background: var(--ifm-code-background);
 }

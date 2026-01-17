@@ -1,326 +1,201 @@
 {
   "$schema": "https://csif.sh/schema/v1/csif.schema.json",
-  "title": "git Core Cheats",
+  "title": "Git Essentials",
   "version": "2.x",
-  "publicationDate": "2026-01-15T00:00:00Z",
-  "description": "Common git commands for day-to-day work.",
+  "publicationDate": "2026-01-16",
+  "description": "Essential git commands for day-to-day development.",
   "metadata": {
     "homepage": "https://git-scm.com/",
     "category": "cli"
   },
   "sections": [
     {
-      "title": "Setup & Config",
-      "description": "Set up identity and useful defaults.",
+      "title": "Setup",
       "items": [
         {
-          "title": "Set your identity",
-          "example": "git config --global user.name \"Your Name\"\ngit config --global user.email \"you@example.com\"",
-          "description": "Configure the author name/email used for new commits."
+          "title": "Set identity",
+          "example": "git config --global user.name \"Your Name\"",
+          "description": "Configure your name for commits (also set user.email)."
         },
         {
-          "title": "List current config",
-          "example": "git config --list\ngit config --global --list\ngit config user.email",
-          "description": "Inspect Git configuration (all scopes or a single key)."
-        },
-        {
-          "title": "Set default branch name",
+          "title": "Set default branch",
           "example": "git config --global init.defaultBranch main",
-          "description": "Make new repositories use `main` as the initial branch."
-        },
-        {
-          "title": "Enable auto setup remote",
-          "example": "git config --global push.autoSetupRemote true",
-          "description": "Automatically set upstream when pushing a new branch (Git 2.37+)."
-        },
-        {
-          "title": "Ignore file patterns",
-          "example": "# repo-local\necho \".DS_Store\" >> .gitignore\n\n# global (macOS example)\ngit config --global core.excludesfile ~/.config/git/ignore",
-          "description": "Ignore files in one repo via `.gitignore`, or globally via `core.excludesfile`."
+          "description": "Use 'main' as the default branch for new repos."
         }
       ]
     },
     {
       "title": "Inspect",
-      "description": "Understand repo state and history.",
       "items": [
         {
-          "title": "Working tree status",
-          "example": "git status\ngit status --short\ngit status --porcelain",
-          "description": "Show staged/unstaged changes and untracked files."
+          "title": "Status",
+          "example": "git status",
+          "description": "Show staged, unstaged, and untracked files."
         },
         {
-          "title": "See recent commits",
-          "example": "git log --oneline --decorate --graph --max-count 20\ngit log --oneline --decorate --graph --all",
-          "description": "Browse commit history in a compact, visual format."
+          "title": "Log",
+          "example": "git log --oneline --graph -10",
+          "description": "View recent commit history in compact format."
         },
         {
-          "title": "Show a commit",
-          "example": "git show HEAD\ngit show <sha>\ngit show <sha> --name-only",
-          "description": "Display a commit, its patch, and optionally affected files."
+          "title": "Diff",
+          "example": "git diff --staged",
+          "description": "Show changes staged for the next commit."
         },
         {
-          "title": "View diffs",
-          "example": "git diff\ngit diff --staged\ngit diff main...HEAD",
-          "description": "Compare working tree, index, or branches."
-        },
-        {
-          "title": "List branches",
-          "example": "git branch\ngit branch -vv\ngit branch -a",
-          "description": "List local branches (and optionally remotes + upstream tracking)."
-        },
-        {
-          "title": "See remotes",
-          "example": "git remote -v\ngit remote show origin",
-          "description": "List remotes and inspect remote-tracking branches."
-        },
-        {
-          "title": "Find where a line came from",
-          "example": "git blame path/to/file.ext\ngit blame -L 120,180 path/to/file.ext",
-          "description": "Attribute lines to commits (useful for debugging and archaeology)."
-        },
-        {
-          "title": "Recover recent HEAD states",
-          "example": "git reflog\ngit reflog --date=iso",
-          "description": "Show where `HEAD` and branches pointed recently (great for recovery)."
+          "title": "Blame",
+          "example": "git blame path/to/file.ext",
+          "description": "Show who last modified each line of a file."
         }
       ]
     },
     {
-      "title": "Edit & Commit",
-      "description": "Stage changes and create commits.",
+      "title": "Stage & Commit",
       "items": [
         {
-          "title": "Stage changes",
-          "example": "git add .\ngit add -A\ngit add path/to/file.ext",
-          "description": "Add changes to the index (staging area)."
+          "title": "Stage all",
+          "example": "git add .",
+          "description": "Stage all changes in current directory."
         },
         {
           "title": "Stage interactively",
-          "example": "git add -p\n# (use to split a file into multiple commits)",
-          "description": "Stage hunks selectively instead of staging the whole file."
+          "example": "git add -p",
+          "description": "Stage changes hunk by hunk."
         },
         {
-          "title": "Unstage changes",
-          "example": "git restore --staged path/to/file.ext\ngit reset HEAD -- path/to/file.ext",
-          "description": "Remove changes from the index while keeping your working tree edits."
-        },
-        {
-          "title": "Discard local edits",
-          "example": "git restore path/to/file.ext\ngit restore .",
-          "description": "Discard working tree changes (use carefully; edits are lost)."
+          "title": "Unstage",
+          "example": "git restore --staged file.ext",
+          "description": "Remove file from staging area, keep changes."
         },
         {
           "title": "Commit",
-          "example": "git commit -m \"Add feature\"\ngit commit\n# opens editor",
-          "description": "Create a commit from staged changes."
+          "example": "git commit -m \"Add feature\"",
+          "description": "Create a commit with staged changes."
         },
         {
-          "title": "Fix last commit message",
-          "example": "git commit --amend -m \"Better message\"",
-          "description": "Update the most recent commit (avoid if already pushed/shared)."
-        },
-        {
-          "title": "Copy a commit onto branch",
-          "example": "git cherry-pick <sha>\ngit cherry-pick <sha1> <sha2>",
-          "description": "Apply commit(s) from elsewhere onto your current branch."
+          "title": "Amend",
+          "example": "git commit --amend",
+          "description": "Modify the last commit (message or content)."
         }
       ]
     },
     {
-      "title": "Branching",
-      "description": "Create, switch, and clean up branches.",
+      "title": "Branches",
       "items": [
         {
-          "title": "Create and switch",
-          "example": "git switch -c feature/my-branch\n# older equivalent\ngit checkout -b feature/my-branch",
-          "description": "Create a new branch and check it out."
+          "title": "Create & switch",
+          "example": "git switch -c feature/new-thing",
+          "description": "Create a new branch and switch to it."
         },
         {
-          "title": "Switch branches",
-          "example": "git switch main\ngit switch -",
-          "description": "Move between branches (`-` toggles to previous branch)."
+          "title": "Switch",
+          "example": "git switch main",
+          "description": "Switch to an existing branch."
         },
         {
-          "title": "Rename branch",
-          "example": "git branch -m old-name new-name\n# rename current branch\ngit branch -m new-name",
-          "description": "Rename a local branch."
+          "title": "List",
+          "example": "git branch -vv",
+          "description": "List branches with upstream tracking info."
         },
         {
-          "title": "Delete local branch",
-          "example": "git branch -d feature/my-branch\n# force delete (unmerged)\ngit branch -D feature/my-branch",
-          "description": "Delete a local branch (safe delete refuses if not merged)."
-        },
-        {
-          "title": "Track a remote branch",
-          "example": "git fetch origin\ngit switch --track origin/feature/my-branch\n# shorthand if branch name matches\ngit switch feature/my-branch",
-          "description": "Create a local branch that tracks a remote branch."
+          "title": "Delete",
+          "example": "git branch -d feature/done",
+          "description": "Delete a merged branch (-D to force)."
         }
       ]
     },
     {
       "title": "Remote",
-      "description": "Sync with GitHub/GitLab/etc.",
       "items": [
         {
           "title": "Clone",
-          "example": "git clone https://github.com/org/repo.git\ngit clone git@github.com:org/repo.git",
-          "description": "Create a local copy of a remote repository."
+          "example": "git clone git@github.com:org/repo.git",
+          "description": "Download a repository and its history."
         },
         {
           "title": "Fetch",
-          "example": "git fetch\ngit fetch origin\ngit fetch --prune",
-          "description": "Download new objects/refs without modifying your current branch."
+          "example": "git fetch --prune",
+          "description": "Download refs and clean up deleted remote branches."
         },
         {
           "title": "Pull",
-          "example": "git pull\ngit pull --rebase\ngit pull origin main",
-          "description": "Fetch and integrate changes into the current branch (merge or rebase)."
+          "example": "git pull --rebase",
+          "description": "Fetch and rebase local commits on top."
         },
         {
           "title": "Push",
-          "example": "git push\ngit push -u origin feature/my-branch\ngit push --set-upstream origin feature/my-branch",
-          "description": "Upload commits to a remote, optionally setting upstream tracking."
-        },
-        {
-          "title": "Delete remote branch",
-          "example": "git push origin --delete feature/my-branch\n# equivalent\ngit push origin :feature/my-branch",
-          "description": "Remove a branch from the remote."
-        },
-        {
-          "title": "Update remote URL",
-          "example": "git remote set-url origin git@github.com:org/repo.git\ngit remote -v",
-          "description": "Change the remote URL (e.g., switch HTTPS ↔ SSH)."
+          "example": "git push -u origin feature/branch",
+          "description": "Push branch and set upstream tracking."
         }
       ]
     },
     {
       "title": "Merge & Rebase",
-      "description": "Integrate changes between branches.",
       "items": [
         {
-          "title": "Merge branch",
-          "example": "git switch main\ngit merge feature/my-branch",
-          "description": "Merge another branch into the current branch."
+          "title": "Merge",
+          "example": "git merge feature/branch",
+          "description": "Merge another branch into current branch."
         },
         {
-          "title": "Rebase onto main",
-          "example": "git fetch origin\ngit rebase origin/main",
-          "description": "Replay your branch commits on top of an updated base."
+          "title": "Rebase",
+          "example": "git rebase origin/main",
+          "description": "Replay commits on top of another base."
         },
         {
-          "title": "Continue/abort rebase",
-          "example": "git rebase --continue\ngit rebase --abort\ngit rebase --skip",
-          "description": "Manage an in-progress rebase during conflict resolution."
+          "title": "Continue rebase",
+          "example": "git rebase --continue",
+          "description": "Continue after resolving conflicts."
         },
         {
-          "title": "Resolve conflicts",
-          "example": "# after resolving files\ngit add path/to/file.ext\ngit commit\n# or during rebase\ngit rebase --continue",
-          "description": "After fixing conflicts, stage resolved files and continue the operation."
-        },
-        {
-          "title": "Preview merge base",
-          "example": "git merge-base main HEAD\ngit log --oneline $(git merge-base main HEAD)..HEAD",
-          "description": "Find the common ancestor between branches."
+          "title": "Cherry-pick",
+          "example": "git cherry-pick abc123",
+          "description": "Apply a specific commit to current branch."
         }
       ]
     },
     {
       "title": "Stash",
-      "description": "Temporarily shelve work-in-progress changes.",
       "items": [
         {
-          "title": "Stash changes",
-          "example": "git stash\ngit stash push -m \"wip: refactor\"\ngit stash -u  # include untracked",
-          "description": "Save local changes without committing them."
+          "title": "Save",
+          "example": "git stash push -m \"wip\"",
+          "description": "Temporarily save uncommitted changes."
         },
         {
-          "title": "List and inspect stashes",
-          "example": "git stash list\ngit stash show stash@{0}\ngit stash show -p stash@{0}",
-          "description": "See what you stashed and what it contains."
+          "title": "List",
+          "example": "git stash list",
+          "description": "Show all stashed changes."
         },
         {
-          "title": "Apply or pop",
-          "example": "git stash apply\ngit stash pop\ngit stash pop stash@{1}",
-          "description": "Re-apply stashed changes (pop also removes the stash entry)."
-        },
-        {
-          "title": "Drop or clear",
-          "example": "git stash drop stash@{0}\ngit stash clear",
-          "description": "Remove one stash entry or all stashes."
+          "title": "Apply",
+          "example": "git stash pop",
+          "description": "Restore and remove most recent stash."
         }
       ]
     },
     {
-      "title": "Undo & Recovery",
-      "description": "Safely back out changes and recover mistakes.",
+      "title": "Undo",
       "items": [
         {
-          "title": "Revert a commit (safe for shared history)",
-          "example": "git revert <sha>\ngit revert HEAD",
-          "description": "Create a new commit that undoes an existing commit."
+          "title": "Discard changes",
+          "example": "git restore file.ext",
+          "description": "Discard working tree changes to a file."
         },
         {
-          "title": "Reset branch pointer",
-          "example": "# keep changes staged\ngit reset --soft HEAD~1\n\n# keep changes unstaged\ngit reset --mixed HEAD~1\n\n# discard changes entirely (dangerous)\ngit reset --hard HEAD~1",
-          "description": "Move `HEAD`/branch to another commit (soft/mixed/hard control what happens to changes)."
+          "title": "Revert commit",
+          "example": "git revert HEAD",
+          "description": "Create a new commit that undoes a previous one."
         },
         {
-          "title": "Restore a file from another commit",
-          "example": "git restore --source <sha> path/to/file.ext\n# older equivalent\ngit checkout <sha> -- path/to/file.ext",
-          "description": "Bring back a previous version of a file without switching branches."
+          "title": "Reset soft",
+          "example": "git reset --soft HEAD~1",
+          "description": "Undo last commit, keep changes staged."
         },
         {
-          "title": "Find lost commit via reflog",
-          "example": "git reflog\n# then recover\ngit branch recover/<name> <sha>",
-          "description": "Use reflog to locate old commit SHAs and create a recovery branch."
-        }
-      ]
-    },
-    {
-      "title": "Tags",
-      "description": "Mark releases or important points in history.",
-      "items": [
-        {
-          "title": "Create an annotated tag",
-          "example": "git tag -a v1.2.3 -m \"v1.2.3\"\ngit tag -a v1.2.3 <sha>",
-          "description": "Create a signed/annotated pointer to a commit (preferred for releases)."
-        },
-        {
-          "title": "List and show tags",
-          "example": "git tag\ngit tag -l \"v1.*\"\ngit show v1.2.3",
-          "description": "Browse tags and inspect what they point to."
-        },
-        {
-          "title": "Push tags",
-          "example": "git push origin v1.2.3\ngit push origin --tags",
-          "description": "Publish tags to the remote."
-        },
-        {
-          "title": "Delete a tag",
-          "example": "# local\ngit tag -d v1.2.3\n\n# remote\ngit push origin :refs/tags/v1.2.3",
-          "description": "Remove a tag locally and/or from the remote."
-        }
-      ]
-    },
-    {
-      "title": "Search",
-      "description": "Locate commits, changes, and text quickly.",
-      "items": [
-        {
-          "title": "Search text in repo",
-          "example": "git grep \"TODO\"\ngit grep -n \"functionName\" -- path/to/dir",
-          "description": "Search tracked content (fast, respects `.gitignore`)."
-        },
-        {
-          "title": "Search commits by message",
-          "example": "git log --grep=\"fix\" --oneline\ngit log --grep=\"JIRA-123\" --oneline",
-          "description": "Find commits whose commit message matches a pattern."
-        },
-        {
-          "title": "Search commits by patch content",
-          "example": "git log -S \"mySymbol\" --oneline\ngit log -G \"regexPattern\" --oneline",
-          "description": "Find commits that add/remove a string (`-S`) or match a regex in diffs (`-G`)."
+          "title": "Reflog",
+          "example": "git reflog",
+          "description": "Show history of HEAD movements for recovery."
         }
       ]
     }

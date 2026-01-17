@@ -1,0 +1,168 @@
+{
+  "$schema": "https://csif.sh/schema/v1/csif.schema.json",
+  "title": "Docker Essentials",
+  "version": "24.x",
+  "publicationDate": "2026-01-16",
+  "description": "Essential Docker commands for container management.",
+  "metadata": {
+    "homepage": "https://docs.docker.com/",
+    "category": "cli"
+  },
+  "sections": [
+    {
+      "title": "Images",
+      "items": [
+        {
+          "title": "Pull image",
+          "example": "docker pull nginx:latest",
+          "description": "Download an image from a registry."
+        },
+        {
+          "title": "List images",
+          "example": "docker images",
+          "description": "Show all local images."
+        },
+        {
+          "title": "Build image",
+          "example": "docker build -t myapp:1.0 .",
+          "description": "Build image from Dockerfile in current directory."
+        },
+        {
+          "title": "Remove image",
+          "example": "docker rmi nginx:latest",
+          "description": "Delete a local image."
+        },
+        {
+          "title": "Prune unused",
+          "example": "docker image prune -a",
+          "description": "Remove all unused images."
+        }
+      ]
+    },
+    {
+      "title": "Containers",
+      "items": [
+        {
+          "title": "Run",
+          "example": "docker run -d -p 8080:80 nginx",
+          "description": "Start a container in detached mode with port mapping."
+        },
+        {
+          "title": "List running",
+          "example": "docker ps",
+          "description": "Show running containers."
+        },
+        {
+          "title": "List all",
+          "example": "docker ps -a",
+          "description": "Show all containers including stopped."
+        },
+        {
+          "title": "Stop",
+          "example": "docker stop my-container",
+          "description": "Gracefully stop a running container."
+        },
+        {
+          "title": "Remove",
+          "example": "docker rm my-container",
+          "description": "Delete a stopped container."
+        },
+        {
+          "title": "Logs",
+          "example": "docker logs -f my-container",
+          "description": "Follow container logs in real-time."
+        }
+      ]
+    },
+    {
+      "title": "Exec & Debug",
+      "items": [
+        {
+          "title": "Shell into container",
+          "example": "docker exec -it my-container /bin/sh",
+          "description": "Open interactive shell in running container."
+        },
+        {
+          "title": "Run command",
+          "example": "docker exec my-container cat /etc/hosts",
+          "description": "Execute a command in a running container."
+        },
+        {
+          "title": "Inspect",
+          "example": "docker inspect my-container",
+          "description": "View detailed container configuration as JSON."
+        },
+        {
+          "title": "Stats",
+          "example": "docker stats",
+          "description": "Live resource usage for all containers."
+        }
+      ]
+    },
+    {
+      "title": "Volumes",
+      "items": [
+        {
+          "title": "Create volume",
+          "example": "docker volume create mydata",
+          "description": "Create a named volume for persistent data."
+        },
+        {
+          "title": "List volumes",
+          "example": "docker volume ls",
+          "description": "Show all volumes."
+        },
+        {
+          "title": "Mount volume",
+          "example": "docker run -v mydata:/app/data nginx",
+          "description": "Attach a volume to a container."
+        },
+        {
+          "title": "Bind mount",
+          "example": "docker run -v $(pwd):/app nginx",
+          "description": "Mount host directory into container."
+        }
+      ]
+    },
+    {
+      "title": "Networks",
+      "items": [
+        {
+          "title": "List networks",
+          "example": "docker network ls",
+          "description": "Show all Docker networks."
+        },
+        {
+          "title": "Create network",
+          "example": "docker network create mynet",
+          "description": "Create a custom bridge network."
+        },
+        {
+          "title": "Connect container",
+          "example": "docker network connect mynet my-container",
+          "description": "Add a container to a network."
+        }
+      ]
+    },
+    {
+      "title": "Cleanup",
+      "items": [
+        {
+          "title": "Remove stopped containers",
+          "example": "docker container prune",
+          "description": "Delete all stopped containers."
+        },
+        {
+          "title": "System prune",
+          "example": "docker system prune -a --volumes",
+          "description": "Remove all unused data (images, containers, volumes)."
+        },
+        {
+          "title": "Disk usage",
+          "example": "docker system df",
+          "description": "Show Docker disk usage summary."
+        }
+      ]
+    }
+  ]
+}

@@ -1,4 +1,10 @@
 {
   "label": "Registry",
-  "position": 2
+  "position": 4,
+  "link": {
+    "type": "generated-index",
+    "title": "Cheatsheet Registry",
+    "description": "Browse example cheatsheets in CSIF format. Each page is auto-generated from a .csif.json source file.",
+    "slug": "/registry"
+  }
 }
