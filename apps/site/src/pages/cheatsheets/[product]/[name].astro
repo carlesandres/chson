@@ -22,21 +22,26 @@ const title = data.title || "Cheatsheet";
 ---
 
 <BaseLayout title={`${title} | ChSON`} description={data.description}>
-  <div class="top">
+  <div class="flex flex-wrap items-start justify-between gap-4">
     <div>
-      <h1 class="h">{title}</h1>
-      <div class="meta">
-        {data.version ? <span>Version: <strong>{data.version}</strong></span> : null}
-        {data.publicationDate ? <span>Published: <strong>{data.publicationDate}</strong></span> : null}
-        {ref ? <span class="path">{ref.product}/{ref.name}</span> : null}
+      <h1 class="font-display text-[clamp(28px,4.2vw,44px)] font-semibold leading-[1.08] tracking-[-0.03em]">{title}</h1>
+      <div class="mt-3 flex flex-wrap gap-2 text-xs text-zinc-600">
+        {data.version ? <span>Version: <strong class="font-semibold text-zinc-900">{data.version}</strong></span> : null}
+        {data.publicationDate ? <span>Published: <strong class="font-semibold text-zinc-900">{data.publicationDate}</strong></span> : null}
+        {ref ? <span class="rounded-full border border-black/10 bg-black/5 px-2 py-0.5 font-mono text-[11px] text-zinc-700">{ref.product}/{ref.name}</span> : null}
       </div>
-      <p class="desc">{data.description}</p>
+      <p class="mt-4 max-w-[80ch] text-zinc-600">{data.description}</p>
     </div>
-    <div class="actions">
-      <a class="btn" href={`${import.meta.env.BASE_URL}cheatsheets/`}>All cheatsheets</a>
+    <div class="flex gap-2">
+      <a
+        class="inline-flex items-center justify-center rounded-xl border border-black/15 bg-white/60 px-3 py-2 text-sm font-medium shadow-soft hover:border-black/20 hover:no-underline"
+        href={`${import.meta.env.BASE_URL}cheatsheets/`}
+      >
+        All cheatsheets
+      </a>
       {ref ? (
         <a
-          class="btn ghost"
+          class="inline-flex items-center justify-center rounded-xl border border-black/15 bg-blue-700/10 px-3 py-2 text-sm font-medium hover:bg-blue-700/15 hover:no-underline"
           href={`https://github.com/carlesandres/csif.sh/blob/main/cheatsheets/${ref.product}/${ref.name}.chson.json`}
         >
           View source
@@ -46,31 +51,31 @@ const title = data.title || "Cheatsheet";
   </div>
 
   {Array.isArray(data.sections) && data.sections.length ? (
-    <div class="sections">
+    <div class="mt-6 grid gap-5">
       {data.sections.map((section) => (
-        <section class="section">
-          <h2 class="sh">{section.title}</h2>
-          {section.description ? <p class="sd">{section.description}</p> : null}
-          <div class="tableWrap">
-            <table class="table">
+        <section class="rounded-xl2 border border-black/10 bg-white/70 p-4 shadow-soft">
+          <h2 class="text-base font-semibold">{section.title}</h2>
+          {section.description ? <p class="mt-1 text-sm text-zinc-600">{section.description}</p> : null}
+          <div class="mt-3 overflow-x-auto rounded-xl border border-black/10">
+            <table class="w-full min-w-[640px] border-collapse">
               <thead>
                 <tr>
-                  <th>Example</th>
-                  <th>Description</th>
+                  <th class="border-b border-black/10 bg-black/[0.03] px-3 py-2 text-left text-xs font-semibold text-zinc-600">Example</th>
+                  <th class="border-b border-black/10 bg-black/[0.03] px-3 py-2 text-left text-xs font-semibold text-zinc-600">Description</th>
                 </tr>
               </thead>
               <tbody>
                 {Array.isArray(section.items)
                   ? section.items.map((item) => (
                       <tr>
-                        <td class="ex">
+                        <td class="border-b border-black/5 px-3 py-3 align-top">
                           {formatExample(item.example ?? item.title) ? (
-                            <pre><code>{formatExample(item.example ?? item.title)}</code></pre>
+                            <pre class="m-0 overflow-auto rounded-xl border border-black/10 bg-black/[0.04] p-3"><code class="font-mono text-[13px]">{formatExample(item.example ?? item.title)}</code></pre>
                           ) : null}
                         </td>
-                        <td class="tx">
-                          <div class="it">{item.title}</div>
-                          <div class="id">{item.description}</div>
+                        <td class="border-b border-black/5 px-3 py-3 align-top">
+                          <div class="font-semibold">{item.title}</div>
+                          <div class="mt-1 text-sm text-zinc-600">{item.description}</div>
                         </td>
                       </tr>
                     ))
@@ -85,96 +90,3 @@ const title = data.title || "Cheatsheet";
     <p>No sections found.</p>
   )}
 </BaseLayout>
-
-<style>
-  .top {
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-    gap: 16px;
-    flex-wrap: wrap;
-  }
-
-  .h {
-    font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
-    letter-spacing: -0.03em;
-    margin: 0 0 10px;
-    font-size: clamp(28px, 4.2vw, 44px);
-    line-height: 1.08;
-  }
-
-  .meta {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    color: var(--muted);
-    font-size: 13px;
-    margin-bottom: 12px;
-  }
-
-  .path {
-    padding: 2px 8px;
-    border: 1px solid rgba(0, 0, 0, 0.10);
-    border-radius: 999px;
-    background: rgba(0, 0, 0, 0.03);
-  }
-
-  .desc { margin: 0 0 18px; max-width: 80ch; color: var(--muted); }
-
-  .actions { display: flex; gap: 10px; }
-  .btn {
-    display: inline-block;
-    padding: 10px 12px;
-    border-radius: 14px;
-    border: 1px solid rgba(0, 0, 0, 0.12);
-    background: rgba(255, 255, 255, 0.65);
-  }
-  .btn:hover { text-decoration: none; border-color: rgba(0, 0, 0, 0.18); }
-  .btn.ghost { background: rgba(11, 91, 211, 0.10); }
-
-  .sections { display: grid; gap: 22px; }
-  .section {
-    border: 1px solid var(--stroke);
-    border-radius: var(--radius);
-    background: rgba(255, 255, 255, 0.70);
-    box-shadow: var(--shadow);
-    padding: 16px;
-  }
-
-  .sh { margin: 0 0 6px; font-size: 18px; }
-  .sd { margin: 0 0 12px; color: var(--muted); }
-
-  .tableWrap { overflow: auto; border-radius: 14px; border: 1px solid rgba(0, 0, 0, 0.10); }
-  .table { width: 100%; border-collapse: collapse; min-width: 640px; }
-  .table th {
-    text-align: left;
-    font-size: 13px;
-    color: var(--muted);
-    background: rgba(0, 0, 0, 0.03);
-    padding: 10px;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.10);
-  }
-  .table td {
-    padding: 10px;
-    vertical-align: top;
-    border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-  }
-  .table tr:last-child td { border-bottom: none; }
-
-  pre {
-    margin: 0;
-    padding: 10px;
-    border-radius: 12px;
-    background: rgba(10, 10, 10, 0.04);
-    border: 1px solid rgba(0, 0, 0, 0.08);
-    overflow: auto;
-  }
-  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-
-  .it { font-weight: 700; margin-bottom: 4px; }
-  .id { color: var(--muted); }
-
-  @media (max-width: 640px) {
-    .actions { width: 100%; }
-  }
-</style>
