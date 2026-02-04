@@ -12,9 +12,6 @@
     "validate": {
       "outputs": []
     },
-    "render:docs": {
-      "outputs": ["website/docs/registry/**"]
-    },
     "render:build": {
       "outputs": ["build/registry-md/**"]
     },

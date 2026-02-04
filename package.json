@@ -13,8 +13,7 @@
     "typecheck": "turbo run typecheck",
     "validate": "node packages/chson-cli/src/chson.js validate cheatsheets",
     "render": "node packages/chson-cli/src/chson.js render markdown cheatsheets",
-    "render:build": "node packages/chson-cli/src/chson.js render markdown cheatsheets --out build/registry-md",
-    "render:docs": "node packages/chson-cli/src/chson.js render markdown cheatsheets --out website/docs/registry"
+    "render:build": "node packages/chson-cli/src/chson.js render markdown cheatsheets --out build/registry-md"
   },
   "devDependencies": {
     "turbo": "^2.0.0"

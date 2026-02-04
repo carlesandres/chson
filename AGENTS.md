@@ -32,8 +32,8 @@ npm run dev
 npm run build
 npm run typecheck
 
-# (Optional) Render legacy registry Markdown into website/docs/registry
-npm run render:docs
+# Render registry Markdown into build/ (writes files)
+npm run render:build
 ```
 
 ## Architecture
@@ -59,7 +59,7 @@ npm run render:docs
 1. Create `cheatsheets/<product>/<name>.chson.json`
 2. Include `"$schema": "https://chson.dev/schema/v1/chson.schema.json"`
 3. Run `npm run validate`
-4. Run `npm run render:docs` to regenerate Markdown
+4. Run `npm run render:build` to regenerate Markdown
 
 **Schema changes**: Keep backwards-compatible. New versions go in `schema/v2/`, etc.
 
@@ -75,12 +75,11 @@ npm run render:docs
 - Keep key order stable
 
 **Markdown rendering**:
-- Docusaurus treats `.md` as MDX
-- The renderer escapes `{`, `}`, `<`, `>` to avoid MDX/JSX parsing issues
-- Verify changes with `cd website && npm run build`
+- The renderer escapes `{`, `}`, `<`, `>` to avoid MDX/JSX parsing issues in MDX-based docs sites
+- Verify changes with `npm run build`
 
 ## CI
 
 GitHub Actions (`.github/workflows/ci.yml`) runs on PRs and pushes to main:
 1. `npm run validate` - schema validation
-2. `npm run render:docs` - smoke test rendering
+2. `npm run build` - website build

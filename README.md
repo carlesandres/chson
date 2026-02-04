@@ -57,10 +57,10 @@ Render a single cheatsheet to Markdown (2-column table) to stdout:
 node packages/chson-cli/src/chson.js render markdown cheatsheets/git/core.chson.json
 ```
 
-Render all cheatsheets into a directory of Markdown pages (optional / legacy):
+Render all cheatsheets into a directory of Markdown pages:
 
 ```bash
-npm run render:docs
+npm run render:build
 ```
 
 ## Registry
@@ -70,9 +70,9 @@ Example cheatsheets live under `cheatsheets/` and are showcased in the Astro web
 - Example source file: `cheatsheets/git/core.chson.json`
 - Website page: `apps/site/src/pages/cheatsheets/[product]/[name].astro`
 
-Optional legacy output (auto-generated Markdown):
+Generated output:
 
-- `website/docs/registry/` (do not hand-edit; regenerate with `npm run render:docs`)
+- `build/registry-md/` (gitignored)
 
 ## Website
 
@@ -113,7 +113,7 @@ Before submitting changes:
 
 ```bash
 npm run validate
-npm run render:docs
+npm run render:build
 ```
 
 ## Status
