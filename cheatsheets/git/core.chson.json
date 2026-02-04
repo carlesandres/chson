@@ -1,5 +1,5 @@
 {
-  "$schema": "https://csif.sh/schema/v1/csif.schema.json",
+  "$schema": "https://chson.dev/schema/v1/chson.schema.json",
   "title": "Git Essentials",
   "version": "2.x",
   "publicationDate": "2026-01-16",
