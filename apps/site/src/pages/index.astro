@@ -1,0 +1,177 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getAllCheatsheets } from "../lib/cheatsheets";
+
+const sheets = getAllCheatsheets().slice(0, 4);
+
+const schemaUrl = "https://chson.dev/schema/v1/chson.schema.json";
+---
+
+<BaseLayout
+  title="ChSON"
+  description="A JSON format for writing software cheatsheets. Write once, render anywhere."
+>
+  <section class="hero">
+    <h1>Cheatsheets that tools can understand.</h1>
+    <p>
+      ChSON is a small JSON format for writing software cheatsheets in a consistent,
+      tool-friendly way.
+    </p>
+    <div class="heroGrid">
+      <div class="card">
+        <h2>Quick example</h2>
+        <pre><code>{`{
+  "$schema": "${schemaUrl}",
+  "title": "Git Essentials",
+  "publicationDate": "2026-01-16",
+  "description": "Essential git commands.",
+  "sections": [
+    {
+      "title": "Basics",
+      "items": [
+        {
+          "title": "Check status",
+          "example": "git status",
+          "description": "Show working tree status."
+        }
+      ]
+    }
+  ]
+}`}</code></pre>
+        <p class="hint">
+          Add <code>$schema</code> for editor autocompletion and validation.
+        </p>
+      </div>
+      <div class="card">
+        <h2>Browse cheatsheets</h2>
+        <p>Start with a few essentials from the registry:</p>
+        <ul class="list">
+          {sheets.map((s) => (
+            <li>
+              <a href={`${import.meta.env.BASE_URL}cheatsheets/${s.product}/${s.name}/`}>
+                <span class="title">{s.data.title}</span>
+                <span class="meta">{s.product}/{s.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a class="cta" href={`${import.meta.env.BASE_URL}cheatsheets/`}>See all cheatsheets</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="strip">
+    <div class="stripInner">
+      <div>
+        <h2>CLI</h2>
+        <p>Validate and render cheatsheets from the repo.</p>
+      </div>
+      <pre class="cmd"><code>{`npm run validate
+npm run render`}</code></pre>
+    </div>
+  </section>
+</BaseLayout>
+
+<style>
+  .hero h1 {
+    font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing: -0.03em;
+    margin: 0 0 10px;
+    font-size: clamp(34px, 6vw, 56px);
+    line-height: 1.05;
+  }
+
+  .hero p {
+    margin: 0 0 18px;
+    color: var(--muted);
+    max-width: 68ch;
+  }
+
+  .heroGrid {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 18px;
+    margin-top: 18px;
+  }
+
+  .card {
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius);
+    background: var(--card);
+    backdrop-filter: blur(10px);
+    box-shadow: var(--shadow);
+    padding: 18px 18px 16px;
+  }
+
+  .card h2 {
+    margin: 0 0 10px;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+  }
+
+  pre {
+    margin: 10px 0 10px;
+    padding: 14px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.10);
+    background: rgba(10, 10, 10, 0.04);
+    overflow: auto;
+  }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+  .hint { font-size: 13px; margin: 0; color: var(--muted); }
+
+  .list {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 10px;
+    display: grid;
+    gap: 8px;
+  }
+
+  .list a {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 10px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.08);
+    background: rgba(255, 255, 255, 0.65);
+  }
+  .list a:hover { text-decoration: none; border-color: rgba(0, 0, 0, 0.16); }
+
+  .title { font-weight: 600; }
+  .meta { color: var(--muted); font-size: 13px; align-self: center; }
+
+  .cta {
+    display: inline-block;
+    margin-top: 8px;
+    padding: 10px 12px;
+    border-radius: 14px;
+    border: 1px solid rgba(0, 0, 0, 0.12);
+    background: rgba(11, 91, 211, 0.10);
+  }
+  .cta:hover { text-decoration: none; background: rgba(11, 91, 211, 0.14); }
+
+  .strip { margin-top: 26px; }
+  .stripInner {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 18px;
+    align-items: center;
+    padding: 18px;
+    border-radius: var(--radius);
+    border: 1px solid var(--stroke);
+    background: rgba(255, 255, 255, 0.60);
+  }
+  .strip h2 { margin: 0 0 6px; font-size: 16px; }
+  .strip p { margin: 0; color: var(--muted); }
+  .cmd { margin: 0; min-width: 240px; }
+
+  @media (max-width: 920px) {
+    .heroGrid { grid-template-columns: 1fr; }
+    .stripInner { grid-template-columns: 1fr; }
+    .cmd { min-width: 0; }
+  }
+</style>

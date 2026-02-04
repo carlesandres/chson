@@ -4,11 +4,11 @@
   "packageManager": "npm@11.7.0",
   "workspaces": [
     "packages/*",
-    "website"
+    "apps/site"
   ],
   "scripts": {
     "chson": "node packages/chson-cli/src/chson.js",
-    "dev": "turbo run start --parallel",
+    "dev": "turbo run dev --parallel",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
     "validate": "node packages/chson-cli/src/chson.js validate cheatsheets",

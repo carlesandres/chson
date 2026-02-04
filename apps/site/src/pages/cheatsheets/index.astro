@@ -1,0 +1,75 @@
+---
+import BaseLayout from "../../layouts/BaseLayout.astro";
+import { getAllCheatsheets } from "../../lib/cheatsheets";
+
+const all = getAllCheatsheets().sort((a, b) => {
+  const ap = a.product.localeCompare(b.product);
+  if (ap !== 0) return ap;
+  return a.name.localeCompare(b.name);
+});
+---
+
+<BaseLayout
+  title="Cheatsheets | ChSON"
+  description="Browse example cheatsheets in ChSON format."
+>
+  <h1 class="h">Cheatsheets</h1>
+  <p class="sub">Source of truth lives in <code>cheatsheets/**</code> as <code>.chson.json</code>.</p>
+
+  <div class="grid">
+    {all.map((s) => (
+      <a class="card" href={`${import.meta.env.BASE_URL}cheatsheets/${s.product}/${s.name}/`}>
+        <div class="top">
+          <div class="t">{s.data.title}</div>
+          <div class="m">{s.product}/{s.name}</div>
+        </div>
+        <div class="d">{s.data.description}</div>
+      </a>
+    ))}
+  </div>
+</BaseLayout>
+
+<style>
+  .h {
+    font-family: "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+    letter-spacing: -0.03em;
+    margin: 0 0 10px;
+    font-size: clamp(28px, 4vw, 40px);
+  }
+
+  .sub { margin: 0 0 18px; color: var(--muted); }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 14px;
+  }
+
+  .card {
+    border: 1px solid var(--stroke);
+    border-radius: var(--radius);
+    background: rgba(255, 255, 255, 0.70);
+    padding: 14px 14px 12px;
+    box-shadow: var(--shadow);
+    display: grid;
+    gap: 10px;
+    min-height: 120px;
+  }
+
+  .card:hover { text-decoration: none; border-color: rgba(0, 0, 0, 0.18); }
+
+  .top { display: grid; gap: 2px; }
+  .t { font-weight: 700; }
+  .m { color: var(--muted); font-size: 13px; }
+  .d { color: var(--muted); }
+
+  code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
+
+  @media (max-width: 980px) {
+    .grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  }
+
+  @media (max-width: 640px) {
+    .grid { grid-template-columns: 1fr; }
+  }
+</style>

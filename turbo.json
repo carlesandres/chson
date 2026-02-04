@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["build/**"]
+      "outputs": ["build/**", "dist/**"]
     },
     "typecheck": {
       "dependsOn": ["^typecheck"],
@@ -18,7 +18,7 @@
     "render:build": {
       "outputs": ["build/registry-md/**"]
     },
-    "start": {
+    "dev": {
       "cache": false,
       "persistent": true
     }
