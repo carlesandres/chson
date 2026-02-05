@@ -86,7 +86,8 @@ npm run dev
 ### Deploy (Vercel)
 
 - Production URL: `https://chson.carlesandres.com`
-- DNS: create a `CNAME` record for `chson` pointing to `cname.vercel-dns.com`.
+- Vercel project root: set **Root Directory** to `apps/site`
+- DNS: create a `CNAME` record for `chson` pointing to `cname.vercel-dns.com`
 
 ## Repository layout
 

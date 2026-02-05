@@ -28,3 +28,4 @@ npm run typecheck
 This site is intended to be deployed on Vercel.
 
 - Domain: `chson.carlesandres.com`
+- Root Directory: `apps/site`

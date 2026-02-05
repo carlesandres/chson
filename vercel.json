@@ -1,6 +1,0 @@
-{
-  "installCommand": "npm ci",
-  "buildCommand": "npm run build -- --filter=@chson/site",
-  "outputDirectory": "apps/site/dist",
-  "framework": "astro"
-}
