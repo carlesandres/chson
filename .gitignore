@@ -10,5 +10,8 @@ build/
 # Turborepo cache
 .turbo/
 
+# Vercel
+.vercel/
+
 # Local sandbox app (not part of this repo)
 apps/web/

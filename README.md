@@ -83,6 +83,11 @@ npm install
 npm run dev
 ```
 
+### Deploy (Vercel)
+
+- Production URL: `https://chson.carlesandres.com`
+- DNS: create a `CNAME` record for `chson` pointing to `cname.vercel-dns.com`.
+
 ## Repository layout
 
 - `schema/v1/chson.schema.json` — ChSON JSON Schema
