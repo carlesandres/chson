@@ -1,14 +1,21 @@
 {
-  "name": "csif",
+  "name": "chson",
   "private": true,
+  "packageManager": "npm@11.7.0",
   "workspaces": [
-    "packages/*"
+    "packages/*",
+    "apps/site"
   ],
   "scripts": {
-    "csif": "node packages/csif-cli/src/csif.js",
-    "validate": "node packages/csif-cli/src/csif.js validate cheatsheets",
-    "render": "node packages/csif-cli/src/csif.js render markdown cheatsheets",
-    "render:build": "node packages/csif-cli/src/csif.js render markdown cheatsheets --out build/registry-md",
-    "render:docs": "node packages/csif-cli/src/csif.js render markdown cheatsheets --out website/docs/registry"
+    "chson": "node packages/chson-cli/src/chson.js",
+    "dev": "turbo run dev --parallel",
+    "build": "turbo run build",
+    "typecheck": "turbo run typecheck",
+    "validate": "node packages/chson-cli/src/chson.js validate cheatsheets",
+    "render": "node packages/chson-cli/src/chson.js render markdown cheatsheets",
+    "render:build": "node packages/chson-cli/src/chson.js render markdown cheatsheets --out build/registry-md"
+  },
+  "devDependencies": {
+    "turbo": "^2.0.0"
   }
 }

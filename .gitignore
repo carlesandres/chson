@@ -1,4 +1,14 @@
 node_modules/
 
+# Local env files
+.env.local
+env.local
+
 # Generated artifacts
 build/
+
+# Turborepo cache
+.turbo/
+
+# Local sandbox app (not part of this repo)
+apps/web/

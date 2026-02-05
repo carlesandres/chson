@@ -1,0 +1,15 @@
+{
+  "name": "@chson/cli",
+  "version": "0.0.1",
+  "private": true,
+  "description": "ChSON CLI tools (validate, render)",
+  "license": "MIT",
+  "bin": {
+    "chson": "./src/chson.js"
+  },
+  "type": "module",
+  "dependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1"
+  }
+}

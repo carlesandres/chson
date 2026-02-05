@@ -1,35 +1,35 @@
-# CSIF Future Ideas (Backlog)
+# ChSON Future Ideas (Backlog)
 
-This file is intentionally a dumping ground for ideas we may add to CSIF later.
-The current goal is: **keep CSIF simple**, but capture future directions so we
+This file is intentionally a dumping ground for ideas we may add to ChSON later.
+The current goal is: **keep ChSON simple**, but capture future directions so we
 can iterate without losing context.
 
 ## Decisions Made So Far
 
-- **Name**: CheatSheet Interchange Format (**CSIF**)
-- **Canonical home (assumed)**: `csif.sh`
-- **Schema URL**: `https://csif.sh/schema/v1/csif.schema.json`
+- **Name**: ChSON
+- **Canonical home (assumed)**: `chson.dev`
+- **Schema URL**: `https://chson.dev/schema/v1/chson.schema.json`
 - **JSON Schema dialect**: Draft 2020-12
-- **Document schema pointer**: CSIF documents include a `$schema` field pointing to the canonical schema URL.
+- **Document schema pointer**: ChSON documents include a `$schema` field pointing to the canonical schema URL.
 - **Core structure**:
   - Top-level: `title`, optional `version`, `publicationDate`, `description`, `metadata`, `sections`
   - Section: `title`, optional `description`, `items`
   - Item: `title`, `description`, optional `comments`
 - **Keep flexibility**: allow unknown fields (`additionalProperties: true`) everywhere.
 - **Dates**: `publicationDate` accepts either `date` or `date-time`.
-- **Registry file extension**: use `.csif.json`.
+- **Registry file extension**: use `.chson.json`.
 - **First renderer target**: 2-column Markdown tables (`Cheat` / `Description`).
 
 ## Postponed / Future Additions
 
-### 1) Explicit CSIF format version
+### 1) Explicit ChSON format version
 
 Even if the schema URL implies `v1`, we may want an explicit field such as:
 
-- `csif: "1"`
+- `chson: "1"`
 - or `formatVersion: "1"`
 
-Rationale: helps tools interpret documents if/when CSIF evolves beyond additive changes.
+Rationale: helps tools interpret documents if/when ChSON evolves beyond additive changes.
 
 ### 2) Stable identifiers
 

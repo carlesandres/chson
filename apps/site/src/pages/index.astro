@@ -1,0 +1,85 @@
+---
+import BaseLayout from "../layouts/BaseLayout.astro";
+import { getAllCheatsheets } from "../lib/cheatsheets";
+
+const sheets = getAllCheatsheets().slice(0, 4);
+
+const schemaUrl = "https://chson.dev/schema/v1/chson.schema.json";
+---
+
+<BaseLayout
+  title="ChSON"
+  description="A JSON format for writing software cheatsheets. Write once, render anywhere."
+>
+  <section>
+    <h1 class="font-display text-[clamp(34px,6vw,56px)] font-semibold leading-[1.05] tracking-[-0.03em]">
+      Cheatsheets that tools can understand.
+    </h1>
+    <p class="mt-3 max-w-[68ch] text-zinc-600">
+      ChSON is a small JSON format for writing software cheatsheets in a consistent,
+      tool-friendly way.
+    </p>
+
+    <div class="mt-5 grid gap-4 lg:grid-cols-[1.15fr_0.85fr]">
+      <div class="rounded-xl2 border border-black/10 bg-white/70 p-5 shadow-soft backdrop-blur">
+        <h2 class="text-sm font-semibold tracking-wide text-zinc-800">Quick example</h2>
+        <pre class="mt-3 overflow-auto rounded-xl border border-black/10 bg-black/[0.04] p-4"><code class="font-mono text-[13px]">{`{
+  "$schema": "${schemaUrl}",
+  "title": "Git Essentials",
+  "publicationDate": "2026-01-16",
+  "description": "Essential git commands.",
+  "sections": [
+    {
+      "title": "Basics",
+      "items": [
+        {
+          "title": "Check status",
+          "example": "git status",
+          "description": "Show working tree status."
+        }
+      ]
+    }
+  ]
+}`}</code></pre>
+        <p class="mt-2 text-xs text-zinc-600">
+          Add <code class="font-mono">$schema</code> for editor autocompletion and validation.
+        </p>
+      </div>
+
+      <div class="rounded-xl2 border border-black/10 bg-white/70 p-5 shadow-soft backdrop-blur">
+        <h2 class="text-sm font-semibold tracking-wide text-zinc-800">Browse cheatsheets</h2>
+        <p class="mt-2 text-sm text-zinc-600">Start with a few essentials from the registry:</p>
+        <ul class="mt-3 grid gap-2">
+          {sheets.map((s) => (
+            <li>
+              <a
+                class="grid grid-cols-[1fr_auto] items-center gap-3 rounded-xl border border-black/10 bg-white/60 px-3 py-2 hover:border-black/20 hover:no-underline"
+                href={`${import.meta.env.BASE_URL}cheatsheets/${s.product}/${s.name}/`}
+              >
+                <span class="font-semibold">{s.data.title}</span>
+                <span class="text-xs text-zinc-600">{s.product}/{s.name}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+        <a
+          class="mt-3 inline-flex items-center justify-center rounded-xl border border-black/15 bg-blue-700/10 px-3 py-2 text-sm font-medium hover:bg-blue-700/15 hover:no-underline"
+          href={`${import.meta.env.BASE_URL}cheatsheets/`}
+        >
+          See all cheatsheets
+        </a>
+      </div>
+    </div>
+
+    <section class="mt-7 rounded-xl2 border border-black/10 bg-white/60 p-5">
+      <div class="grid items-center gap-4 md:grid-cols-[1fr_auto]">
+        <div>
+          <h2 class="text-sm font-semibold tracking-wide text-zinc-800">CLI</h2>
+          <p class="mt-1 text-sm text-zinc-600">Validate and render cheatsheets from the repo.</p>
+        </div>
+        <pre class="overflow-auto rounded-xl border border-black/10 bg-black/[0.04] p-3"><code class="font-mono text-[13px]">{`npm run validate
+npm run render`}</code></pre>
+      </div>
+    </section>
+  </section>
+</BaseLayout>

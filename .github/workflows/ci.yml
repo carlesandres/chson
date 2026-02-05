@@ -22,8 +22,11 @@ jobs:
       - name: Install
         run: npm install
 
-      - name: Validate CSIF files
+      - name: Validate ChSON files
         run: npm run validate
 
-      - name: Render registry Markdown (smoke test)
-        run: npm run render:docs
+      - name: Build
+        run: npm run build
+
+      - name: Typecheck
+        run: npm run typecheck

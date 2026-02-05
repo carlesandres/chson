@@ -1,0 +1,223 @@
+{
+  "$schema": "https://chson.dev/schema/v1/chson.schema.json",
+  "title": "Vim Essentials",
+  "version": "9.x",
+  "publicationDate": "2026-01-16",
+  "description": "Essential Vim commands for text editing.",
+  "metadata": {
+    "homepage": "https://www.vim.org/",
+    "category": "editor"
+  },
+  "sections": [
+    {
+      "title": "Modes",
+      "items": [
+        {
+          "title": "Normal mode",
+          "example": "Esc",
+          "description": "Return to normal mode from any other mode."
+        },
+        {
+          "title": "Insert mode",
+          "example": "i",
+          "description": "Enter insert mode before cursor."
+        },
+        {
+          "title": "Append",
+          "example": "a",
+          "description": "Enter insert mode after cursor."
+        },
+        {
+          "title": "Visual mode",
+          "example": "v",
+          "description": "Start character-wise visual selection."
+        },
+        {
+          "title": "Visual line",
+          "example": "V",
+          "description": "Start line-wise visual selection."
+        },
+        {
+          "title": "Command mode",
+          "example": ":",
+          "description": "Enter command-line mode."
+        }
+      ]
+    },
+    {
+      "title": "Navigation",
+      "items": [
+        {
+          "title": "Move by character",
+          "example": "h j k l",
+          "description": "Left, down, up, right."
+        },
+        {
+          "title": "Move by word",
+          "example": "w",
+          "description": "Jump to start of next word."
+        },
+        {
+          "title": "Move by word back",
+          "example": "b",
+          "description": "Jump to start of previous word."
+        },
+        {
+          "title": "Line start",
+          "example": "0",
+          "description": "Jump to beginning of line."
+        },
+        {
+          "title": "Line end",
+          "example": "$",
+          "description": "Jump to end of line."
+        },
+        {
+          "title": "File start",
+          "example": "gg",
+          "description": "Jump to first line of file."
+        },
+        {
+          "title": "File end",
+          "example": "G",
+          "description": "Jump to last line of file."
+        },
+        {
+          "title": "Go to line",
+          "example": "42G",
+          "description": "Jump to line 42."
+        }
+      ]
+    },
+    {
+      "title": "Editing",
+      "items": [
+        {
+          "title": "Delete character",
+          "example": "x",
+          "description": "Delete character under cursor."
+        },
+        {
+          "title": "Delete word",
+          "example": "dw",
+          "description": "Delete from cursor to start of next word."
+        },
+        {
+          "title": "Delete line",
+          "example": "dd",
+          "description": "Delete entire current line."
+        },
+        {
+          "title": "Change word",
+          "example": "cw",
+          "description": "Delete word and enter insert mode."
+        },
+        {
+          "title": "Change line",
+          "example": "cc",
+          "description": "Delete line and enter insert mode."
+        },
+        {
+          "title": "Replace character",
+          "example": "r",
+          "description": "Replace single character under cursor."
+        },
+        {
+          "title": "Undo",
+          "example": "u",
+          "description": "Undo last change."
+        },
+        {
+          "title": "Redo",
+          "example": "Ctrl+r",
+          "description": "Redo last undone change."
+        }
+      ]
+    },
+    {
+      "title": "Copy & Paste",
+      "items": [
+        {
+          "title": "Yank line",
+          "example": "yy",
+          "description": "Copy current line."
+        },
+        {
+          "title": "Yank word",
+          "example": "yw",
+          "description": "Copy from cursor to start of next word."
+        },
+        {
+          "title": "Paste after",
+          "example": "p",
+          "description": "Paste after cursor."
+        },
+        {
+          "title": "Paste before",
+          "example": "P",
+          "description": "Paste before cursor."
+        }
+      ]
+    },
+    {
+      "title": "Search",
+      "items": [
+        {
+          "title": "Search forward",
+          "example": "/pattern",
+          "description": "Search for pattern forward."
+        },
+        {
+          "title": "Search backward",
+          "example": "?pattern",
+          "description": "Search for pattern backward."
+        },
+        {
+          "title": "Next match",
+          "example": "n",
+          "description": "Jump to next search match."
+        },
+        {
+          "title": "Previous match",
+          "example": "N",
+          "description": "Jump to previous search match."
+        },
+        {
+          "title": "Search and replace",
+          "example": ":%s/old/new/g",
+          "description": "Replace all occurrences in file."
+        }
+      ]
+    },
+    {
+      "title": "Files",
+      "items": [
+        {
+          "title": "Save",
+          "example": ":w",
+          "description": "Write current file to disk."
+        },
+        {
+          "title": "Quit",
+          "example": ":q",
+          "description": "Quit (fails if unsaved changes)."
+        },
+        {
+          "title": "Save and quit",
+          "example": ":wq",
+          "description": "Write and quit."
+        },
+        {
+          "title": "Force quit",
+          "example": ":q!",
+          "description": "Quit without saving changes."
+        },
+        {
+          "title": "Open file",
+          "example": ":e filename",
+          "description": "Open another file for editing."
+        }
+      ]
+    }
+  ]
+}

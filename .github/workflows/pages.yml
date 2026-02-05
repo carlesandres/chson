@@ -33,19 +33,11 @@ jobs:
       - name: Install (root)
         run: npm install
 
-      - name: Validate CSIF files
+      - name: Validate ChSON files
         run: npm run validate
 
-      - name: Render registry docs
-        run: npm run render:docs
-
-      - name: Install (website)
-        run: npm install
-        working-directory: website
-
-      - name: Build website
+      - name: Build site
         run: npm run build
-        working-directory: website
 
       - name: Check Pages enabled
         id: pages
@@ -72,7 +64,7 @@ jobs:
         if: steps.pages.outputs.enabled == 'true'
         uses: actions/upload-pages-artifact@v3
         with:
-          path: website/build
+          path: apps/site/dist
 
   deploy:
     if: needs.build.outputs.pages_enabled == 'true'
