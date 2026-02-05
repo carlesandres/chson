@@ -1,6 +1,6 @@
 {
-  "framework": "astro",
+  "framework": "nextjs",
   "installCommand": "npm ci",
   "buildCommand": "npm run build -- --filter=@chson/site",
-  "outputDirectory": "apps/site/dist"
+  "outputDirectory": "apps/site/.next"
 }
