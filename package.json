@@ -7,13 +7,12 @@
     "apps/site"
   ],
   "scripts": {
-    "chson": "node packages/chson-cli/src/chson.js",
-    "dev": "turbo run dev --parallel",
+    "dev": "turbo run dev",
     "build": "turbo run build",
     "typecheck": "turbo run typecheck",
-    "validate": "node packages/chson-cli/src/chson.js validate cheatsheets",
-    "render": "node packages/chson-cli/src/chson.js render markdown cheatsheets",
-    "render:build": "node packages/chson-cli/src/chson.js render markdown cheatsheets --out build/registry-md"
+    "validate": "turbo run validate",
+    "render": "turbo run render",
+    "render:build": "turbo run render:build"
   },
   "devDependencies": {
     "turbo": "^2.0.0"

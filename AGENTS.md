@@ -6,11 +6,23 @@ Note: `CLAUDE.md` is a symlink to `AGENTS.md` (intentionally kept that way).
 
 ## What Is This Repo?
 
-ChSON is a JSON-based format for software cheatsheets. This repo contains:
-- The JSON Schema (`schema/v1/chson.schema.json`)
-- Example cheatsheets (`cheatsheets/**/*.chson.json`)
-- A Node.js CLI for validation and rendering (`packages/chson-cli/`)
-- An Astro website (`apps/site/`)
+ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo monorepo containing:
+
+- **`packages/chson-schema/`** — JSON Schema + auto-generated TypeScript types
+- **`packages/chson-registry/`** — Example cheatsheets (source of truth)
+- **`packages/chson-cli/`** — Node.js CLI for validation and rendering
+- **`apps/site/`** — Astro website
+
+### Package Dependencies
+
+```
+@chson/schema (builds types)
+  ├── @chson/cli (validates/renders)
+  └── @chson/registry (validates its cheatsheets)
+        └── @chson/site (displays cheatsheets)
+```
+
+Turborepo automatically builds packages in the correct order based on workspace dependencies.
 
 ## Commands
 
@@ -18,14 +30,17 @@ ChSON is a JSON-based format for software cheatsheets. This repo contains:
 # Install dependencies
 npm install
 
+# Build all packages (schema types → cli/registry → site)
+npm run build
+
 # Validate all cheatsheets against schema
 npm run validate
 
 # Validate a single file
-node packages/chson-cli/src/chson.js validate cheatsheets/git/core.chson.json
+node packages/chson-cli/src/chson.js validate packages/chson-registry/cheatsheets/git/core.chson.json
 
 # Render cheatsheet to stdout
-node packages/chson-cli/src/chson.js render markdown cheatsheets/git/core.chson.json
+node packages/chson-cli/src/chson.js render markdown packages/chson-registry/cheatsheets/git/core.chson.json
 
 # Website (Astro)
 npm run dev
@@ -34,6 +49,13 @@ npm run typecheck
 
 # Render registry Markdown into build/ (writes files)
 npm run render:build
+
+# Build specific package
+turbo run build --filter=@chson/schema
+turbo run build --filter=@chson/site
+
+# Clean build
+rm -rf .turbo build packages/chson-schema/types && npm run build
 ```
 
 ## Architecture
@@ -42,7 +64,9 @@ npm run render:build
 
 **Key files**:
 - `packages/chson-cli/src/chson.js` - Single-file CLI with validate and render commands
-- `schema/v1/chson.schema.json` - JSON Schema (Draft 2020-12) defining the ChSON format
+- `packages/chson-schema/schema/v1/chson.schema.json` - JSON Schema (Draft 2020-12) defining the ChSON format
+- `packages/chson-schema/types/index.d.ts` - Auto-generated TypeScript types (gitignored)
+- `packages/chson-registry/cheatsheets/` - Source cheatsheets
 - `apps/site/` - Astro website
 
 **ChSON schema structure**:
@@ -56,10 +80,10 @@ npm run render:build
 ## Workflow
 
 **Adding cheatsheets**:
-1. Create `cheatsheets/<product>/<name>.chson.json`
+1. Create `packages/chson-registry/cheatsheets/<product>/<name>.chson.json`
 2. Include `"$schema": "https://chson.dev/schema/v1/chson.schema.json"`
 3. Run `npm run validate`
-4. Run `npm run render:build` to regenerate Markdown
+4. Run `npm run build` to rebuild the site
 
 **Schema changes**: Keep backwards-compatible. New versions go in `schema/v2/`, etc.
 
@@ -70,7 +94,7 @@ npm run render:build
 - 2-space indent, double quotes
 - Import order: `node:*` builtins, then third-party, then local (blank lines between groups)
 
-**JSON** (`schema/`, `cheatsheets/`):
+**JSON** (`packages/chson-schema/`, `packages/chson-registry/`):
 - 2-space indent
 - Keep key order stable
 
@@ -81,5 +105,6 @@ npm run render:build
 ## CI
 
 GitHub Actions (`.github/workflows/ci.yml`) runs on PRs and pushes to main:
-1. `npm run validate` - schema validation
-2. `npm run build` - website build
+1. `npm run validate` - schema validation (via Turborepo)
+2. `npm run build` - all packages build (via Turborepo)
+3. `npm run typecheck` - TypeScript checking
