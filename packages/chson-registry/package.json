@@ -1,0 +1,22 @@
+{
+  "name": "@chson/registry",
+  "version": "1.0.0",
+  "private": true,
+  "description": "ChSON cheatsheet registry - source of truth for example cheatsheets",
+  "type": "module",
+  "exports": {
+    "./cheatsheets": "./cheatsheets",
+    "./cheatsheets/*": "./cheatsheets/*"
+  },
+  "files": [
+    "cheatsheets"
+  ],
+  "scripts": {
+    "validate": "node ../chson-cli/src/chson.js validate cheatsheets",
+    "render": "node ../chson-cli/src/chson.js render markdown cheatsheets",
+    "render:build": "node ../chson-cli/src/chson.js render markdown cheatsheets --out ../../build/registry-md"
+  },
+  "dependencies": {
+    "@chson/schema": "*"
+  }
+}

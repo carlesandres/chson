@@ -3,10 +3,12 @@
 import fs from "node:fs";
 import path from "node:path";
 import process from "node:process";
-import { fileURLToPath } from "node:url";
 
 import Ajv from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
+
+// Import schema directly from workspace package
+import schemaV1 from "@chson/schema/v1" with { type: "json" };
 
 function usage() {
   return [
@@ -54,32 +56,10 @@ function parseJsonFile(filePath) {
   }
 }
 
-function findUp(startDir, relativePath) {
-  let dir = startDir;
-  for (;;) {
-    const candidate = path.join(dir, relativePath);
-    if (fs.existsSync(candidate)) return candidate;
-
-    const parent = path.dirname(dir);
-    if (parent === dir) break;
-    dir = parent;
-  }
-
-  return null;
-}
-
 function loadSchema() {
-  const thisFile = fileURLToPath(import.meta.url);
-  const startDir = path.dirname(thisFile);
-
-  const schemaPath = findUp(startDir, path.join("schema", "v1", "chson.schema.json"));
-  if (!schemaPath) {
-    throw new Error(
-      `Could not locate ChSON schema (expected schema/v1/chson.schema.json). Started from: ${startDir}`,
-    );
-  }
-
-  return { schemaPath, schema: parseJsonFile(schemaPath) };
+  // Schema is imported directly from workspace package
+  const schemaPath = "@chson/schema/v1/chson.schema.json";
+  return { schemaPath, schema: schemaV1 };
 }
 
 function escapeMarkdown(text) {

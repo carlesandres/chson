@@ -1,19 +1,26 @@
 {
-  "$schema": "https://turbo.build/schema.json",
+  "$schema": "https://turborepo.dev/schema.v2.json",
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["build/**", "dist/**"]
+      "outputs": ["dist/**", "types/**", ".astro/**", ".next/**", "!.next/cache/**"]
     },
     "typecheck": {
-      "dependsOn": ["^typecheck"],
+      "dependsOn": ["^build"],
       "outputs": []
     },
     "validate": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
+    "render": {
+      "dependsOn": ["^build"],
+      "cache": false,
       "outputs": []
     },
     "render:build": {
-      "outputs": ["build/registry-md/**"]
+      "dependsOn": ["^build"],
+      "outputs": ["$TURBO_ROOT$/build/registry-md/**"]
     },
     "dev": {
       "cache": false,

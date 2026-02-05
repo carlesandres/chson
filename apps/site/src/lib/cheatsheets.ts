@@ -1,6 +1,8 @@
 import fs from "node:fs";
 import path from "node:path";
 
+// Keep local type definitions for backwards compatibility
+// These match the schema but are defined locally for simplicity
 export type CheatsheetItem = {
   title: string;
   description: string;
@@ -31,10 +33,27 @@ export type CheatsheetRef = {
   data: Cheatsheet;
 };
 
-function repoRootFromAppCwd(): string {
-  // Turbo runs each package command with cwd set to the package directory.
-  // This app lives at apps/site, so repo root is two levels up.
-  return path.resolve(process.cwd(), "../..");
+/**
+ * Get the path to the cheatsheets directory in @chson/registry.
+ * Uses the known monorepo structure.
+ */
+function getRegistryPath(): string {
+  // Try repo root first (when run from repo root)
+  const fromRepoRoot = path.join(process.cwd(), "packages/chson-registry/cheatsheets");
+  if (fs.existsSync(fromRepoRoot)) {
+    return fromRepoRoot;
+  }
+
+  // Try from apps/site (when turbo runs from workspace directory)
+  const fromSite = path.join(process.cwd(), "../../packages/chson-registry/cheatsheets");
+  if (fs.existsSync(fromSite)) {
+    return path.resolve(fromSite);
+  }
+
+  throw new Error(
+    `Could not find cheatsheets at ${fromRepoRoot} or ${fromSite}. ` +
+      `Ensure you're running from the repo root or apps/site.`
+  );
 }
 
 function listFilesRecursive(dir: string): string[] {
@@ -52,7 +71,7 @@ function listFilesRecursive(dir: string): string[] {
 }
 
 export function listCheatsheetPaths(): string[] {
-  const cheatsheetsDir = path.join(repoRootFromAppCwd(), "cheatsheets");
+  const cheatsheetsDir = getRegistryPath();
   if (!fs.existsSync(cheatsheetsDir)) return [];
 
   return listFilesRecursive(cheatsheetsDir).filter((p) => p.endsWith(".chson.json"));
@@ -64,7 +83,7 @@ export function loadCheatsheet(filePath: string): Cheatsheet {
 }
 
 export function getAllCheatsheets(): CheatsheetRef[] {
-  const cheatsheetsDir = path.join(repoRootFromAppCwd(), "cheatsheets");
+  const cheatsheetsDir = getRegistryPath();
 
   return listCheatsheetPaths()
     .map((filePath) => {
