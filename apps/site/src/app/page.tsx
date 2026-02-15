@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { getAllCheatsheets } from "@/lib/cheatsheets";
 
-const schemaUrl = "https://chson.dev/schema/v1/chson.schema.json";
+const schemaUrl = "https://chson.dev/schema/v2/chson.schema.json";
 
 export default function Home() {
   const sheets = getAllCheatsheets().slice(0, 4);
@@ -28,11 +28,10 @@ export default function Home() {
   "sections": [
     {
       "title": "Basics",
-      "items": [
+      "entries": [
         {
-          "title": "Check status",
-          "example": "git status",
-          "description": "Show working tree status."
+          "anchor": "git status",
+          "content": "Show working tree status."
         }
       ]
     }
@@ -40,7 +39,10 @@ export default function Home() {
 }`}</code>
           </pre>
           <p className="mt-2 text-xs text-zinc-600">
-            Add <code className="font-mono">$schema</code> for editor autocompletion and validation.
+            Add <code className="font-mono">$schema</code> for editor autocompletion.{" "}
+            <Link href="/docs" className="text-blue-700 hover:text-blue-800">
+              Learn more →
+            </Link>
           </p>
         </div>
 

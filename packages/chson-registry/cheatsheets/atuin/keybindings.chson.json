@@ -1,0 +1,293 @@
+{
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "title": "Atuin Keybindings",
+  "version": "18.x",
+  "publicationDate": "2026-02-15",
+  "description": "Keyboard shortcuts for Atuin's interactive shell history search UI.",
+  "retrievalDirection": "intent-to-mechanism",
+  "anchorLabel": "Action",
+  "contentLabel": "Shortcut",
+  "metadata": {
+    "homepage": "https://atuin.sh/",
+    "docs": "https://docs.atuin.sh/cli/configuration/key-binding/",
+    "category": "cli"
+  },
+  "sections": [
+    {
+      "title": "Navigation & Selection",
+      "entries": [
+        {
+          "anchor": "Execute selected item",
+          "content": "enter"
+        },
+        {
+          "anchor": "Select item and edit before executing",
+          "content": "tab"
+        },
+        {
+          "anchor": "Cancel search and return to shell",
+          "content": "ctrl + c / ctrl + d / ctrl + g / esc"
+        },
+        {
+          "anchor": "Select next item",
+          "content": "ctrl + n / ctrl + j / ↑"
+        },
+        {
+          "anchor": "Select previous item",
+          "content": "ctrl + p / ctrl + k / ↓"
+        },
+        {
+          "anchor": "Quick select item by number",
+          "content": "alt + 1 to alt + 9"
+        },
+        {
+          "anchor": "Scroll results one page down",
+          "content": "page down"
+        },
+        {
+          "anchor": "Scroll results one page up",
+          "content": "page up"
+        }
+      ]
+    },
+    {
+      "title": "Search & Filters",
+      "entries": [
+        {
+          "anchor": "Cycle through filter modes (global, host, session, directory)",
+          "content": "ctrl + r"
+        },
+        {
+          "anchor": "Cycle through search modes (fuzzy, prefix, full-text)",
+          "content": "ctrl + s"
+        },
+        {
+          "anchor": "Switch to context of selected command / return to default",
+          "content": "ctrl + a, c"
+        }
+      ]
+    },
+    {
+      "title": "Text Editing",
+      "entries": [
+        {
+          "anchor": "Move cursor to previous word",
+          "content": "ctrl + ← / alt + b"
+        },
+        {
+          "anchor": "Move cursor to next word",
+          "content": "ctrl + → / alt + f"
+        },
+        {
+          "anchor": "Move cursor left one character",
+          "content": "ctrl + b / ←"
+        },
+        {
+          "anchor": "Move cursor right one character",
+          "content": "ctrl + f / →"
+        },
+        {
+          "anchor": "Move cursor to start of line",
+          "content": "ctrl + a / home"
+        },
+        {
+          "anchor": "Move cursor to end of line",
+          "content": "ctrl + e / end"
+        },
+        {
+          "anchor": "Delete previous word",
+          "content": "ctrl + backspace"
+        },
+        {
+          "anchor": "Delete next word",
+          "content": "ctrl + delete"
+        },
+        {
+          "anchor": "Delete word before cursor (across word boundaries)",
+          "content": "ctrl + w"
+        },
+        {
+          "anchor": "Clear the entire line",
+          "content": "ctrl + u"
+        }
+      ]
+    },
+    {
+      "title": "Clipboard & Inspector",
+      "entries": [
+        {
+          "anchor": "Copy selected item to clipboard",
+          "content": "ctrl + y"
+        },
+        {
+          "anchor": "Open the inspector for detailed view",
+          "content": "ctrl + o"
+        }
+      ]
+    },
+    {
+      "title": "Inspector Mode",
+      "description": "Shortcuts available when the inspector is open (ctrl + o).",
+      "entries": [
+        {
+          "anchor": "Close inspector, return to shell",
+          "content": "esc"
+        },
+        {
+          "anchor": "Close inspector, return to search view",
+          "content": "ctrl + o"
+        },
+        {
+          "anchor": "Delete inspected item from history",
+          "content": "ctrl + d"
+        },
+        {
+          "anchor": "Inspect previous item",
+          "content": "↑ / page up"
+        },
+        {
+          "anchor": "Inspect next item",
+          "content": "↓ / page down"
+        },
+        {
+          "anchor": "Execute selected item",
+          "content": "enter"
+        },
+        {
+          "anchor": "Select item and edit",
+          "content": "tab"
+        }
+      ]
+    },
+    {
+      "title": "Vim Mode - Navigation",
+      "description": "Available when vim mode is enabled in config. Normal mode.",
+      "entries": [
+        {
+          "anchor": "Select next item",
+          "content": "k"
+        },
+        {
+          "anchor": "Select previous item",
+          "content": "j"
+        },
+        {
+          "anchor": "Move cursor left",
+          "content": "h"
+        },
+        {
+          "anchor": "Move cursor right",
+          "content": "l"
+        },
+        {
+          "anchor": "Move cursor to next word",
+          "content": "w"
+        },
+        {
+          "anchor": "Move cursor to previous word",
+          "content": "b"
+        },
+        {
+          "anchor": "Move cursor to end of current/next word",
+          "content": "e"
+        },
+        {
+          "anchor": "Move cursor to start of line",
+          "content": "0"
+        },
+        {
+          "anchor": "Move cursor to end of line",
+          "content": "$"
+        }
+      ]
+    },
+    {
+      "title": "Vim Mode - Scrolling",
+      "description": "Normal mode scrolling commands.",
+      "entries": [
+        {
+          "anchor": "Half-page up (toward visual top)",
+          "content": "ctrl + u"
+        },
+        {
+          "anchor": "Half-page down (toward visual bottom)",
+          "content": "ctrl + d"
+        },
+        {
+          "anchor": "Full-page up",
+          "content": "ctrl + b"
+        },
+        {
+          "anchor": "Full-page down",
+          "content": "ctrl + f"
+        },
+        {
+          "anchor": "Jump to visual bottom of history",
+          "content": "G"
+        },
+        {
+          "anchor": "Jump to visual top of history",
+          "content": "gg"
+        },
+        {
+          "anchor": "Jump to top of visible screen",
+          "content": "H"
+        },
+        {
+          "anchor": "Jump to middle of visible screen",
+          "content": "M"
+        },
+        {
+          "anchor": "Jump to bottom of visible screen",
+          "content": "L"
+        }
+      ]
+    },
+    {
+      "title": "Vim Mode - Editing",
+      "description": "Normal mode editing commands.",
+      "entries": [
+        {
+          "anchor": "Delete character under cursor",
+          "content": "x"
+        },
+        {
+          "anchor": "Clear entire line",
+          "content": "dd"
+        },
+        {
+          "anchor": "Delete to end of line",
+          "content": "D"
+        },
+        {
+          "anchor": "Delete to end of line and enter insert mode",
+          "content": "C"
+        },
+        {
+          "anchor": "Enter insert mode",
+          "content": "i"
+        },
+        {
+          "anchor": "Move to start of line and enter insert mode",
+          "content": "I"
+        },
+        {
+          "anchor": "Move right and enter insert mode",
+          "content": "a"
+        },
+        {
+          "anchor": "Move to end of line and enter insert mode",
+          "content": "A"
+        },
+        {
+          "anchor": "Clear input and enter insert mode (search)",
+          "content": "? / /"
+        },
+        {
+          "anchor": "Exit insert mode, enter normal mode",
+          "content": "esc"
+        }
+      ]
+    }
+  ]
+}

@@ -26,6 +26,12 @@ function Header() {
           </Link>
           <Link
             className="rounded-xl px-3 py-2 text-sm text-zinc-600 hover:bg-black/5 hover:text-zinc-900 hover:no-underline"
+            href="/docs"
+          >
+            Docs
+          </Link>
+          <Link
+            className="rounded-xl px-3 py-2 text-sm text-zinc-600 hover:bg-black/5 hover:text-zinc-900 hover:no-underline"
             href="/cheatsheets"
           >
             Cheatsheets

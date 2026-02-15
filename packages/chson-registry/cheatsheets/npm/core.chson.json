@@ -1,9 +1,12 @@
 {
-  "$schema": "https://chson.dev/schema/v1/chson.schema.json",
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
   "title": "npm Essentials",
   "version": "10.x",
   "publicationDate": "2026-01-16",
   "description": "Essential npm commands for Node.js package management.",
+  "retrievalDirection": "mechanism-to-meaning",
+  "anchorLabel": "Example",
+  "contentLabel": "Description",
   "metadata": {
     "homepage": "https://docs.npmjs.com/",
     "category": "cli"
@@ -11,141 +14,120 @@
   "sections": [
     {
       "title": "Project Setup",
-      "items": [
+      "entries": [
         {
-          "title": "Initialize project",
-          "example": "npm init -y",
-          "description": "Create package.json with defaults."
+          "anchor": "npm init -y",
+          "content": "Create package.json with defaults."
         },
         {
-          "title": "Install dependencies",
-          "example": "npm install",
-          "description": "Install all dependencies from package.json."
+          "anchor": "npm install",
+          "content": "Install all dependencies from package.json."
         },
         {
-          "title": "Clean install",
-          "example": "npm ci",
-          "description": "Install exact versions from package-lock.json."
+          "anchor": "npm ci",
+          "content": "Install exact versions from package-lock.json.",
+          "label": "Clean install"
         }
       ]
     },
     {
       "title": "Dependencies",
-      "items": [
+      "entries": [
         {
-          "title": "Add package",
-          "example": "npm install lodash",
-          "description": "Install and save as dependency."
+          "anchor": "npm install <package>",
+          "content": "Install and save as dependency."
         },
         {
-          "title": "Add dev dependency",
-          "example": "npm install -D typescript",
-          "description": "Install as devDependency."
+          "anchor": "npm install -D <package>",
+          "content": "Install as devDependency."
         },
         {
-          "title": "Add global",
-          "example": "npm install -g npm-check-updates",
-          "description": "Install package globally."
+          "anchor": "npm install -g <package>",
+          "content": "Install package globally."
         },
         {
-          "title": "Remove package",
-          "example": "npm uninstall lodash",
-          "description": "Remove package and update package.json."
+          "anchor": "npm uninstall <package>",
+          "content": "Remove package and update package.json."
         },
         {
-          "title": "List installed",
-          "example": "npm ls --depth=0",
-          "description": "Show top-level installed packages."
+          "anchor": "npm ls --depth=0",
+          "content": "Show top-level installed packages."
         }
       ]
     },
     {
       "title": "Scripts",
-      "items": [
+      "entries": [
         {
-          "title": "Run script",
-          "example": "npm run build",
-          "description": "Execute a script defined in package.json."
+          "anchor": "npm run <script>",
+          "content": "Execute a script defined in package.json."
         },
         {
-          "title": "Run test",
-          "example": "npm test",
-          "description": "Run the test script (shorthand)."
+          "anchor": "npm test",
+          "content": "Run the test script (shorthand)."
         },
         {
-          "title": "Run start",
-          "example": "npm start",
-          "description": "Run the start script (shorthand)."
+          "anchor": "npm start",
+          "content": "Run the start script (shorthand)."
         },
         {
-          "title": "List scripts",
-          "example": "npm run",
-          "description": "Show all available scripts."
+          "anchor": "npm run",
+          "content": "Show all available scripts."
         }
       ]
     },
     {
       "title": "Updates",
-      "items": [
+      "entries": [
         {
-          "title": "Check outdated",
-          "example": "npm outdated",
-          "description": "Show packages with newer versions available."
+          "anchor": "npm outdated",
+          "content": "Show packages with newer versions available."
         },
         {
-          "title": "Update packages",
-          "example": "npm update",
-          "description": "Update packages within semver range."
+          "anchor": "npm update",
+          "content": "Update packages within semver range."
         },
         {
-          "title": "Update npm",
-          "example": "npm install -g npm@latest",
-          "description": "Update npm itself to latest version."
+          "anchor": "npm install -g npm@latest",
+          "content": "Update npm itself to latest version."
         }
       ]
     },
     {
       "title": "Info & Debug",
-      "items": [
+      "entries": [
         {
-          "title": "View package info",
-          "example": "npm info react",
-          "description": "Show registry information for a package."
+          "anchor": "npm info <package>",
+          "content": "Show registry information for a package."
         },
         {
-          "title": "Check for vulnerabilities",
-          "example": "npm audit",
-          "description": "Scan dependencies for security issues."
+          "anchor": "npm audit",
+          "content": "Scan dependencies for security issues."
         },
         {
-          "title": "Fix vulnerabilities",
-          "example": "npm audit fix",
-          "description": "Automatically fix security issues when possible."
+          "anchor": "npm audit fix",
+          "content": "Automatically fix security issues when possible."
         },
         {
-          "title": "Why installed",
-          "example": "npm explain lodash",
-          "description": "Show why a package is installed."
+          "anchor": "npm explain <package>",
+          "content": "Show why a package is installed."
         }
       ]
     },
     {
       "title": "Publishing",
-      "items": [
+      "entries": [
         {
-          "title": "Login",
-          "example": "npm login",
-          "description": "Authenticate with npm registry."
+          "anchor": "npm login",
+          "content": "Authenticate with npm registry."
         },
         {
-          "title": "Publish",
-          "example": "npm publish",
-          "description": "Publish package to registry."
+          "anchor": "npm publish",
+          "content": "Publish package to registry."
         },
         {
-          "title": "Bump version",
-          "example": "npm version patch",
-          "description": "Increment version (patch/minor/major)."
+          "anchor": "npm version <patch|minor|major>",
+          "content": "Increment version (patch/minor/major)."
         }
       ]
     }

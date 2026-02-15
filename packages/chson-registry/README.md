@@ -10,7 +10,7 @@ cheatsheets/
 │   └── <name>.chson.json
 ```
 
-Each cheatsheet validates against `@chson/schema/v1`.
+Each cheatsheet validates against `@chson/schema/v2`.
 
 ## Available Tasks
 
@@ -21,5 +21,5 @@ Each cheatsheet validates against `@chson/schema/v1`.
 ## Adding Cheatsheets
 
 1. Create `cheatsheets/<product>/<name>.chson.json`
-2. Include `"$schema": "https://chson.dev/schema/v1/chson.schema.json"` for IDE support
+2. Include `"$schema": "https://chson.dev/schema/v2/chson.schema.json"` for IDE support
 3. Run `npm run validate` to ensure it's valid

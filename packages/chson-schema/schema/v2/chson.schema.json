@@ -1,0 +1,110 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://chson.dev/schema/v2/chson.schema.json",
+  "title": "ChSON Cheatsheet",
+  "description": "A structured format for software cheatsheets, based on cognitive science principles of retrieval and chunking.",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["title", "publicationDate", "description", "sections"],
+  "properties": {
+    "$schema": {
+      "type": "string",
+      "description": "JSON Schema reference URL."
+    },
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "description": "The name of this cheatsheet."
+    },
+    "version": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Version of the software this cheatsheet documents."
+    },
+    "publicationDate": {
+      "type": "string",
+      "anyOf": [
+        { "format": "date" },
+        { "format": "date-time" }
+      ],
+      "description": "When this cheatsheet was published or last updated."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "description": "A brief summary of what this cheatsheet covers."
+    },
+    "retrievalDirection": {
+      "type": "string",
+      "enum": ["intent-to-mechanism", "mechanism-to-meaning"],
+      "description": "The cognitive lookup direction for this cheatsheet. 'intent-to-mechanism': user knows what they want to do, needs the command/shortcut. 'mechanism-to-meaning': user sees a command/syntax, needs to understand what it does."
+    },
+    "anchorLabel": {
+      "type": "string",
+      "description": "Display name for the anchor column (default: 'Anchor'). Use 'Example' for code samples, 'Shortcut' for keyboard shortcuts, etc."
+    },
+    "contentLabel": {
+      "type": "string",
+      "description": "Display name for the content column (default: 'Content'). Use 'Description' for explanations, 'Action' for intent-based lookups, etc."
+    },
+    "metadata": {
+      "type": "object",
+      "additionalProperties": true,
+      "description": "Additional metadata (homepage, category, tags, etc.)."
+    },
+    "sections": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/section" },
+      "description": "Logical groupings of related entries (chunks)."
+    }
+  },
+  "$defs": {
+    "section": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["title", "entries"],
+      "properties": {
+        "title": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The name of this section (chunk category)."
+        },
+        "description": {
+          "type": "string",
+          "description": "Optional explanation of what this section covers."
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": { "$ref": "#/$defs/entry" },
+          "description": "The anchor-content pairs in this section."
+        }
+      }
+    },
+    "entry": {
+      "type": "object",
+      "additionalProperties": true,
+      "required": ["anchor", "content"],
+      "properties": {
+        "anchor": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The retrieval anchor: what users scan for. Typically a command, shortcut, or action name."
+        },
+        "content": {
+          "type": "string",
+          "minLength": 1,
+          "description": "The associated content: what users need to know once they find the anchor."
+        },
+        "label": {
+          "type": "string",
+          "description": "Optional human-readable label when the anchor is cryptic (e.g., 'gg' might have label 'Go to start')."
+        },
+        "comments": {
+          "description": "Optional notes, warnings, or additional context."
+        }
+      }
+    }
+  }
+}

@@ -11,25 +11,32 @@ personal knowledge bases.
 
 A ChSON file is a single JSON document with:
 
-- top-level metadata (`title`, optional `version`, `publicationDate`, `description`)
-- optional `metadata` for custom fields
-- a `sections[]` array, each containing `items[]` (the individual cheats)
+- Top-level metadata (`title`, optional `version`, `publicationDate`, `description`)
+- Optional `retrievalDirection` ("mechanism-to-meaning" or "intent-to-mechanism")
+- Optional `anchorLabel` and `contentLabel` for custom column headers
+- Optional `metadata` for custom fields
+- A `sections[]` array, each containing `entries[]` (the individual cheats)
+- Each entry has an `anchor` (what users scan for), `content` (what they need),
+  and optional `label` (human-readable description when the anchor is cryptic)
 
 Files use the extension `.chson.json`.
 
 ## Schema
 
-ChSON files validate against the canonical JSON Schema:
+ChSON files validate against the canonical JSON Schema (currently v2):
 
-- `https://chson.dev/schema/v1/chson.schema.json`
+- `https://chson.dev/schema/v2/chson.schema.json`
 
 In each cheatsheet, set:
 
   ```json
   {
-  "$schema": "https://chson.dev/schema/v1/chson.schema.json"
+    "$schema": "https://chson.dev/schema/v2/chson.schema.json"
   }
   ```
+
+Visit the [documentation](https://chson.carlesandres.com/docs) for detailed explanations
+of anchors, content, labels, and retrieval direction.
 
 ## Quickstart
 
@@ -65,11 +72,11 @@ npm run render:build
 
 ## Registry
 
-Example cheatsheets live in the `@chson/registry` package and are showcased in the Astro website.
+Example cheatsheets live in the `@chson/registry` package and are showcased in the Next.js website.
 
 - Package: `packages/chson-registry/`
 - Example source file: `packages/chson-registry/cheatsheets/git/core.chson.json`
-- Website page: `apps/site/src/pages/cheatsheets/[product]/[name].astro`
+- Website page: `apps/site/src/app/cheatsheets/[product]/[name]/page.tsx`
 
 Generated output:
 
@@ -77,7 +84,7 @@ Generated output:
 
 ## Website
 
-The website lives in `apps/site/` (Astro).
+The website lives in `apps/site/` (Next.js).
 
 ```bash
 npm install
@@ -99,7 +106,7 @@ This is a Turborepo monorepo with the following packages:
 - `packages/chson-schema/` — ChSON JSON Schema + auto-generated TypeScript types
 - `packages/chson-registry/` — Source cheatsheets (registry)
 - `packages/chson-cli/` — CLI (`chson`) for validate + render
-- `apps/site/` — Astro website
+- `apps/site/` — Next.js website
 
 ### Package Dependencies
 
@@ -116,8 +123,13 @@ Turborepo automatically builds packages in the correct order.
 
 This repo currently ships a minimal Node CLI:
 
-- Validate ChSON files using AJV
-- Render ChSON to Markdown using 2-column tables (`Cheat` / `Description`)
+- Validate ChSON files using AJV (auto-detects v2 schema)
+- Render ChSON to Markdown using 2-column tables (Anchor / Content, with custom labels)
+
+The v2 format is based on cognitive retrieval theory. The `anchor` field represents
+what users scan for (command, shortcut, keyword), and `content` represents what they need
+(description, action, result). Optional `label` fields provide human-readable descriptions
+when anchors are cryptic. See `research/cognitive-foundations.md` for details.
 
 If you want to build a renderer (PDF, flashcards, etc.), the current schema is intentionally
 minimal — the `comments` field can hold any extra structure you need while the standard

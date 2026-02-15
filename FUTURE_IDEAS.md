@@ -8,17 +8,18 @@ can iterate without losing context.
 
 - **Name**: ChSON
 - **Canonical home (assumed)**: `chson.dev`
-- **Schema URL**: `https://chson.dev/schema/v1/chson.schema.json`
+- **Schema URL**: `https://chson.dev/schema/v2/chson.schema.json` (v1 still supported)
 - **JSON Schema dialect**: Draft 2020-12
 - **Document schema pointer**: ChSON documents include a `$schema` field pointing to the canonical schema URL.
-- **Core structure**:
-  - Top-level: `title`, optional `version`, `publicationDate`, `description`, `metadata`, `sections`
-  - Section: `title`, optional `description`, `items`
-  - Item: `title`, `description`, optional `comments`
+- **Core structure (v2)** — based on cognitive retrieval theory (see `research/cognitive-foundations.md`):
+  - Top-level: `title`, optional `version`, `publicationDate`, `description`, `retrievalDirection`, `metadata`, `sections`
+  - Section: `title`, optional `description`, `entries`
+  - Entry: `anchor` (retrieval anchor), `content` (associated content), optional `label`, `comments`
+- **Retrieval direction**: `"mechanism-to-meaning"` (scan by command/syntax) or `"intent-to-mechanism"` (scan by action/intent)
 - **Keep flexibility**: allow unknown fields (`additionalProperties: true`) everywhere.
 - **Dates**: `publicationDate` accepts either `date` or `date-time`.
 - **Registry file extension**: use `.chson.json`.
-- **First renderer target**: 2-column Markdown tables (`Cheat` / `Description`).
+- **First renderer target**: 2-column Markdown tables (`Anchor` / `Content`).
 
 ## Postponed / Future Additions
 
