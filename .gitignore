@@ -15,6 +15,3 @@ packages/chson-schema/types/
 
 # Vercel
 .vercel/
-
-# Local sandbox app (not part of this repo)
-apps/web/
