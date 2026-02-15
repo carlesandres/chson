@@ -1,19 +1,23 @@
 {
   "name": "@chson/schema",
-  "version": "1.0.0",
+  "version": "2.0.0",
   "private": true,
   "description": "ChSON JSON Schema and TypeScript type definitions",
   "type": "module",
-  "main": "./schema/v1/chson.schema.json",
-  "types": "./types/index.d.ts",
+  "main": "./schema/v2/chson.schema.json",
+  "types": "./types/v2.d.ts",
   "exports": {
     ".": {
-      "types": "./types/index.d.ts",
-      "default": "./schema/v1/chson.schema.json"
+      "types": "./types/v2.d.ts",
+      "default": "./schema/v2/chson.schema.json"
     },
     "./v1": "./schema/v1/chson.schema.json",
     "./v1/chson.schema.json": "./schema/v1/chson.schema.json",
-    "./types": "./types/index.d.ts"
+    "./v2": "./schema/v2/chson.schema.json",
+    "./v2/chson.schema.json": "./schema/v2/chson.schema.json",
+    "./types": "./types/v2.d.ts",
+    "./types/v1": "./types/v1.d.ts",
+    "./types/v2": "./types/v2.d.ts"
   },
   "files": [
     "schema",

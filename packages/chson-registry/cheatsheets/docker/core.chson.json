@@ -1,9 +1,12 @@
 {
-  "$schema": "https://chson.dev/schema/v1/chson.schema.json",
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
   "title": "Docker Essentials",
   "version": "24.x",
   "publicationDate": "2026-01-16",
   "description": "Essential Docker commands for container management.",
+  "retrievalDirection": "mechanism-to-meaning",
+  "anchorLabel": "Example",
+  "contentLabel": "Description",
   "metadata": {
     "homepage": "https://docs.docker.com/",
     "category": "cli"
@@ -11,156 +14,132 @@
   "sections": [
     {
       "title": "Images",
-      "items": [
+      "entries": [
         {
-          "title": "Pull image",
-          "example": "docker pull nginx:latest",
-          "description": "Download an image from a registry."
+          "anchor": "docker pull <image>:<tag>",
+          "content": "Download an image from a registry."
         },
         {
-          "title": "List images",
-          "example": "docker images",
-          "description": "Show all local images."
+          "anchor": "docker images",
+          "content": "Show all local images."
         },
         {
-          "title": "Build image",
-          "example": "docker build -t myapp:1.0 .",
-          "description": "Build image from Dockerfile in current directory."
+          "anchor": "docker build -t <name>:<tag> .",
+          "content": "Build image from Dockerfile in current directory."
         },
         {
-          "title": "Remove image",
-          "example": "docker rmi nginx:latest",
-          "description": "Delete a local image."
+          "anchor": "docker rmi <image>",
+          "content": "Delete a local image."
         },
         {
-          "title": "Prune unused",
-          "example": "docker image prune -a",
-          "description": "Remove all unused images."
+          "anchor": "docker image prune -a",
+          "content": "Remove all unused images."
         }
       ]
     },
     {
       "title": "Containers",
-      "items": [
+      "entries": [
         {
-          "title": "Run",
-          "example": "docker run -d -p 8080:80 nginx",
-          "description": "Start a container in detached mode with port mapping."
+          "anchor": "docker run -d -p <host>:<container> <image>",
+          "content": "Start a container in detached mode with port mapping."
         },
         {
-          "title": "List running",
-          "example": "docker ps",
-          "description": "Show running containers."
+          "anchor": "docker ps",
+          "content": "Show running containers."
         },
         {
-          "title": "List all",
-          "example": "docker ps -a",
-          "description": "Show all containers including stopped."
+          "anchor": "docker ps -a",
+          "content": "Show all containers including stopped."
         },
         {
-          "title": "Stop",
-          "example": "docker stop my-container",
-          "description": "Gracefully stop a running container."
+          "anchor": "docker stop <container>",
+          "content": "Gracefully stop a running container."
         },
         {
-          "title": "Remove",
-          "example": "docker rm my-container",
-          "description": "Delete a stopped container."
+          "anchor": "docker rm <container>",
+          "content": "Delete a stopped container."
         },
         {
-          "title": "Logs",
-          "example": "docker logs -f my-container",
-          "description": "Follow container logs in real-time."
+          "anchor": "docker logs -f <container>",
+          "content": "Follow container logs in real-time."
         }
       ]
     },
     {
       "title": "Exec & Debug",
-      "items": [
+      "entries": [
         {
-          "title": "Shell into container",
-          "example": "docker exec -it my-container /bin/sh",
-          "description": "Open interactive shell in running container."
+          "anchor": "docker exec -it <container> /bin/sh",
+          "content": "Open interactive shell in running container."
         },
         {
-          "title": "Run command",
-          "example": "docker exec my-container cat /etc/hosts",
-          "description": "Execute a command in a running container."
+          "anchor": "docker exec <container> <command>",
+          "content": "Execute a command in a running container."
         },
         {
-          "title": "Inspect",
-          "example": "docker inspect my-container",
-          "description": "View detailed container configuration as JSON."
+          "anchor": "docker inspect <container>",
+          "content": "View detailed container configuration as JSON."
         },
         {
-          "title": "Stats",
-          "example": "docker stats",
-          "description": "Live resource usage for all containers."
+          "anchor": "docker stats",
+          "content": "Live resource usage for all containers."
         }
       ]
     },
     {
       "title": "Volumes",
-      "items": [
+      "entries": [
         {
-          "title": "Create volume",
-          "example": "docker volume create mydata",
-          "description": "Create a named volume for persistent data."
+          "anchor": "docker volume create <name>",
+          "content": "Create a named volume for persistent data."
         },
         {
-          "title": "List volumes",
-          "example": "docker volume ls",
-          "description": "Show all volumes."
+          "anchor": "docker volume ls",
+          "content": "Show all volumes."
         },
         {
-          "title": "Mount volume",
-          "example": "docker run -v mydata:/app/data nginx",
-          "description": "Attach a volume to a container."
+          "anchor": "docker run -v <volume>:<path> <image>",
+          "content": "Attach a volume to a container."
         },
         {
-          "title": "Bind mount",
-          "example": "docker run -v $(pwd):/app nginx",
-          "description": "Mount host directory into container."
+          "anchor": "docker run -v $(pwd):<path> <image>",
+          "content": "Mount host directory into container.",
+          "label": "Bind mount"
         }
       ]
     },
     {
       "title": "Networks",
-      "items": [
+      "entries": [
         {
-          "title": "List networks",
-          "example": "docker network ls",
-          "description": "Show all Docker networks."
+          "anchor": "docker network ls",
+          "content": "Show all Docker networks."
         },
         {
-          "title": "Create network",
-          "example": "docker network create mynet",
-          "description": "Create a custom bridge network."
+          "anchor": "docker network create <name>",
+          "content": "Create a custom bridge network."
         },
         {
-          "title": "Connect container",
-          "example": "docker network connect mynet my-container",
-          "description": "Add a container to a network."
+          "anchor": "docker network connect <network> <container>",
+          "content": "Add a container to a network."
         }
       ]
     },
     {
       "title": "Cleanup",
-      "items": [
+      "entries": [
         {
-          "title": "Remove stopped containers",
-          "example": "docker container prune",
-          "description": "Delete all stopped containers."
+          "anchor": "docker container prune",
+          "content": "Delete all stopped containers."
         },
         {
-          "title": "System prune",
-          "example": "docker system prune -a --volumes",
-          "description": "Remove all unused data (images, containers, volumes)."
+          "anchor": "docker system prune -a --volumes",
+          "content": "Remove all unused data (images, containers, volumes)."
         },
         {
-          "title": "Disk usage",
-          "example": "docker system df",
-          "description": "Show Docker disk usage summary."
+          "anchor": "docker system df",
+          "content": "Show Docker disk usage summary."
         }
       ]
     }

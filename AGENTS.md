@@ -64,24 +64,35 @@ rm -rf .turbo build packages/chson-schema/types && npm run build
 
 **Key files**:
 - `packages/chson-cli/src/chson.js` - Single-file CLI with validate and render commands
-- `packages/chson-schema/schema/v1/chson.schema.json` - JSON Schema (Draft 2020-12) defining the ChSON format
-- `packages/chson-schema/types/index.d.ts` - Auto-generated TypeScript types (gitignored)
+- `packages/chson-schema/schema/v2/chson.schema.json` - JSON Schema (Draft 2020-12) defining the ChSON v2 format
+- `packages/chson-schema/schema/v1/chson.schema.json` - Legacy v1 schema (still supported)
+- `packages/chson-schema/types/` - Auto-generated TypeScript types (gitignored)
 - `packages/chson-registry/cheatsheets/` - Source cheatsheets
 - `apps/site/` - Astro website
+- `research/` - Cognitive science research supporting ChSON design
 
-**ChSON schema structure**:
+**ChSON v2 schema structure** (based on cognitive retrieval theory):
 ```
 {
-  title, version?, publicationDate, description, metadata?,
-  sections: [{ title, description?, items: [{ title, description, example?, comments? }] }]
+  title, version?, publicationDate, description, retrievalDirection?, metadata?,
+  anchorLabel?, contentLabel?,
+  sections: [{ title, description?, entries: [{ anchor, content, label?, comments? }] }]
 }
 ```
+
+Key terminology (see `research/cognitive-foundations.md`):
+- **anchor**: The retrieval anchor — what users scan for (command, shortcut, term)
+- **content**: The associated content — what users need once they find the anchor
+- **label**: Optional human-readable label when the anchor is cryptic (e.g., `gg` → "Go to start")
+- **retrievalDirection**: `"mechanism-to-meaning"` (scan by command) or `"intent-to-mechanism"` (scan by action)
+- **anchorLabel**: Custom display name for anchor column (e.g., "Example", "Shortcut")
+- **contentLabel**: Custom display name for content column (e.g., "Description", "Action")
 
 ## Workflow
 
 **Adding cheatsheets**:
 1. Create `packages/chson-registry/cheatsheets/<product>/<name>.chson.json`
-2. Include `"$schema": "https://chson.dev/schema/v1/chson.schema.json"`
+2. Include `"$schema": "https://chson.dev/schema/v2/chson.schema.json"`
 3. Run `npm run validate`
 4. Run `npm run build` to rebuild the site
 

@@ -13,6 +13,8 @@ present, enhance and create those cheatsheets.
 
 - Bring the vocabulary of neuroscience and learning to cheatsheets and
 evangelise why cheatsheets are a great way to learn software
+  - See [research/cognitive-foundations.md](./research/cognitive-foundations.md)
+    for theoretical framework
 
 
 

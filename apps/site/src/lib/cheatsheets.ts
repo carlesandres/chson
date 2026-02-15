@@ -1,19 +1,18 @@
 import fs from "node:fs";
 import path from "node:path";
 
-// Keep local type definitions for backwards compatibility
-// These match the schema but are defined locally for simplicity
-export type CheatsheetItem = {
-  title: string;
-  description: string;
-  example?: unknown;
+// V2 schema types (current)
+export type CheatsheetEntry = {
+  anchor: string;
+  content: string;
+  label?: string;
   comments?: unknown;
 };
 
 export type CheatsheetSection = {
   title: string;
   description?: string;
-  items: CheatsheetItem[];
+  entries: CheatsheetEntry[];
 };
 
 export type Cheatsheet = {
@@ -22,8 +21,35 @@ export type Cheatsheet = {
   version?: string;
   publicationDate: string;
   description: string;
+  retrievalDirection?: "intent-to-mechanism" | "mechanism-to-meaning";
+  anchorLabel?: string;
+  contentLabel?: string;
   metadata?: Record<string, unknown>;
   sections: CheatsheetSection[];
+};
+
+// V1 schema types (legacy support)
+type CheatsheetItemV1 = {
+  title: string;
+  description: string;
+  example?: unknown;
+  comments?: unknown;
+};
+
+type CheatsheetSectionV1 = {
+  title: string;
+  description?: string;
+  items: CheatsheetItemV1[];
+};
+
+type CheatsheetV1 = {
+  $schema?: string;
+  title: string;
+  version?: string;
+  publicationDate: string;
+  description: string;
+  metadata?: Record<string, unknown>;
+  sections: CheatsheetSectionV1[];
 };
 
 export type CheatsheetRef = {
@@ -32,6 +58,34 @@ export type CheatsheetRef = {
   filePath: string;
   data: Cheatsheet;
 };
+
+/**
+ * Detect schema version from $schema URL
+ */
+function detectVersion(data: unknown): "v1" | "v2" {
+  const schemaUrl = (data as { $schema?: string }).$schema ?? "";
+  if (schemaUrl.includes("/v2/")) return "v2";
+  return "v1";
+}
+
+/**
+ * Normalize v1 cheatsheet to v2 format
+ */
+function normalizeToV2(data: CheatsheetV1): Cheatsheet {
+  return {
+    ...data,
+    sections: data.sections.map((section) => ({
+      title: section.title,
+      description: section.description,
+      entries: section.items.map((item) => ({
+        anchor: formatExample(item.example) || item.title,
+        content: item.description,
+        label: item.example ? item.title : undefined,
+        comments: item.comments,
+      })),
+    })),
+  };
+}
 
 /**
  * Get the path to the cheatsheets directory in @chson/registry.
@@ -79,7 +133,14 @@ export function listCheatsheetPaths(): string[] {
 
 export function loadCheatsheet(filePath: string): Cheatsheet {
   const raw = fs.readFileSync(filePath, "utf8");
-  return JSON.parse(raw);
+  const data = JSON.parse(raw);
+
+  // Normalize v1 to v2 format
+  if (detectVersion(data) === "v1") {
+    return normalizeToV2(data as CheatsheetV1);
+  }
+
+  return data as Cheatsheet;
 }
 
 export function getAllCheatsheets(): CheatsheetRef[] {

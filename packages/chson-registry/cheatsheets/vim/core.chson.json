@@ -1,9 +1,12 @@
 {
-  "$schema": "https://chson.dev/schema/v1/chson.schema.json",
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
   "title": "Vim Essentials",
   "version": "9.x",
   "publicationDate": "2026-01-16",
   "description": "Essential Vim commands for text editing.",
+  "retrievalDirection": "mechanism-to-meaning",
+  "anchorLabel": "Example",
+  "contentLabel": "Description",
   "metadata": {
     "homepage": "https://www.vim.org/",
     "category": "editor"
@@ -11,211 +14,194 @@
   "sections": [
     {
       "title": "Modes",
-      "items": [
+      "entries": [
         {
-          "title": "Normal mode",
-          "example": "Esc",
-          "description": "Return to normal mode from any other mode."
+          "anchor": "Esc",
+          "content": "Return to normal mode from any other mode.",
+          "label": "Normal mode"
         },
         {
-          "title": "Insert mode",
-          "example": "i",
-          "description": "Enter insert mode before cursor."
+          "anchor": "i",
+          "content": "Enter insert mode before cursor.",
+          "label": "Insert mode"
         },
         {
-          "title": "Append",
-          "example": "a",
-          "description": "Enter insert mode after cursor."
+          "anchor": "a",
+          "content": "Enter insert mode after cursor.",
+          "label": "Append"
         },
         {
-          "title": "Visual mode",
-          "example": "v",
-          "description": "Start character-wise visual selection."
+          "anchor": "v",
+          "content": "Start character-wise visual selection.",
+          "label": "Visual mode"
         },
         {
-          "title": "Visual line",
-          "example": "V",
-          "description": "Start line-wise visual selection."
+          "anchor": "V",
+          "content": "Start line-wise visual selection.",
+          "label": "Visual line"
         },
         {
-          "title": "Command mode",
-          "example": ":",
-          "description": "Enter command-line mode."
+          "anchor": ":",
+          "content": "Enter command-line mode.",
+          "label": "Command mode"
         }
       ]
     },
     {
       "title": "Navigation",
-      "items": [
+      "entries": [
         {
-          "title": "Move by character",
-          "example": "h j k l",
-          "description": "Left, down, up, right."
+          "anchor": "h j k l",
+          "content": "Left, down, up, right.",
+          "label": "Move by character"
         },
         {
-          "title": "Move by word",
-          "example": "w",
-          "description": "Jump to start of next word."
+          "anchor": "w",
+          "content": "Jump to start of next word."
         },
         {
-          "title": "Move by word back",
-          "example": "b",
-          "description": "Jump to start of previous word."
+          "anchor": "b",
+          "content": "Jump to start of previous word."
         },
         {
-          "title": "Line start",
-          "example": "0",
-          "description": "Jump to beginning of line."
+          "anchor": "0",
+          "content": "Jump to beginning of line.",
+          "label": "Line start"
         },
         {
-          "title": "Line end",
-          "example": "$",
-          "description": "Jump to end of line."
+          "anchor": "$",
+          "content": "Jump to end of line.",
+          "label": "Line end"
         },
         {
-          "title": "File start",
-          "example": "gg",
-          "description": "Jump to first line of file."
+          "anchor": "gg",
+          "content": "Jump to first line of file.",
+          "label": "File start"
         },
         {
-          "title": "File end",
-          "example": "G",
-          "description": "Jump to last line of file."
+          "anchor": "G",
+          "content": "Jump to last line of file.",
+          "label": "File end"
         },
         {
-          "title": "Go to line",
-          "example": "42G",
-          "description": "Jump to line 42."
+          "anchor": "<n>G",
+          "content": "Jump to line n.",
+          "label": "Go to line"
         }
       ]
     },
     {
       "title": "Editing",
-      "items": [
+      "entries": [
         {
-          "title": "Delete character",
-          "example": "x",
-          "description": "Delete character under cursor."
+          "anchor": "x",
+          "content": "Delete character under cursor."
         },
         {
-          "title": "Delete word",
-          "example": "dw",
-          "description": "Delete from cursor to start of next word."
+          "anchor": "dw",
+          "content": "Delete from cursor to start of next word."
         },
         {
-          "title": "Delete line",
-          "example": "dd",
-          "description": "Delete entire current line."
+          "anchor": "dd",
+          "content": "Delete entire current line."
         },
         {
-          "title": "Change word",
-          "example": "cw",
-          "description": "Delete word and enter insert mode."
+          "anchor": "cw",
+          "content": "Delete word and enter insert mode."
         },
         {
-          "title": "Change line",
-          "example": "cc",
-          "description": "Delete line and enter insert mode."
+          "anchor": "cc",
+          "content": "Delete line and enter insert mode."
         },
         {
-          "title": "Replace character",
-          "example": "r",
-          "description": "Replace single character under cursor."
+          "anchor": "r",
+          "content": "Replace single character under cursor."
         },
         {
-          "title": "Undo",
-          "example": "u",
-          "description": "Undo last change."
+          "anchor": "u",
+          "content": "Undo last change."
         },
         {
-          "title": "Redo",
-          "example": "Ctrl+r",
-          "description": "Redo last undone change."
+          "anchor": "Ctrl+r",
+          "content": "Redo last undone change."
         }
       ]
     },
     {
       "title": "Copy & Paste",
-      "items": [
+      "entries": [
         {
-          "title": "Yank line",
-          "example": "yy",
-          "description": "Copy current line."
+          "anchor": "yy",
+          "content": "Copy current line.",
+          "label": "Yank line"
         },
         {
-          "title": "Yank word",
-          "example": "yw",
-          "description": "Copy from cursor to start of next word."
+          "anchor": "yw",
+          "content": "Copy from cursor to start of next word.",
+          "label": "Yank word"
         },
         {
-          "title": "Paste after",
-          "example": "p",
-          "description": "Paste after cursor."
+          "anchor": "p",
+          "content": "Paste after cursor."
         },
         {
-          "title": "Paste before",
-          "example": "P",
-          "description": "Paste before cursor."
+          "anchor": "P",
+          "content": "Paste before cursor."
         }
       ]
     },
     {
       "title": "Search",
-      "items": [
+      "entries": [
         {
-          "title": "Search forward",
-          "example": "/pattern",
-          "description": "Search for pattern forward."
+          "anchor": "/<pattern>",
+          "content": "Search for pattern forward."
         },
         {
-          "title": "Search backward",
-          "example": "?pattern",
-          "description": "Search for pattern backward."
+          "anchor": "?<pattern>",
+          "content": "Search for pattern backward."
         },
         {
-          "title": "Next match",
-          "example": "n",
-          "description": "Jump to next search match."
+          "anchor": "n",
+          "content": "Jump to next search match."
         },
         {
-          "title": "Previous match",
-          "example": "N",
-          "description": "Jump to previous search match."
+          "anchor": "N",
+          "content": "Jump to previous search match."
         },
         {
-          "title": "Search and replace",
-          "example": ":%s/old/new/g",
-          "description": "Replace all occurrences in file."
+          "anchor": ":%s/<old>/<new>/g",
+          "content": "Replace all occurrences in file."
         }
       ]
     },
     {
       "title": "Files",
-      "items": [
+      "entries": [
         {
-          "title": "Save",
-          "example": ":w",
-          "description": "Write current file to disk."
+          "anchor": ":w",
+          "content": "Write current file to disk.",
+          "label": "Save"
         },
         {
-          "title": "Quit",
-          "example": ":q",
-          "description": "Quit (fails if unsaved changes)."
+          "anchor": ":q",
+          "content": "Quit (fails if unsaved changes).",
+          "label": "Quit"
         },
         {
-          "title": "Save and quit",
-          "example": ":wq",
-          "description": "Write and quit."
+          "anchor": ":wq",
+          "content": "Write and quit.",
+          "label": "Save and quit"
         },
         {
-          "title": "Force quit",
-          "example": ":q!",
-          "description": "Quit without saving changes."
+          "anchor": ":q!",
+          "content": "Quit without saving changes.",
+          "label": "Force quit"
         },
         {
-          "title": "Open file",
-          "example": ":e filename",
-          "description": "Open another file for editing."
+          "anchor": ":e <file>",
+          "content": "Open another file for editing.",
+          "label": "Open file"
         }
       ]
     }

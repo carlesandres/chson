@@ -7,7 +7,7 @@ ChSON JSON Schema and auto-generated TypeScript type definitions.
 ### Import Schema (JSON)
 
 ```typescript
-import schemaV1 from "@chson/schema/v1" with { type: "json" };
+import schemaV2 from "@chson/schema/v2" with { type: "json" };
 ```
 
 ### Import TypeScript Types
@@ -26,6 +26,6 @@ npm run build
 
 ## Structure
 
-- `schema/v1/chson.schema.json` - JSON Schema (Draft 2020-12)
+- `schema/v2/chson.schema.json` - JSON Schema (Draft 2020-12) - current version
 - `types/index.d.ts` - Generated TypeScript types (auto-generated, gitignored)
 - `scripts/build-types.js` - Type generation script

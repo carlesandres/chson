@@ -1,7 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { getAllCheatsheets, loadCheatsheet, formatExample } from "@/lib/cheatsheets";
+import { getAllCheatsheets, loadCheatsheet } from "@/lib/cheatsheets";
 
 type Params = Promise<{ product: string; name: string }>;
 
@@ -23,6 +23,29 @@ export async function generateMetadata({ params }: { params: Params }): Promise<
   };
 }
 
+/**
+ * Renders content as monospace code block (for mechanisms: commands, shortcuts)
+ */
+function CodeCell({ children }: { children: React.ReactNode }) {
+  return (
+    <pre className="m-0 overflow-auto rounded-xl border border-black/10 bg-black/[0.04] p-3">
+      <code className="font-mono text-[13px]">{children}</code>
+    </pre>
+  );
+}
+
+/**
+ * Renders content as plain text (for intents: actions, descriptions)
+ */
+function TextCell({ children, label }: { children: React.ReactNode; label?: string }) {
+  return (
+    <>
+      {label && <div className="font-semibold">{label}</div>}
+      <div className={label ? "mt-1 text-sm text-zinc-600" : ""}>{children}</div>
+    </>
+  );
+}
+
 export default async function CheatsheetPage({ params }: { params: Params }) {
   const { product, name } = await params;
   const ref = getAllCheatsheets().find((r) => r.product === product && r.name === name);
@@ -33,6 +56,14 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
 
   const data = loadCheatsheet(ref.filePath);
   const title = data.title || "Cheatsheet";
+  const anchorLabel = data.anchorLabel || "Anchor";
+  const contentLabel = data.contentLabel || "Content";
+  const retrievalDirection = data.retrievalDirection || "mechanism-to-meaning";
+
+  // Determine which column contains the mechanism (code) vs intent (text)
+  // - mechanism-to-meaning: anchor is mechanism (code), content is meaning (text)
+  // - intent-to-mechanism: anchor is intent (text), content is mechanism (code)
+  const anchorIsMechanism = retrievalDirection === "mechanism-to-meaning";
 
   return (
     <>
@@ -91,29 +122,30 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                   <thead>
                     <tr>
                       <th className="border-b border-black/10 bg-black/[0.03] px-3 py-2 text-left text-xs font-semibold text-zinc-600">
-                        Example
+                        {anchorLabel}
                       </th>
                       <th className="border-b border-black/10 bg-black/[0.03] px-3 py-2 text-left text-xs font-semibold text-zinc-600">
-                        Description
+                        {contentLabel}
                       </th>
                     </tr>
                   </thead>
                   <tbody>
-                    {Array.isArray(section.items) &&
-                      section.items.map((item, itemIdx) => (
-                        <tr key={itemIdx}>
+                    {Array.isArray(section.entries) &&
+                      section.entries.map((entry, entryIdx) => (
+                        <tr key={entryIdx}>
                           <td className="border-b border-black/5 px-3 py-3 align-top">
-                            {formatExample(item.example ?? item.title) && (
-                              <pre className="m-0 overflow-auto rounded-xl border border-black/10 bg-black/[0.04] p-3">
-                                <code className="font-mono text-[13px]">
-                                  {formatExample(item.example ?? item.title)}
-                                </code>
-                              </pre>
+                            {anchorIsMechanism ? (
+                              entry.anchor && <CodeCell>{entry.anchor}</CodeCell>
+                            ) : (
+                              <TextCell label={entry.label}>{entry.anchor}</TextCell>
                             )}
                           </td>
                           <td className="border-b border-black/5 px-3 py-3 align-top">
-                            <div className="font-semibold">{item.title}</div>
-                            <div className="mt-1 text-sm text-zinc-600">{item.description}</div>
+                            {anchorIsMechanism ? (
+                              <TextCell label={entry.label}>{entry.content}</TextCell>
+                            ) : (
+                              entry.content && <CodeCell>{entry.content}</CodeCell>
+                            )}
                           </td>
                         </tr>
                       ))}
