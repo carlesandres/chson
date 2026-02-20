@@ -38,3 +38,5 @@ yarn-error.log*
 tsconfig.tsbuildinfo
 
 Session.vim
+
+next-env.d.ts
