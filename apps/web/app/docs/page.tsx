@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import { CodeBlock } from 'components/chson';
 import { Badge } from 'components/ui/badge';
 import { Card, CardContent } from 'components/ui/card';
 import { Separator } from 'components/ui/separator';
@@ -9,21 +10,6 @@ export const metadata: Metadata = {
   description:
     'Learn about ChSON v2 format: anchors, content, labels, and cognitive-friendly cheatsheet design.',
 };
-
-function CodeBlock({ children, title }: { children: string; title?: string }) {
-  return (
-    <div className="mt-4">
-      {title && (
-        <div className="mb-1 text-xs font-medium text-muted-foreground">
-          {title}
-        </div>
-      )}
-      <pre className="overflow-auto rounded-xl border border-border bg-muted/50 p-4">
-        <code className="font-mono text-[13px]">{children}</code>
-      </pre>
-    </div>
-  );
-}
 
 function Section({
   id,
@@ -161,7 +147,7 @@ export default function DocsPage() {
             Think of it like a dictionary: you scan for the word (anchor) to
             find its definition (content).
           </p>
-          <CodeBlock title="Basic entry">{`{
+          <CodeBlock language="json" title="Basic entry">{`{
   "anchor": "git status",
   "content": "Show staged, unstaged, and untracked files."
 }`}</CodeBlock>
@@ -176,7 +162,7 @@ export default function DocsPage() {
             </Badge>{' '}
             field provides a human-readable description.
           </p>
-          <CodeBlock title="Entry with label">{`{
+          <CodeBlock language="json" title="Entry with label">{`{
   "anchor": "gg",
   "content": "Jump to visual top of history",
   "label": "Go to start"
@@ -193,7 +179,7 @@ export default function DocsPage() {
             description. Sections group related entries logically—by
             functionality, context, or workflow.
           </p>
-          <CodeBlock title="Section structure">{`{
+          <CodeBlock language="json" title="Section structure">{`{
   "sections": [
     {
       "title": "Navigation",
@@ -236,7 +222,7 @@ export default function DocsPage() {
               <em>&quot;How do I squash commits?&quot;</em>
             </li>
           </ul>
-          <CodeBlock>{`{
+          <CodeBlock language="json">{`{
   "retrievalDirection": "mechanism-to-meaning"
 }`}</CodeBlock>
         </SubSection>
@@ -254,11 +240,11 @@ export default function DocsPage() {
             </Badge>
             .
           </p>
-          <CodeBlock title="Keyboard shortcuts cheatsheet">{`{
+          <CodeBlock language="json" title="Keyboard shortcuts cheatsheet">{`{
   "anchorLabel": "Shortcut",
   "contentLabel": "Action"
 }`}</CodeBlock>
-          <CodeBlock title="Command reference cheatsheet">{`{
+          <CodeBlock language="json" title="Command reference cheatsheet">{`{
   "anchorLabel": "Example",
   "contentLabel": "Description"
 }`}</CodeBlock>
@@ -277,7 +263,7 @@ export default function DocsPage() {
             field holds custom key-value pairs for tooling, categorization, or
             attribution.
           </p>
-          <CodeBlock>{`{
+          <CodeBlock language="json">{`{
   "metadata": {
     "homepage": "https://atuin.sh/",
     "category": "cli",
@@ -299,7 +285,7 @@ export default function DocsPage() {
           demonstrating the v2 format with custom labels, section descriptions,
           and cryptic shortcuts that benefit from human-readable labels.
         </p>
-        <CodeBlock>{`{
+        <CodeBlock language="json">{`{
   "$schema": "https://chson.dev/schema/v2/chson.schema.json",
   "title": "Atuin Keybindings",
   "version": "18.x",
@@ -366,7 +352,7 @@ export default function DocsPage() {
         </p>
 
         <SubSection title="Validate a cheatsheet">
-          <CodeBlock>{`node packages/chson-cli/src/chson.js validate path/to/file.chson.json`}</CodeBlock>
+          <CodeBlock language="bash">{`node packages/chson-cli/src/chson.js validate path/to/file.chson.json`}</CodeBlock>
           <p>
             Validates against the v2 schema (auto-detected from the{' '}
             <Badge variant="secondary" className="font-mono text-xs">
@@ -377,7 +363,7 @@ export default function DocsPage() {
         </SubSection>
 
         <SubSection title="Render to Markdown">
-          <CodeBlock>{`node packages/chson-cli/src/chson.js render markdown path/to/file.chson.json`}</CodeBlock>
+          <CodeBlock language="bash">{`node packages/chson-cli/src/chson.js render markdown path/to/file.chson.json`}</CodeBlock>
           <p>
             Outputs a 2-column Markdown table using the cheatsheet&apos;s column
             labels.
@@ -385,7 +371,7 @@ export default function DocsPage() {
         </SubSection>
 
         <SubSection title="Validate all cheatsheets">
-          <CodeBlock>{`npm run validate`}</CodeBlock>
+          <CodeBlock language="bash">{`npm run validate`}</CodeBlock>
         </SubSection>
       </Section>
 

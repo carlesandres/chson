@@ -1,7 +1,7 @@
 {
   "name": "chson",
   "private": true,
-  "packageManager": "npm@11.7.0",
+  "packageManager": "npm@11.10.1",
   "workspaces": [
     "packages/*",
     "apps/web"
@@ -15,6 +15,6 @@
     "render:build": "turbo run render:build"
   },
   "devDependencies": {
-    "turbo": "^2.0.0"
+    "turbo": "^2.8.10"
   }
 }

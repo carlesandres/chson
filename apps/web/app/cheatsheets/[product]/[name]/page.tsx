@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllCheatsheets, loadCheatsheet } from 'lib/cheatsheets';
+import { InlineCode } from 'components/chson';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
 import { Badge } from 'components/ui/badge';
 import { Button } from 'components/ui/button';
@@ -54,17 +55,6 @@ export async function generateMetadata({
     title: `${ref.data.title} | ChSON`,
     description: ref.data.description,
   };
-}
-
-/**
- * Renders content as monospace code block (for mechanisms: commands, shortcuts)
- */
-function CodeCell({ children }: { children: React.ReactNode }) {
-  return (
-    <pre className="m-0 overflow-auto rounded-lg border border-border bg-muted/50 p-2.5">
-      <code className="font-mono text-[13px]">{children}</code>
-    </pre>
-  );
 }
 
 /**
@@ -228,7 +218,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                               <TableCell className="align-top">
                                 {anchorIsMechanism ? (
                                   entry.anchor && (
-                                    <CodeCell>{entry.anchor}</CodeCell>
+                                    <InlineCode language="bash">{entry.anchor}</InlineCode>
                                   )
                                 ) : (
                                   <TextCell label={entry.label}>
@@ -243,7 +233,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                   </TextCell>
                                 ) : (
                                   entry.content && (
-                                    <CodeCell>{entry.content}</CodeCell>
+                                    <InlineCode language="bash">{entry.content}</InlineCode>
                                   )
                                 )}
                               </TableCell>
