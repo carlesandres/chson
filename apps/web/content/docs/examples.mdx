@@ -1,0 +1,74 @@
+---
+title: Complete Example
+description: A real-world ChSON v2 cheatsheet demonstrating all features.
+---
+
+Here's a real-world example: an [Atuin keybindings cheatsheet](/cheatsheets/atuin/keybindings) demonstrating the v2 format with custom labels, section descriptions, and cryptic shortcuts that benefit from human-readable labels.
+
+## Full Cheatsheet
+
+```json
+{
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "title": "Atuin Keybindings",
+  "version": "18.x",
+  "publicationDate": "2026-02-15",
+  "description": "Keyboard shortcuts for Atuin's interactive shell history search UI.",
+  "retrievalDirection": "mechanism-to-meaning",
+  "anchorLabel": "Shortcut",
+  "contentLabel": "Action",
+  "metadata": {
+    "homepage": "https://atuin.sh/",
+    "category": "cli"
+  },
+  "sections": [
+    {
+      "title": "Navigation & Selection",
+      "entries": [
+        {
+          "anchor": "enter",
+          "content": "Execute selected item"
+        },
+        {
+          "anchor": "ctrl + c / ctrl + d / ctrl + g / esc",
+          "content": "Cancel search and return to shell",
+          "label": "Cancel"
+        },
+        {
+          "anchor": "alt + 1 to alt + 9",
+          "content": "Select item by number shown next to it",
+          "label": "Quick select"
+        }
+      ]
+    },
+    {
+      "title": "Vim Mode - Scrolling",
+      "description": "Normal mode scrolling commands.",
+      "entries": [
+        {
+          "anchor": "gg",
+          "content": "Jump to visual top of history",
+          "label": "Go to start"
+        },
+        {
+          "anchor": "G",
+          "content": "Jump to visual bottom of history"
+        }
+      ]
+    }
+  ]
+}
+```
+
+## Key Features Demonstrated
+
+1. **Schema reference** — `$schema` enables IDE validation and autocompletion
+2. **Custom column labels** — `anchorLabel: "Shortcut"` and `contentLabel: "Action"`
+3. **Retrieval direction** — `mechanism-to-meaning` for command-first lookup
+4. **Labels on cryptic anchors** — `"gg"` gets `label: "Go to start"`
+5. **Section descriptions** — Vim Mode section has additional context
+6. **Metadata** — Homepage URL and category for tooling
+
+## View It Live
+
+[View the full Atuin cheatsheet →](/cheatsheets/atuin/keybindings)

@@ -1,27 +1,35 @@
 ---
-title: Welcome to ChSON
-description: A JSON format for software cheatsheets, designed around how people actually look up information.
+title: Introduction
+description: Learn about ChSON v2 format - anchors, content, labels, and cognitive-friendly cheatsheet design.
 ---
 
-ChSON (Cheatsheet JSON) is a small JSON format for writing software cheatsheets in a consistent, tool-friendly way.
+ChSON (Cheatsheet JSON) is a small JSON format for writing software cheatsheets in a consistent, tool-friendly way. The goal is simple: write a cheatsheet once, then consume it anywhere—searchable websites, printable pages, study decks, or personal knowledge bases.
 
 ## Why ChSON?
 
-The goal is simple: write a cheatsheet once, then consume it anywhere—searchable websites, printable pages, study decks, or personal knowledge bases.
+The v2 format is designed around **cognitive retrieval theory**: how people actually scan and look up information. When you use a cheatsheet, you typically scan for something you recognize (a command, shortcut, or keyword) to find the information you need.
 
-The v2 format is designed around **cognitive retrieval theory**: how people actually scan and look up information.
-
-## Core Concepts
+## Quick Start
 
 Every cheatsheet entry has two key parts:
 
-- **anchor** — The retrieval cue. What you scan for. (command, shortcut, keyword)
-- **content** — The information you need when you find it. (description, action, result)
+- **anchor** — The retrieval cue. What you scan for.
+- **content** — The information you need when you find it.
+
+```json
+{
+  "anchor": "git status",
+  "content": "Show staged, unstaged, and untracked files."
+}
+```
 
 Think of it like a dictionary: you scan for the word (anchor) to find its definition (content).
 
 ## Next Steps
 
-- Learn about [Core Concepts](/docs/core-concepts)
-- See the [Schema Reference](/docs/schema)
-- Browse [Example Cheatsheets](/cheatsheets)
+- [Core Concepts](/docs/core-concepts) — Anchors, content, labels, and sections
+- [Advanced Features](/docs/advanced-features) — Retrieval direction, column labels, metadata
+- [Complete Example](/docs/examples) — Real-world Atuin keybindings cheatsheet
+- [CLI Usage](/docs/cli) — Validate and render cheatsheets
+- [Best Practices](/docs/best-practices) — Guidelines for effective cheatsheets
+- [Browse Cheatsheets](/cheatsheets) — See ChSON in action

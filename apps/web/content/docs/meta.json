@@ -1,0 +1,11 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "core-concepts",
+    "advanced-features",
+    "examples",
+    "cli",
+    "best-practices"
+  ]
+}

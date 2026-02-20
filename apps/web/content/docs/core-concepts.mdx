@@ -3,14 +3,16 @@ title: Core Concepts
 description: Understanding anchors, content, labels, and sections in ChSON v2.
 ---
 
+Every cheatsheet entry has two key parts that mirror how people actually look up information.
+
 ## Anchor and Content
 
-Every cheatsheet entry has two key parts:
+- **anchor** — The retrieval cue. What you scan for. (command, shortcut, keyword)
+- **content** — The information you need when you find it. (description, action, result)
 
-- **anchor** — The retrieval cue. What you scan for.
-- **content** — The information you need when you find it.
+Think of it like a dictionary: you scan for the word (anchor) to find its definition (content).
 
-```json
+```json title="Basic entry"
 {
   "anchor": "git status",
   "content": "Show staged, unstaged, and untracked files."
@@ -21,7 +23,7 @@ Every cheatsheet entry has two key parts:
 
 Sometimes the anchor is cryptic—a keyboard shortcut, obscure command, or symbol. The optional `label` field provides a human-readable description.
 
-```json
+```json title="Entry with label"
 {
   "anchor": "gg",
   "content": "Jump to visual top of history",
@@ -29,13 +31,16 @@ Sometimes the anchor is cryptic—a keyboard shortcut, obscure command, or symbo
 }
 ```
 
-Labels are useful for vim commands, keyboard shortcuts, or any anchor that isn't immediately self-explanatory.
+Labels are useful for:
+- Vim commands (`gg`, `dd`, `ciw`)
+- Keyboard shortcuts (`ctrl + shift + p`)
+- Any anchor that isn't immediately self-explanatory
 
 ## Sections
 
-Entries are organized into sections, each with a title and optional description.
+Entries are organized into sections, each with a title and optional description. Sections group related entries logically—by functionality, context, or workflow.
 
-```json
+```json title="Section structure"
 {
   "sections": [
     {
@@ -49,3 +54,8 @@ Entries are organized into sections, each with a title and optional description.
   ]
 }
 ```
+
+## Next Steps
+
+- [Advanced Features](/docs/advanced-features) — Retrieval direction, column labels, metadata
+- [Complete Example](/docs/examples) — See all concepts in action
