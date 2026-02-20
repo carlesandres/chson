@@ -1,6 +1,6 @@
 {
   "framework": "nextjs",
   "installCommand": "npm ci --legacy-peer-deps",
-  "buildCommand": "npm run build -- --filter=@chson/web",
+  "buildCommand": "npx turbo run build --filter=@chson/web",
   "outputDirectory": "apps/web/.next"
 }
