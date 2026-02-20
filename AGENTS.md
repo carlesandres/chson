@@ -11,7 +11,7 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 - **`packages/chson-schema/`** — JSON Schema + auto-generated TypeScript types
 - **`packages/chson-registry/`** — Example cheatsheets (source of truth)
 - **`packages/chson-cli/`** — Node.js CLI for validation and rendering
-- **`apps/site/`** — Astro website
+- **`apps/web/`** — Next.js 16 website with shadcn/ui components
 
 ### Package Dependencies
 
@@ -19,7 +19,7 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 @chson/schema (builds types)
   ├── @chson/cli (validates/renders)
   └── @chson/registry (validates its cheatsheets)
-        └── @chson/site (displays cheatsheets)
+        └── @chson/web (displays cheatsheets)
 ```
 
 Turborepo automatically builds packages in the correct order based on workspace dependencies.
@@ -42,7 +42,7 @@ node packages/chson-cli/src/chson.js validate packages/chson-registry/cheatsheet
 # Render cheatsheet to stdout
 node packages/chson-cli/src/chson.js render markdown packages/chson-registry/cheatsheets/git/core.chson.json
 
-# Website (Astro)
+# Website (Next.js 16)
 npm run dev
 npm run build
 npm run typecheck
@@ -52,7 +52,7 @@ npm run render:build
 
 # Build specific package
 turbo run build --filter=@chson/schema
-turbo run build --filter=@chson/site
+turbo run build --filter=@chson/web
 
 # Clean build
 rm -rf .turbo build packages/chson-schema/types && npm run build
@@ -68,7 +68,7 @@ rm -rf .turbo build packages/chson-schema/types && npm run build
 - `packages/chson-schema/schema/v1/chson.schema.json` - Legacy v1 schema (still supported)
 - `packages/chson-schema/types/` - Auto-generated TypeScript types (gitignored)
 - `packages/chson-registry/cheatsheets/` - Source cheatsheets
-- `apps/site/` - Astro website
+- `apps/web/` - Next.js 16 website with shadcn/ui
 - `research/` - Cognitive science research supporting ChSON design
 
 **ChSON v2 schema structure** (based on cognitive retrieval theory):
