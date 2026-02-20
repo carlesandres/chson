@@ -253,10 +253,10 @@
   background-color: var(--muted);
 }
 
-/* Light mode: use the light theme colors */
+/* Light mode: use the default theme colors */
 .shiki,
 .shiki span {
-  color: var(--shiki-light) !important;
+  color: var(--shiki) !important;
   background-color: transparent !important;
 }
 
