@@ -4,8 +4,8 @@ import React from 'react';
 import { Popover, PopoverContent, PopoverTrigger } from 'components/ui/popover';
 import { Button } from 'components/ui/button';
 import FeedbackForm from './FeedbackForm';
-// import { createClientComponentClient } from '@supabase/auth-helpers-nextjs';
-// import { useUser } from '@supabase/auth-helpers-react';
+// import { createClient } from 'utils/supabase/client';
+// import { useUser } from 'hooks/queries/use-auth';
 import { X } from 'lucide-react';
 import { z } from 'zod';
 import { Alert, AlertTitle, AlertDescription } from 'components/ui/alert';
@@ -18,8 +18,8 @@ export const formSchema = z.object({
 });
 
 const FeedbackButton = () => {
-  // const supabase = createClientComponentClient<Database>();
-  // const user = useUser();
+  // const supabase = createClient();
+  // const { data: user } = useUser();
   const { open, success, error } = useUIStore((state) => state.feedbackModal);
   const setOpen = useUIStore((state) => state.setFeedbackModalOpen);
   const setSuccess = useUIStore((state) => state.setFeedbackSuccess);

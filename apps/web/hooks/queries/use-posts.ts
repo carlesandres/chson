@@ -1,5 +1,8 @@
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
-import { supabase } from 'utils/supabaseClient';
+import { createClient } from 'utils/supabase/client';
+
+// Create a singleton browser client for use in hooks
+const supabase = createClient();
 
 // Query keys
 export const postsKeys = {

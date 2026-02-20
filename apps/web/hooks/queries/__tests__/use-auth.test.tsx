@@ -8,29 +8,31 @@ import {
   useSignOut,
   authKeys,
 } from '../use-auth';
-import { supabase } from 'utils/supabaseClient';
 import React from 'react';
 import type { Mock } from 'vitest';
 
-// Mock Supabase client
-vi.mock('utils/supabaseClient', () => ({
-  supabase: {
-    auth: {
-      getSession: vi.fn(),
-      getUser: vi.fn(),
-      signInWithPassword: vi.fn(),
-      signUp: vi.fn(),
-      signOut: vi.fn(),
-    },
+// Use vi.hoisted to create mock before vi.mock is hoisted
+const mockSupabaseClient = vi.hoisted(() => ({
+  auth: {
+    getSession: vi.fn(),
+    getUser: vi.fn(),
+    signInWithPassword: vi.fn(),
+    signUp: vi.fn(),
+    signOut: vi.fn(),
   },
 }));
 
-const authGetSessionMock = supabase.auth.getSession as unknown as Mock;
-const authGetUserMock = supabase.auth.getUser as unknown as Mock;
-const authSignInWithPasswordMock = supabase.auth
+vi.mock('utils/supabase/client', () => ({
+  createClient: vi.fn(() => mockSupabaseClient),
+}));
+
+const authGetSessionMock = mockSupabaseClient.auth
+  .getSession as unknown as Mock;
+const authGetUserMock = mockSupabaseClient.auth.getUser as unknown as Mock;
+const authSignInWithPasswordMock = mockSupabaseClient.auth
   .signInWithPassword as unknown as Mock;
-const authSignUpMock = supabase.auth.signUp as unknown as Mock;
-const authSignOutMock = supabase.auth.signOut as unknown as Mock;
+const authSignUpMock = mockSupabaseClient.auth.signUp as unknown as Mock;
+const authSignOutMock = mockSupabaseClient.auth.signOut as unknown as Mock;
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -83,7 +85,7 @@ describe('useSession', () => {
     });
 
     expect(result.current.data).toEqual(mockSession);
-    expect(supabase.auth.getSession).toHaveBeenCalled();
+    expect(mockSupabaseClient.auth.getSession).toHaveBeenCalled();
   });
 
   it('should handle null session', async () => {
@@ -145,7 +147,7 @@ describe('useUser', () => {
     });
 
     expect(result.current.data).toEqual(mockUser);
-    expect(supabase.auth.getUser).toHaveBeenCalled();
+    expect(mockSupabaseClient.auth.getUser).toHaveBeenCalled();
   });
 
   it('should handle null user', async () => {
@@ -193,7 +195,9 @@ describe('useSignIn', () => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(supabase.auth.signInWithPassword).toHaveBeenCalledWith(credentials);
+    expect(mockSupabaseClient.auth.signInWithPassword).toHaveBeenCalledWith(
+      credentials,
+    );
     expect(result.current.data).toEqual(mockSession);
   });
 
@@ -268,7 +272,7 @@ describe('useSignUp', () => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(supabase.auth.signUp).toHaveBeenCalledWith(credentials);
+    expect(mockSupabaseClient.auth.signUp).toHaveBeenCalledWith(credentials);
     expect(result.current.data).toEqual(mockSession);
   });
 
@@ -315,7 +319,7 @@ describe('useSignOut', () => {
       expect(result.current.isSuccess).toBe(true);
     });
 
-    expect(supabase.auth.signOut).toHaveBeenCalled();
+    expect(mockSupabaseClient.auth.signOut).toHaveBeenCalled();
   });
 
   it('should handle sign out error', async () => {
