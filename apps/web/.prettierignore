@@ -1,0 +1,10 @@
+# Ignore artifacts:
+.next
+dist
+build
+coverage
+next-env.d.ts
+@/components
+@/lib
+*.yaml
+*.json
