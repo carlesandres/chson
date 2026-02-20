@@ -1,0 +1,244 @@
+---
+title: Cognitive Science Background
+description: The research foundations behind ChSON's design
+---
+
+# Cognitive Science Background
+
+ChSON isn't just a convenient format—it's designed based on principles from cognitive psychology, memory science, and human-computer interaction. This page summarizes the theoretical foundations that inform ChSON's structure.
+
+<Callout type="info">
+This is a summary of the research document [Toward a Cognitive Theory of Cheatsheets](/research/cognitive-foundations.md), which provides full citations and detailed analysis.
+</Callout>
+
+---
+
+## Why This Matters
+
+Software cheatsheets exist in countless forms, yet no systematic theory has explained:
+
+1. **Why** cheatsheets are cognitively effective
+2. **What** structural properties make some cheatsheets better than others
+3. **How** different types of content should be organized differently
+
+ChSON's design choices are grounded in answers to these questions.
+
+---
+
+## Core Insight: The Anchor-Content Structure
+
+Consider two common cheatsheet layouts:
+
+**Programming cheatsheet (Git):**
+| Command | Description |
+|---------|-------------|
+| `git commit -m "msg"` | Create a commit with message |
+
+**Keyboard shortcut cheatsheet (VS Code):**
+| Action | Shortcut |
+|--------|----------|
+| Save file | Cmd+S |
+
+The columns appear "reversed." Why?
+
+Both layouts follow the same underlying principle:
+
+> **The left column contains what the user knows (the retrieval anchor); the right column contains what they need (the associated content).**
+
+This is why ChSON uses the terms **anchor** and **content** rather than "command/description" or "key/value"—they're neutral terms that apply to any retrieval direction.
+
+---
+
+## Theoretical Foundations
+
+### Cheatsheets as Extended Mind
+
+Clark and Chalmers' **Extended Mind Thesis** (1998) argues that cognitive processes extend beyond the brain into the environment. Cheatsheets function as **cognitive offloading devices**:
+
+- They reduce demands on working memory
+- They externalize retrieval to a reliable artifact
+- They become part of the practitioner's cognitive system
+
+A cheatsheet isn't just a learning aid—it's a functional extension of the user's memory.
+
+### The Cue-Target Structure
+
+The fundamental unit of a cheatsheet is a **paired associate**: two pieces of information linked together, where one serves as a retrieval cue for the other.
+
+| Memory Term | Cheatsheet Role |
+|-------------|-----------------|
+| **Cue** (stimulus) | Left column (anchor) |
+| **Target** (response) | Right column (content) |
+
+The memory research distinguishes **forward recall** (A → B) from **backward recall** (B → A). Different cheatsheet types optimize for different directions.
+
+### Chunking and Templates
+
+Miller (1956) established that working memory holds approximately 7±2 "chunks" of information. Chase and Simon (1973) showed that expert chess players' superior memory came from recognizing positions as familiar **chunks** rather than individual pieces.
+
+**Implications for cheatsheets:**
+
+1. The anchor often represents a **chunk** or **template pattern**
+2. Well-designed entries match the user's existing chunk vocabulary
+3. For novices, cheatsheets *teach* new chunks; for experts, they *remind* of rarely-used ones
+4. Slot notation (e.g., `git commit -m "<message>"`) maps directly to template theory
+
+### Information Foraging
+
+Pirolli and Card's **Information Foraging Theory** (1999) models how humans seek information using concepts from optimal foraging:
+
+- **Information scent**: Cues indicating useful information ahead
+- **Information patch**: A resource (section, page) as an information source
+- **Informavores**: Humans optimizing information-seeking behavior
+
+Cheatsheet users are foragers scanning for the right entry. The anchor column provides **information scent**; stronger scent leads to faster, more accurate retrieval.
+
+**Design implication**: Anchors must provide strong, unambiguous scent:
+- Code in monospace is more distinctive than prose
+- Visual formatting (bold, boxes) aids scanning
+- Consistent structure enables pattern matching
+
+### Cognitive Load Theory
+
+Sweller's **Cognitive Load Theory** (1988) distinguishes three types of load:
+
+| Load Type | Cheatsheet Effect |
+|-----------|-------------------|
+| **Intrinsic** (material complexity) | Unchanged |
+| **Extraneous** (poor presentation) | **Reduced** by good design |
+| **Germane** (schema construction) | **Enabled** by freeing working memory |
+
+Cheatsheets reduce extraneous load by:
+- Pre-organizing information (no search required)
+- Consistent formatting (reduces parsing effort)
+- Proximity of related information (reduces split attention)
+
+### Dual Coding Theory
+
+Paivio's **Dual Coding Theory** (1971) proposes separate channels for verbal and visual information:
+
+- **Logogens**: Units for verbal information
+- **Imagens**: Units for visual/spatial information
+
+The **picture superiority effect** shows that distinctive visual elements are remembered better than text alone.
+
+**Cheatsheet implication**: Code, commands, and shortcuts should be visually distinctive (monospace, highlighting, icons). This creates a second retrieval pathway.
+
+---
+
+## Retrieval Directions
+
+Different cheatsheet types optimize for different retrieval directions based on what users know vs. need.
+
+### Intent → Mechanism
+
+User knows: **What they want to accomplish**  
+User needs: **How to accomplish it**
+
+```
+"How do I save?" → Cmd+S
+```
+
+### Mechanism → Meaning
+
+User knows: **A command or syntax they've seen**  
+User needs: **What it does**
+
+```
+git stash → "Temporarily store changes"
+```
+
+### Content Type Mapping
+
+| Content Type | Primary Direction |
+|--------------|-------------------|
+| Keyboard shortcuts | Intent → Mechanism |
+| CLI commands (learning) | Intent → Mechanism |
+| CLI commands (reference) | Mechanism → Meaning |
+| API reference | Mechanism → Meaning |
+| Config options | Mechanism → Meaning |
+| Concepts/glossary | Term → Definition |
+
+---
+
+## Design Principles
+
+Based on these foundations, ChSON follows these design principles:
+
+### Structural Principles
+
+**Consistent retrieval direction**  
+All entries within a section should share the same retrieval direction. Mixing directions creates scanning confusion.
+
+**Strong scent in anchors**  
+Retrieval anchors should be visually distinctive and semantically precise.
+
+**Atomic entries**  
+Each entry should capture one chunk. Multi-step procedures may need decomposition.
+
+**Slot notation for templates**  
+Variable components should use consistent placeholder notation (e.g., `<file>`, `{name}`).
+
+### Cognitive Load Principles
+
+**Minimize split attention**  
+Keep anchor and content visually proximate. Two-column tables excel at this.
+
+**Consistent formatting**  
+Visual consistency reduces parsing effort.
+
+**Progressive disclosure**  
+Common entries first; advanced options later.
+
+### Chunking Principles
+
+**Match user vocabulary**  
+Anchors should use terms the target audience already knows.
+
+**Group by semantic category**  
+Sections should reflect conceptual chunks, not alphabetical order.
+
+**Reasonable section size**  
+Sections should be scannable at a glance. 10-15 entries is acceptable when visually consistent.
+
+---
+
+## ChSON Schema Alignment
+
+The ChSON v2 schema directly implements this theoretical framework:
+
+| ChSON Element | Cognitive Role |
+|---------------|----------------|
+| `entry.anchor` | Retrieval anchor |
+| `entry.content` | Associated content |
+| `entry.label` | Human-readable label for cryptic anchors |
+| `section.title` | Chunk category label |
+| `section.entries` | Entries within a chunk |
+| `retrievalDirection` | Explicit declaration of lookup direction |
+| `anchorLabel` | Domain-appropriate name for anchor column |
+| `contentLabel` | Domain-appropriate name for content column |
+
+---
+
+## Glossary
+
+| Term | Definition |
+|------|------------|
+| **Retrieval Anchor** | The element users scan for; triggers recognition and retrieval |
+| **Associated Content** | The information retrieved once an anchor is recognized |
+| **Retrieval Direction** | The implicit query direction: what the user knows → what they need |
+| **Chunk** | A familiar pattern recognized as a cognitive unit |
+| **Information Scent** | Visual or semantic cues indicating useful information ahead |
+| **Slot Pattern** | An anchor containing variable placeholders |
+| **Template** | A chunk with slots that can be filled with specific values |
+
+---
+
+## References
+
+- Chase, W. G., & Simon, H. A. (1973). Perception in chess. *Cognitive Psychology*, 4(1), 55-81.
+- Clark, A., & Chalmers, D. (1998). The extended mind. *Analysis*, 58(1), 7-19.
+- Miller, G. A. (1956). The magical number seven, plus or minus two. *Psychological Review*, 63(2), 81-97.
+- Paivio, A. (1971). *Imagery and Verbal Processes*. Holt, Rinehart, and Winston.
+- Pirolli, P., & Card, S. (1999). Information foraging. *Psychological Review*, 106(4), 643-675.
+- Sweller, J. (1988). Cognitive load during problem solving. *Cognitive Science*, 12(2), 257-285.

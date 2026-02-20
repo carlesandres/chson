@@ -4,8 +4,10 @@
     "index",
     "core-concepts",
     "advanced-features",
+    "schema-reference",
     "examples",
     "cli",
-    "best-practices"
+    "best-practices",
+    "cognitive-science"
   ]
 }
