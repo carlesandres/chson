@@ -1,0 +1,51 @@
+---
+title: Core Concepts
+description: Understanding anchors, content, labels, and sections in ChSON v2.
+---
+
+## Anchor and Content
+
+Every cheatsheet entry has two key parts:
+
+- **anchor** — The retrieval cue. What you scan for.
+- **content** — The information you need when you find it.
+
+```json
+{
+  "anchor": "git status",
+  "content": "Show staged, unstaged, and untracked files."
+}
+```
+
+## Optional Labels
+
+Sometimes the anchor is cryptic—a keyboard shortcut, obscure command, or symbol. The optional `label` field provides a human-readable description.
+
+```json
+{
+  "anchor": "gg",
+  "content": "Jump to visual top of history",
+  "label": "Go to start"
+}
+```
+
+Labels are useful for vim commands, keyboard shortcuts, or any anchor that isn't immediately self-explanatory.
+
+## Sections
+
+Entries are organized into sections, each with a title and optional description.
+
+```json
+{
+  "sections": [
+    {
+      "title": "Navigation",
+      "description": "Moving around the interface.",
+      "entries": [
+        { "anchor": "ctrl + n", "content": "Next item" },
+        { "anchor": "ctrl + p", "content": "Previous item" }
+      ]
+    }
+  ]
+}
+```

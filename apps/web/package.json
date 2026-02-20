@@ -19,7 +19,7 @@
   "dependencies": {
     "@chson/registry": "*",
     "@chson/schema": "*",
-    "@hookform/resolvers": "^3.10.0",
+    "@hookform/resolvers": "5.2.2",
     "@radix-ui/react-accordion": "^1.2.12",
     "@radix-ui/react-alert-dialog": "^1.1.15",
     "@radix-ui/react-aspect-ratio": "^1.1.8",
@@ -55,6 +55,9 @@
     "cmdk": "^1.1.1",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.6.0",
+    "fumadocs-core": "16.6.4",
+    "fumadocs-mdx": "14.2.7",
+    "fumadocs-ui": "16.6.4",
     "immer": "11.1.4",
     "input-otp": "^1.4.2",
     "lodash": "^4.17.23",
@@ -75,7 +78,7 @@
     "tailwindcss-animate": "^1.0.7",
     "tw-animate-css": "1.4.0",
     "vaul": "^0.9.9",
-    "zod": "^3.25.76",
+    "zod": "4.3.6",
     "zustand": "5.0.11"
   },
   "devDependencies": {

@@ -1,0 +1,39 @@
+---
+title: Schema Reference
+description: Complete ChSON v2 schema documentation.
+---
+
+## Top-Level Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `$schema` | No | Schema URL for validation |
+| `title` | Yes | Cheatsheet title |
+| `version` | No | Version of the software being documented |
+| `publicationDate` | Yes | ISO 8601 date string |
+| `description` | Yes | Brief description of the cheatsheet |
+| `retrievalDirection` | No | `"mechanism-to-meaning"` or `"intent-to-mechanism"` |
+| `anchorLabel` | No | Custom label for anchor column |
+| `contentLabel` | No | Custom label for content column |
+| `metadata` | No | Custom key-value pairs |
+| `sections` | Yes | Array of section objects |
+
+## Entry Fields
+
+| Field | Required | Description |
+|-------|----------|-------------|
+| `anchor` | Yes | The retrieval cue (command, shortcut, etc.) |
+| `content` | Yes | The associated information |
+| `label` | No | Human-readable label for cryptic anchors |
+| `comments` | No | Additional notes or context |
+
+## Retrieval Direction
+
+- **`mechanism-to-meaning`** — Users scan by command/syntax to find what it does
+- **`intent-to-mechanism`** — Users scan by goal to find how to do it
+
+## Schema URL
+
+```
+https://chson.dev/schema/v2/chson.schema.json
+```
