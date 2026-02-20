@@ -8,19 +8,20 @@ import {
   useDeletePost,
   postsKeys,
 } from '../use-posts';
-import { supabase } from 'utils/supabaseClient';
 import React from 'react';
 
 import type { Mock } from 'vitest';
 
-// Mock Supabase client
-vi.mock('utils/supabaseClient', () => ({
-  supabase: {
-    from: vi.fn(),
-  },
+// Use vi.hoisted to create mock before vi.mock is hoisted
+const mockSupabaseClient = vi.hoisted(() => ({
+  from: vi.fn(),
 }));
 
-const supabaseFromMock = supabase.from as unknown as Mock;
+vi.mock('utils/supabase/client', () => ({
+  createClient: vi.fn(() => mockSupabaseClient),
+}));
+
+const supabaseFromMock = mockSupabaseClient.from as unknown as Mock;
 
 const createWrapper = () => {
   const queryClient = new QueryClient({
@@ -84,7 +85,7 @@ describe('usePosts', () => {
     });
 
     expect(result.current.data).toEqual(mockPosts);
-    expect(supabase.from).toHaveBeenCalledWith('posts');
+    expect(mockSupabaseClient.from).toHaveBeenCalledWith('posts');
     expect(mockSelect).toHaveBeenCalledWith('*');
     expect(mockOrder).toHaveBeenCalledWith('created_at', { ascending: false });
   });
