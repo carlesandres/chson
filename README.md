@@ -76,7 +76,7 @@ Example cheatsheets live in the `@chson/registry` package and are showcased in t
 
 - Package: `packages/chson-registry/`
 - Example source file: `packages/chson-registry/cheatsheets/git/core.chson.json`
-- Website page: `apps/site/src/app/cheatsheets/[product]/[name]/page.tsx`
+- Website page: `apps/web/app/cheatsheets/[product]/[name]/page.tsx`
 
 Generated output:
 
@@ -84,7 +84,7 @@ Generated output:
 
 ## Website
 
-The website lives in `apps/site/` (Next.js).
+The website lives in `apps/web/` (Next.js 16 with shadcn/ui components).
 
 ```bash
 npm install
@@ -95,8 +95,8 @@ npm run dev
 
 - Production URL: `https://chson.carlesandres.com`
 - Vercel: set **Root Directory** to the repo root (`.`)
-- Build: `npm run build -- --filter=@chson/site` (see `vercel.json`)
-- Output: `apps/site/dist` (see `vercel.json`)
+- Build: `npm run build -- --filter=@chson/web` (see `vercel.json`)
+- Output: `apps/web/.next` (see `vercel.json`)
 - DNS: create a `CNAME` record for `chson` pointing to `cname.vercel-dns.com`
 
 ## Repository layout
@@ -106,7 +106,7 @@ This is a Turborepo monorepo with the following packages:
 - `packages/chson-schema/` — ChSON JSON Schema + auto-generated TypeScript types
 - `packages/chson-registry/` — Source cheatsheets (registry)
 - `packages/chson-cli/` — CLI (`chson`) for validate + render
-- `apps/site/` — Next.js website
+- `apps/web/` — Next.js 16 website with shadcn/ui components
 
 ### Package Dependencies
 
@@ -114,7 +114,7 @@ This is a Turborepo monorepo with the following packages:
 @chson/schema (builds types)
   ├── @chson/cli (validates/renders)
   └── @chson/registry (validates its cheatsheets)
-        └── @chson/site (displays cheatsheets)
+        └── @chson/web (displays cheatsheets)
 ```
 
 Turborepo automatically builds packages in the correct order.
