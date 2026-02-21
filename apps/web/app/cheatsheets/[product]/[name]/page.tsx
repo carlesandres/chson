@@ -47,7 +47,7 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { product, name } = await params;
   const ref = getAllCheatsheets().find(
-    (r) => r.product === product && r.name === name
+    (r) => r.product === product && r.name === name,
   );
   if (!ref) return { title: 'Not Found' };
 
@@ -93,7 +93,7 @@ function TextCell({
 export default async function CheatsheetPage({ params }: { params: Params }) {
   const { product, name } = await params;
   const ref = getAllCheatsheets().find(
-    (r) => r.product === product && r.name === name
+    (r) => r.product === product && r.name === name,
   );
 
   if (!ref) {
@@ -218,7 +218,9 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                               <TableCell className="align-top">
                                 {anchorIsMechanism ? (
                                   entry.anchor && (
-                                    <InlineCode language="bash">{entry.anchor}</InlineCode>
+                                    <InlineCode language="bash">
+                                      {entry.anchor}
+                                    </InlineCode>
                                   )
                                 ) : (
                                   <TextCell label={entry.label}>
@@ -233,7 +235,9 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                   </TextCell>
                                 ) : (
                                   entry.content && (
-                                    <InlineCode language="bash">{entry.content}</InlineCode>
+                                    <InlineCode language="bash">
+                                      {entry.content}
+                                    </InlineCode>
                                   )
                                 )}
                               </TableCell>

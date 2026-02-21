@@ -26,10 +26,10 @@ If the anchor is self-explanatory (like `git status`), skip the label.
 
 ## Choosing Retrieval Direction
 
-| Direction | Use When | Example Question |
-|-----------|----------|------------------|
+| Direction              | Use When                                          | Example Question                |
+| ---------------------- | ------------------------------------------------- | ------------------------------- |
 | `mechanism-to-meaning` | Users know the command, want to know what it does | "What does `git rebase -i` do?" |
-| `intent-to-mechanism` | Users know the goal, want to find the command | "How do I squash commits?" |
+| `intent-to-mechanism`  | Users know the goal, want to find the command     | "How do I squash commits?"      |
 
 **Default to `mechanism-to-meaning`** for most cheatsheets (command references, shortcuts). Use `intent-to-mechanism` when users will primarily search by goal.
 
@@ -52,15 +52,15 @@ If the anchor is self-explanatory (like `git status`), skip the label.
 
 Choose labels that match your content type:
 
-| Cheatsheet Type | anchorLabel | contentLabel |
-|-----------------|-------------|--------------|
-| Keyboard shortcuts | Shortcut | Action |
-| CLI commands | Command | Description |
-| CLI with examples | Example | Description |
-| Configuration | Option | Description |
-| Configuration with defaults | Option | Default |
-| Glossaries | Term | Definition |
-| API reference | Endpoint | Description |
+| Cheatsheet Type             | anchorLabel | contentLabel |
+| --------------------------- | ----------- | ------------ |
+| Keyboard shortcuts          | Shortcut    | Action       |
+| CLI commands                | Command     | Description  |
+| CLI with examples           | Example     | Description  |
+| Configuration               | Option      | Description  |
+| Configuration with defaults | Option      | Default      |
+| Glossaries                  | Term        | Definition   |
+| API reference               | Endpoint    | Description  |
 
 ## File Naming
 
@@ -90,6 +90,7 @@ Always include the schema URL for IDE support:
 ```
 
 This enables:
+
 - Autocompletion in VS Code, WebStorm, etc.
 - Inline validation errors
 - Hover documentation

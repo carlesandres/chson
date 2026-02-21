@@ -22,7 +22,7 @@ export async function InlineCode({
     <div
       className={cn(
         'shiki-container overflow-auto rounded-lg border border-border p-2.5 text-[13px] [&_pre]:m-0 [&_pre]:bg-transparent [&_pre]:p-0',
-        className
+        className,
       )}
       dangerouslySetInnerHTML={{ __html: highlightedHtml }}
     />

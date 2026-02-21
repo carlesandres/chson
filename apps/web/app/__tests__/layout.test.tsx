@@ -29,7 +29,7 @@ describe('Layout', () => {
     render(
       <Layout>
         <div>Test Content</div>
-      </Layout>
+      </Layout>,
     );
 
     // Layout renders html and body tags, but in jsdom they're outside the container
@@ -43,7 +43,7 @@ describe('Layout', () => {
     render(
       <Layout>
         <div data-testid="test-child">Test Content</div>
-      </Layout>
+      </Layout>,
     );
 
     expect(screen.getByTestId('test-child')).toBeInTheDocument();
@@ -54,7 +54,7 @@ describe('Layout', () => {
     render(
       <Layout>
         <div>Content</div>
-      </Layout>
+      </Layout>,
     );
 
     expect(screen.getByTestId('query-provider')).toBeInTheDocument();
@@ -64,7 +64,7 @@ describe('Layout', () => {
     render(
       <Layout>
         <div>Content</div>
-      </Layout>
+      </Layout>,
     );
 
     expect(screen.getByTestId('theme-provider')).toBeInTheDocument();
@@ -74,7 +74,7 @@ describe('Layout', () => {
     render(
       <Layout>
         <div>Content</div>
-      </Layout>
+      </Layout>,
     );
 
     expect(screen.getByTestId('chson-header')).toBeInTheDocument();
@@ -85,7 +85,7 @@ describe('Layout', () => {
     render(
       <Layout>
         <div>Content</div>
-      </Layout>
+      </Layout>,
     );
 
     expect(screen.getByTestId('chson-footer')).toBeInTheDocument();
@@ -97,7 +97,7 @@ describe('Layout', () => {
       <Layout>
         <div data-testid="child-1">Child 1</div>
         <div data-testid="child-2">Child 2</div>
-      </Layout>
+      </Layout>,
     );
 
     expect(screen.getByTestId('child-1')).toBeInTheDocument();
