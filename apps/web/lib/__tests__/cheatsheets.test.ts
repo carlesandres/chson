@@ -37,11 +37,11 @@ describe('cheatsheets library', () => {
   describe('Cheatsheet type definitions', () => {
     it('exports correct types', async () => {
       // Just verify the module can be imported without errors
-      const module = await import('lib/cheatsheets');
-      expect(module.formatExample).toBeDefined();
-      expect(module.getAllCheatsheets).toBeDefined();
-      expect(module.loadCheatsheet).toBeDefined();
-      expect(module.listCheatsheetPaths).toBeDefined();
+      const cheatsheetModule = await import('lib/cheatsheets');
+      expect(cheatsheetModule.formatExample).toBeDefined();
+      expect(cheatsheetModule.getAllCheatsheets).toBeDefined();
+      expect(cheatsheetModule.loadCheatsheet).toBeDefined();
+      expect(cheatsheetModule.listCheatsheetPaths).toBeDefined();
     });
   });
 });

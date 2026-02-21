@@ -2,7 +2,7 @@
 
 import { ThemeProvider as NextThemesProvider, useTheme } from 'next-themes';
 import { useEffect, useRef } from 'react';
-import { useUIStore, type ThemePreference } from 'stores/ui-store';
+import { useUIStore } from 'stores/ui-store';
 
 interface ThemeProviderProps {
   children: React.ReactNode;

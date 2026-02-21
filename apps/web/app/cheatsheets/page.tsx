@@ -2,7 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getAllCheatsheets } from 'lib/cheatsheets';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Badge } from 'components/ui/badge';
+
 
 export const metadata: Metadata = {
   title: 'Cheatsheets | ChSON',
@@ -34,18 +34,12 @@ export default function CheatsheetsPage() {
             href={`/cheatsheets/${s.product}/${s.name}`}
             className="group"
           >
-            <Card className="h-full min-h-[120px] border-border/50 bg-card/70 shadow-soft backdrop-blur transition-all hover:border-border hover:shadow-md">
+            <Card className="h-full min-h-30 border-border/50 bg-card/70 shadow-soft backdrop-blur transition-all hover:border-border hover:shadow-md">
               <CardHeader className="pb-2">
                 <div className="flex items-start justify-between gap-2">
                   <CardTitle className="text-base font-semibold group-hover:text-primary">
                     {s.data.title}
                   </CardTitle>
-                  <Badge
-                    variant="secondary"
-                    className="shrink-0 font-mono text-xs"
-                  >
-                    {s.product}/{s.name}
-                  </Badge>
                 </div>
               </CardHeader>
               <CardContent>

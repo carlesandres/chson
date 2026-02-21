@@ -1,4 +1,8 @@
-import { createHighlighter, type Highlighter, type BundledLanguage } from 'shiki';
+import {
+  createHighlighter,
+  type Highlighter,
+  type BundledLanguage,
+} from 'shiki';
 
 // Languages commonly used in cheatsheets
 const BUNDLED_LANGUAGES: BundledLanguage[] = [
@@ -42,20 +46,22 @@ export async function getHighlighter(): Promise<Highlighter> {
     });
   }
 
-  globalForShiki.shikiHighlighter = await globalForShiki.shikiHighlighterPromise;
+  globalForShiki.shikiHighlighter =
+    await globalForShiki.shikiHighlighterPromise;
   return globalForShiki.shikiHighlighter;
 }
 
 export async function highlightCode(
   code: string,
-  language?: string
+  language?: string,
 ): Promise<string> {
   const hl = await getHighlighter();
 
   // Validate language, fallback to 'text' if not supported
-  const lang = language && hl.getLoadedLanguages().includes(language as BundledLanguage)
-    ? language
-    : 'text';
+  const lang =
+    language && hl.getLoadedLanguages().includes(language as BundledLanguage)
+      ? language
+      : 'text';
 
   return hl.codeToHtml(code, {
     lang,

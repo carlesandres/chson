@@ -48,7 +48,8 @@ export default function Home() {
 }`}</code>
             </pre>
             <p className="mt-2 text-xs text-muted-foreground">
-              Add <code className="rounded bg-muted px-1 font-mono">$schema</code>{' '}
+              Add{' '}
+              <code className="rounded bg-muted px-1 font-mono">$schema</code>{' '}
               for editor autocompletion.{' '}
               <Link
                 href="/docs"

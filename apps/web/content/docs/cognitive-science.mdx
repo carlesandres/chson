@@ -8,7 +8,9 @@ description: The research foundations behind ChSON's design
 ChSON isn't just a convenient format—it's designed based on principles from cognitive psychology, memory science, and human-computer interaction. This page summarizes the theoretical foundations that inform ChSON's structure.
 
 <Callout type="info">
-This is a summary of the research document [Toward a Cognitive Theory of Cheatsheets](https://github.com/carlesandres/chson/blob/main/research/cognitive-foundations.md), which provides full citations and detailed analysis.
+  This is a summary of the research document [Toward a Cognitive Theory of
+  Cheatsheets](https://github.com/carlesandres/chson/blob/main/research/cognitive-foundations.md),
+  which provides full citations and detailed analysis.
 </Callout>
 
 ---
@@ -65,9 +67,9 @@ A cheatsheet isn't just a learning aid—it's a functional extension of the user
 
 The fundamental unit of a cheatsheet is a **paired associate**: two pieces of information linked together, where one serves as a retrieval cue for the other.
 
-| Memory Term | Cheatsheet Role |
-|-------------|-----------------|
-| **Cue** (stimulus) | Left column (anchor) |
+| Memory Term           | Cheatsheet Role        |
+| --------------------- | ---------------------- |
+| **Cue** (stimulus)    | Left column (anchor)   |
 | **Target** (response) | Right column (content) |
 
 The memory research distinguishes **forward recall** (A → B) from **backward recall** (B → A). Different cheatsheet types optimize for different directions.
@@ -80,7 +82,7 @@ Miller (1956) established that working memory holds approximately 7±2 "chunks" 
 
 1. The anchor often represents a **chunk** or **template pattern**
 2. Well-designed entries match the user's existing chunk vocabulary
-3. For novices, cheatsheets *teach* new chunks; for experts, they *remind* of rarely-used ones
+3. For novices, cheatsheets _teach_ new chunks; for experts, they _remind_ of rarely-used ones
 4. Slot notation (e.g., `git commit -m "<message>"`) maps directly to template theory
 
 ### Information Foraging
@@ -94,6 +96,7 @@ Pirolli and Card's **Information Foraging Theory** (1999) models how humans seek
 Cheatsheet users are foragers scanning for the right entry. The anchor column provides **information scent**; stronger scent leads to faster, more accurate retrieval.
 
 **Design implication**: Anchors must provide strong, unambiguous scent:
+
 - Code in monospace is more distinctive than prose
 - Visual formatting (bold, boxes) aids scanning
 - Consistent structure enables pattern matching
@@ -102,13 +105,14 @@ Cheatsheet users are foragers scanning for the right entry. The anchor column pr
 
 Sweller's **Cognitive Load Theory** (1988) distinguishes three types of load:
 
-| Load Type | Cheatsheet Effect |
-|-----------|-------------------|
-| **Intrinsic** (material complexity) | Unchanged |
-| **Extraneous** (poor presentation) | **Reduced** by good design |
-| **Germane** (schema construction) | **Enabled** by freeing working memory |
+| Load Type                           | Cheatsheet Effect                     |
+| ----------------------------------- | ------------------------------------- |
+| **Intrinsic** (material complexity) | Unchanged                             |
+| **Extraneous** (poor presentation)  | **Reduced** by good design            |
+| **Germane** (schema construction)   | **Enabled** by freeing working memory |
 
 Cheatsheets reduce extraneous load by:
+
 - Pre-organizing information (no search required)
 - Consistent formatting (reduces parsing effort)
 - Proximity of related information (reduces split attention)
@@ -150,14 +154,14 @@ git stash → "Temporarily store changes"
 
 ### Content Type Mapping
 
-| Content Type | Primary Direction |
-|--------------|-------------------|
-| Keyboard shortcuts | Intent → Mechanism |
-| CLI commands (learning) | Intent → Mechanism |
+| Content Type             | Primary Direction   |
+| ------------------------ | ------------------- |
+| Keyboard shortcuts       | Intent → Mechanism  |
+| CLI commands (learning)  | Intent → Mechanism  |
 | CLI commands (reference) | Mechanism → Meaning |
-| API reference | Mechanism → Meaning |
-| Config options | Mechanism → Meaning |
-| Concepts/glossary | Term → Definition |
+| API reference            | Mechanism → Meaning |
+| Config options           | Mechanism → Meaning |
+| Concepts/glossary        | Term → Definition   |
 
 ---
 
@@ -207,38 +211,38 @@ Sections should be scannable at a glance. 10-15 entries is acceptable when visua
 
 The ChSON v2 schema directly implements this theoretical framework:
 
-| ChSON Element | Cognitive Role |
-|---------------|----------------|
-| `entry.anchor` | Retrieval anchor |
-| `entry.content` | Associated content |
-| `entry.label` | Human-readable label for cryptic anchors |
-| `section.title` | Chunk category label |
-| `section.entries` | Entries within a chunk |
-| `retrievalDirection` | Explicit declaration of lookup direction |
-| `anchorLabel` | Domain-appropriate name for anchor column |
-| `contentLabel` | Domain-appropriate name for content column |
+| ChSON Element        | Cognitive Role                             |
+| -------------------- | ------------------------------------------ |
+| `entry.anchor`       | Retrieval anchor                           |
+| `entry.content`      | Associated content                         |
+| `entry.label`        | Human-readable label for cryptic anchors   |
+| `section.title`      | Chunk category label                       |
+| `section.entries`    | Entries within a chunk                     |
+| `retrievalDirection` | Explicit declaration of lookup direction   |
+| `anchorLabel`        | Domain-appropriate name for anchor column  |
+| `contentLabel`       | Domain-appropriate name for content column |
 
 ---
 
 ## Glossary
 
-| Term | Definition |
-|------|------------|
-| **Retrieval Anchor** | The element users scan for; triggers recognition and retrieval |
-| **Associated Content** | The information retrieved once an anchor is recognized |
+| Term                    | Definition                                                         |
+| ----------------------- | ------------------------------------------------------------------ |
+| **Retrieval Anchor**    | The element users scan for; triggers recognition and retrieval     |
+| **Associated Content**  | The information retrieved once an anchor is recognized             |
 | **Retrieval Direction** | The implicit query direction: what the user knows → what they need |
-| **Chunk** | A familiar pattern recognized as a cognitive unit |
-| **Information Scent** | Visual or semantic cues indicating useful information ahead |
-| **Slot Pattern** | An anchor containing variable placeholders |
-| **Template** | A chunk with slots that can be filled with specific values |
+| **Chunk**               | A familiar pattern recognized as a cognitive unit                  |
+| **Information Scent**   | Visual or semantic cues indicating useful information ahead        |
+| **Slot Pattern**        | An anchor containing variable placeholders                         |
+| **Template**            | A chunk with slots that can be filled with specific values         |
 
 ---
 
 ## References
 
-- Chase, W. G., & Simon, H. A. (1973). Perception in chess. *Cognitive Psychology*, 4(1), 55-81.
-- Clark, A., & Chalmers, D. (1998). The extended mind. *Analysis*, 58(1), 7-19.
-- Miller, G. A. (1956). The magical number seven, plus or minus two. *Psychological Review*, 63(2), 81-97.
-- Paivio, A. (1971). *Imagery and Verbal Processes*. Holt, Rinehart, and Winston.
-- Pirolli, P., & Card, S. (1999). Information foraging. *Psychological Review*, 106(4), 643-675.
-- Sweller, J. (1988). Cognitive load during problem solving. *Cognitive Science*, 12(2), 257-285.
+- Chase, W. G., & Simon, H. A. (1973). Perception in chess. _Cognitive Psychology_, 4(1), 55-81.
+- Clark, A., & Chalmers, D. (1998). The extended mind. _Analysis_, 58(1), 7-19.
+- Miller, G. A. (1956). The magical number seven, plus or minus two. _Psychological Review_, 63(2), 81-97.
+- Paivio, A. (1971). _Imagery and Verbal Processes_. Holt, Rinehart, and Winston.
+- Pirolli, P., & Card, S. (1999). Information foraging. _Psychological Review_, 106(4), 643-675.
+- Sweller, J. (1988). Cognitive load during problem solving. _Cognitive Science_, 12(2), 257-285.

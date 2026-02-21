@@ -1,5 +1,6 @@
 {
   "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "jsPlugins": ["eslint-plugin-tailwindcss"],
   "plugins": [
     "react",
     "unicorn",
@@ -193,7 +194,11 @@
     "unicorn/prefer-set-size": "warn",
     "unicorn/prefer-string-starts-ends-with": "warn",
     "vitest/no-conditional-tests": "warn",
-    "vitest/require-local-test-context-for-concurrent-snapshots": "warn"
+    "vitest/require-local-test-context-for-concurrent-snapshots": "warn",
+    "tailwindcss/enforces-negative-arbitrary-values": "warn",
+    "tailwindcss/enforces-shorthand": "warn",
+    "tailwindcss/no-contradicting-classname": "warn",
+    "tailwindcss/no-unnecessary-arbitrary-value": "warn"
   },
   "settings": {
     "jsx-a11y": {

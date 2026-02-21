@@ -95,7 +95,7 @@ function getRegistryPath(): string {
   // Try repo root first (when run from repo root)
   const fromRepoRoot = path.join(
     process.cwd(),
-    'packages/chson-registry/cheatsheets'
+    'packages/chson-registry/cheatsheets',
   );
   if (fs.existsSync(fromRepoRoot)) {
     return fromRepoRoot;
@@ -104,7 +104,7 @@ function getRegistryPath(): string {
   // Try from apps/web (when turbo runs from workspace directory)
   const fromWeb = path.join(
     process.cwd(),
-    '../../packages/chson-registry/cheatsheets'
+    '../../packages/chson-registry/cheatsheets',
   );
   if (fs.existsSync(fromWeb)) {
     return path.resolve(fromWeb);
@@ -112,7 +112,7 @@ function getRegistryPath(): string {
 
   throw new Error(
     `Could not find cheatsheets at ${fromRepoRoot} or ${fromWeb}. ` +
-      `Ensure you're running from the repo root or apps/web.`
+      `Ensure you're running from the repo root or apps/web.`,
   );
 }
 
@@ -135,7 +135,7 @@ export function listCheatsheetPaths(): string[] {
   if (!fs.existsSync(cheatsheetsDir)) return [];
 
   return listFilesRecursive(cheatsheetsDir).filter((p) =>
-    p.endsWith('.chson.json')
+    p.endsWith('.chson.json'),
   );
 }
 
