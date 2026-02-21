@@ -1,0 +1,68 @@
+---
+title: CLI Usage
+description: Validate and render ChSON cheatsheets with the command-line interface.
+---
+
+The ChSON CLI validates files against the schema and renders them to Markdown.
+
+## Installation
+
+The CLI is included in the monorepo. From the repository root:
+
+```bash
+npm install
+```
+
+## Validate a Cheatsheet
+
+```bash
+node packages/chson-cli/src/chson.js validate path/to/file.chson.json
+```
+
+Validates against the v2 schema (auto-detected from the `$schema` field).
+
+### Validate All Cheatsheets
+
+```bash
+npm run validate
+```
+
+This validates all cheatsheets in `packages/chson-registry/cheatsheets/`.
+
+## Render to Markdown
+
+```bash
+node packages/chson-cli/src/chson.js render markdown path/to/file.chson.json
+```
+
+Outputs a 2-column Markdown table using the cheatsheet's column labels (`anchorLabel` and `contentLabel`).
+
+### Example Output
+
+For a cheatsheet with `anchorLabel: "Shortcut"` and `contentLabel: "Action"`:
+
+```markdown
+## Navigation
+
+| Shortcut | Action |
+|----------|--------|
+| `ctrl + n` | Next item |
+| `ctrl + p` | Previous item |
+```
+
+## Build All Rendered Output
+
+```bash
+npm run render:build
+```
+
+Renders all registry cheatsheets to the `build/` directory.
+
+## Schema Validation
+
+The CLI automatically detects the schema version from the `$schema` field:
+
+- `https://chson.dev/schema/v2/chson.schema.json` → v2 validation
+- `https://chson.dev/schema/v1/chson.schema.json` → v1 validation (legacy)
+
+If no `$schema` is specified, v2 is assumed.

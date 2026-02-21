@@ -1,0 +1,394 @@
+---
+title: Schema Reference
+description: Complete field-by-field reference for the ChSON v2 schema
+---
+
+# Schema Reference
+
+This page provides a complete reference for all fields in the ChSON v2 schema. For conceptual explanations, see [Core Concepts](/docs/core-concepts) and [Advanced Features](/docs/advanced-features).
+
+## Schema URL
+
+All ChSON v2 files should include the schema reference:
+
+```json
+{
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json"
+}
+```
+
+---
+
+## Root Object
+
+The root object contains metadata about the cheatsheet and an array of sections.
+
+### Required Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `title` | `string` | The name of this cheatsheet. Must be non-empty. |
+| `publicationDate` | `string` | When this cheatsheet was published or last updated. Must be ISO 8601 format (`YYYY-MM-DD` or full datetime). |
+| `description` | `string` | A brief summary of what this cheatsheet covers. Must be non-empty. |
+| `sections` | `array` | Logical groupings of related entries. Must contain at least one section. |
+
+### Optional Fields
+
+| Field | Type | Description |
+|-------|------|-------------|
+| `$schema` | `string` | JSON Schema reference URL for validation. |
+| `version` | `string` | Version of the software this cheatsheet documents (e.g., `"3.2.1"`). |
+| `retrievalDirection` | `string` | The cognitive lookup direction. See [Retrieval Direction](#retrievaldirection). |
+| `anchorLabel` | `string` | Display name for the anchor column. Default: `"Anchor"`. |
+| `contentLabel` | `string` | Display name for the content column. Default: `"Content"`. |
+| `metadata` | `object` | Additional metadata (homepage, category, tags, etc.). |
+
+---
+
+## Field Details
+
+### `title`
+
+```json
+{
+  "title": "Git Core Commands"
+}
+```
+
+The human-readable name of the cheatsheet. This is displayed as the main heading and used for identification.
+
+**Constraints:**
+- Type: `string`
+- Minimum length: 1 character
+- Required: Yes
+
+---
+
+### `version`
+
+```json
+{
+  "version": "2.47.0"
+}
+```
+
+The version of the software being documented. This helps users know if the cheatsheet applies to their installed version.
+
+**Constraints:**
+- Type: `string`
+- Minimum length: 1 character
+- Required: No
+
+---
+
+### `publicationDate`
+
+```json
+{
+  "publicationDate": "2026-02-15"
+}
+```
+
+When this cheatsheet was published or last updated. Accepts either date or datetime format.
+
+**Constraints:**
+- Type: `string`
+- Format: ISO 8601 date (`YYYY-MM-DD`) or datetime (`YYYY-MM-DDTHH:MM:SSZ`)
+- Required: Yes
+
+**Examples:**
+- `"2026-02-15"` - Date only
+- `"2026-02-15T10:30:00Z"` - Full datetime
+
+---
+
+### `description`
+
+```json
+{
+  "description": "Essential Git commands for daily development workflows"
+}
+```
+
+A brief summary explaining what this cheatsheet covers and who it's for.
+
+**Constraints:**
+- Type: `string`
+- Minimum length: 1 character
+- Required: Yes
+
+---
+
+### `retrievalDirection`
+
+```json
+{
+  "retrievalDirection": "mechanism-to-meaning"
+}
+```
+
+Declares the cognitive lookup direction for this cheatsheet. This affects how renderers may present the data.
+
+**Constraints:**
+- Type: `string`
+- Allowed values:
+  - `"intent-to-mechanism"` - User knows what they want, needs the command/shortcut
+  - `"mechanism-to-meaning"` - User sees a command, needs to understand what it does
+- Required: No
+
+See [Advanced Features](/docs/advanced-features#retrieval-direction) for detailed explanation.
+
+---
+
+### `anchorLabel`
+
+```json
+{
+  "anchorLabel": "Shortcut"
+}
+```
+
+Custom display name for the anchor column. Use domain-appropriate terminology.
+
+**Constraints:**
+- Type: `string`
+- Required: No
+- Default: `"Anchor"`
+
+**Common values:**
+- `"Command"` - CLI tools
+- `"Shortcut"` - Keyboard shortcuts
+- `"Example"` - Code samples
+- `"Syntax"` - Language references
+- `"Option"` - Configuration
+
+---
+
+### `contentLabel`
+
+```json
+{
+  "contentLabel": "Action"
+}
+```
+
+Custom display name for the content column.
+
+**Constraints:**
+- Type: `string`
+- Required: No
+- Default: `"Content"`
+
+**Common values:**
+- `"Description"` - General explanations
+- `"Action"` - Intent-based lookups
+- `"Effect"` - What happens when used
+- `"Result"` - Output or outcome
+
+---
+
+### `metadata`
+
+```json
+{
+  "metadata": {
+    "homepage": "https://git-scm.com",
+    "category": "version-control",
+    "tags": ["cli", "devtools"]
+  }
+}
+```
+
+Freeform object for additional metadata. No specific structure is enforced.
+
+**Constraints:**
+- Type: `object`
+- Additional properties: Allowed
+- Required: No
+
+**Common fields:**
+- `homepage` - Project website
+- `category` - Classification
+- `tags` - Array of keywords
+- `author` - Cheatsheet author
+- `license` - License identifier
+
+---
+
+## Section Object
+
+Sections group related entries together, forming cognitive "chunks."
+
+```json
+{
+  "sections": [
+    {
+      "title": "Basic Commands",
+      "description": "Commands you'll use every day",
+      "entries": [...]
+    }
+  ]
+}
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `title` | `string` | Yes | The name of this section. Must be non-empty. |
+| `description` | `string` | No | Optional explanation of what this section covers. |
+| `entries` | `array` | Yes | The anchor-content pairs in this section. Must contain at least one entry. |
+
+---
+
+## Entry Object
+
+Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
+
+```json
+{
+  "entries": [
+    {
+      "anchor": "git status",
+      "content": "Show working tree status",
+      "label": null,
+      "comments": "Use -s for short format"
+    }
+  ]
+}
+```
+
+### Fields
+
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| `anchor` | `string` | Yes | The retrieval anchor—what users scan for. Must be non-empty. |
+| `content` | `string` | Yes | The associated content—what users need. Must be non-empty. |
+| `label` | `string` | No | Human-readable label for cryptic anchors. |
+| `comments` | `any` | No | Additional notes, warnings, or context. |
+
+### `anchor`
+
+The retrieval anchor is what users visually scan for when looking up information. It should be distinctive and easy to spot.
+
+**Examples by type:**
+- CLI command: `"git commit -m \"<message>\""`
+- Keyboard shortcut: `"Ctrl+K Ctrl+C"`
+- Code pattern: `"array.map(fn)"`
+- Config key: `"maxRetries"`
+
+### `content`
+
+The associated content is what users need once they find the anchor.
+
+**Examples by retrieval direction:**
+- Mechanism → Meaning: `"Create a commit with the specified message"`
+- Intent → Mechanism: `"Save the current file"`
+
+### `label`
+
+Optional human-readable label when the anchor is cryptic or non-obvious.
+
+```json
+{
+  "anchor": "gg",
+  "content": "Move cursor to start of document",
+  "label": "Go to start"
+}
+```
+
+**When to use:**
+- Vim-style single-key commands (`dd`, `yy`, `gg`)
+- Abbreviated shortcuts (`C-x C-s`)
+- Symbolic anchors (`::`, `=>`, `??`)
+
+### `comments`
+
+Additional context that doesn't fit in the content field. Can be any JSON type, though strings are most common.
+
+```json
+{
+  "anchor": "git push --force",
+  "content": "Force push to remote (overwrites history)",
+  "comments": "WARNING: Never use on shared branches"
+}
+```
+
+---
+
+## Complete Example
+
+```json
+{
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "title": "Git Core Commands",
+  "version": "2.47.0",
+  "publicationDate": "2026-02-15",
+  "description": "Essential Git commands for daily workflows",
+  "retrievalDirection": "mechanism-to-meaning",
+  "anchorLabel": "Command",
+  "contentLabel": "Description",
+  "metadata": {
+    "homepage": "https://git-scm.com",
+    "category": "version-control"
+  },
+  "sections": [
+    {
+      "title": "Getting Started",
+      "description": "Initialize and clone repositories",
+      "entries": [
+        {
+          "anchor": "git init",
+          "content": "Create a new Git repository in the current directory"
+        },
+        {
+          "anchor": "git clone <url>",
+          "content": "Clone a repository from a remote URL"
+        }
+      ]
+    },
+    {
+      "title": "Daily Workflow",
+      "entries": [
+        {
+          "anchor": "git status",
+          "content": "Show working tree status",
+          "comments": "Use -s for short format"
+        },
+        {
+          "anchor": "git add <file>",
+          "content": "Stage changes for the next commit"
+        },
+        {
+          "anchor": "git commit -m \"<msg>\"",
+          "content": "Create a commit with the specified message"
+        }
+      ]
+    }
+  ]
+}
+```
+
+---
+
+## JSON Schema
+
+The full JSON Schema (Draft 2020-12) is available at:
+
+- **URL:** [https://chson.dev/schema/v2/chson.schema.json](https://chson.dev/schema/v2/chson.schema.json)
+- **Source:** [`packages/chson-schema/schema/v2/chson.schema.json`](https://github.com/chson-dev/chson/blob/main/packages/chson-schema/schema/v2/chson.schema.json)
+
+### TypeScript Types
+
+Auto-generated TypeScript types are available in the `@chson/schema` package:
+
+```typescript
+import type { ChSONv2 } from '@chson/schema';
+
+const cheatsheet: ChSONv2 = {
+  title: "My Cheatsheet",
+  publicationDate: "2026-02-15",
+  description: "A sample cheatsheet",
+  sections: [...]
+};
+```

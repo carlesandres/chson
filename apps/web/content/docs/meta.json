@@ -1,0 +1,13 @@
+{
+  "title": "Documentation",
+  "pages": [
+    "index",
+    "core-concepts",
+    "advanced-features",
+    "schema-reference",
+    "examples",
+    "cli",
+    "best-practices",
+    "cognitive-science"
+  ]
+}

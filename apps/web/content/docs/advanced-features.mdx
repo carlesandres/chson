@@ -1,0 +1,72 @@
+---
+title: Advanced Features
+description: Retrieval direction, custom column labels, and metadata in ChSON v2.
+---
+
+Beyond the basics, ChSON v2 provides several fields for customizing how your cheatsheet is rendered and used.
+
+## Retrieval Direction
+
+The `retrievalDirection` field describes how users typically scan the cheatsheet:
+
+- **"mechanism-to-meaning"** — Users scan by command/syntax to find what it does. Most cheatsheets work this way. *"What does `git rebase -i` do?"*
+
+- **"intent-to-mechanism"** — Users scan by goal to find how to do it. Reverse lookups. *"How do I squash commits?"*
+
+```json
+{
+  "retrievalDirection": "mechanism-to-meaning"
+}
+```
+
+When unsure, default to `"mechanism-to-meaning"`.
+
+## Custom Column Labels
+
+By default, renderers display "Anchor" and "Content" as column headers. You can customize these with `anchorLabel` and `contentLabel`.
+
+```json title="Keyboard shortcuts cheatsheet"
+{
+  "anchorLabel": "Shortcut",
+  "contentLabel": "Action"
+}
+```
+
+```json title="Command reference cheatsheet"
+{
+  "anchorLabel": "Example",
+  "contentLabel": "Description"
+}
+```
+
+This makes the rendered output more intuitive for the specific type of cheatsheet.
+
+### Common Conventions
+
+| Cheatsheet Type | anchorLabel | contentLabel |
+|-----------------|-------------|--------------|
+| Keyboard shortcuts | Shortcut | Action |
+| CLI commands | Command / Example | Description |
+| Configuration | Option | Description / Default |
+| Glossaries | Term | Definition |
+
+## Metadata
+
+The optional `metadata` field holds custom key-value pairs for tooling, categorization, or attribution.
+
+```json
+{
+  "metadata": {
+    "homepage": "https://atuin.sh/",
+    "category": "cli",
+    "author": "Your Name"
+  }
+}
+```
+
+Metadata is freeform—use whatever keys make sense for your workflow.
+
+## Next Steps
+
+- [Complete Example](/docs/examples) — See all features in a real cheatsheet
+- [Best Practices](/docs/best-practices) — Guidelines for effective cheatsheets

@@ -1,0 +1,61 @@
+---
+title: Core Concepts
+description: Understanding anchors, content, labels, and sections in ChSON v2.
+---
+
+Every cheatsheet entry has two key parts that mirror how people actually look up information.
+
+## Anchor and Content
+
+- **anchor** — The retrieval cue. What you scan for. (command, shortcut, keyword)
+- **content** — The information you need when you find it. (description, action, result)
+
+Think of it like a dictionary: you scan for the word (anchor) to find its definition (content).
+
+```json title="Basic entry"
+{
+  "anchor": "git status",
+  "content": "Show staged, unstaged, and untracked files."
+}
+```
+
+## Optional Labels
+
+Sometimes the anchor is cryptic—a keyboard shortcut, obscure command, or symbol. The optional `label` field provides a human-readable description.
+
+```json title="Entry with label"
+{
+  "anchor": "gg",
+  "content": "Jump to visual top of history",
+  "label": "Go to start"
+}
+```
+
+Labels are useful for:
+- Vim commands (`gg`, `dd`, `ciw`)
+- Keyboard shortcuts (`ctrl + shift + p`)
+- Any anchor that isn't immediately self-explanatory
+
+## Sections
+
+Entries are organized into sections, each with a title and optional description. Sections group related entries logically—by functionality, context, or workflow.
+
+```json title="Section structure"
+{
+  "sections": [
+    {
+      "title": "Navigation",
+      "description": "Moving around the interface.",
+      "entries": [
+        { "anchor": "ctrl + n", "content": "Next item" },
+        { "anchor": "ctrl + p", "content": "Previous item" }
+      ]
+    }
+  ]
+}
+```
+
+## Next Steps
+
+- [Advanced Features](/docs/advanced-features) — Retrieval direction, column labels, metadata
+- [Complete Example](/docs/examples) — See all concepts in action

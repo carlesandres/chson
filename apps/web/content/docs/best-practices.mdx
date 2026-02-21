@@ -1,0 +1,95 @@
+---
+title: Best Practices
+description: Guidelines for writing effective ChSON cheatsheets.
+---
+
+Follow these guidelines to create cheatsheets that are easy to scan and use.
+
+## When to Use Labels
+
+Add a `label` field when the anchor isn't immediately clear:
+
+- **Keyboard shortcuts** — `ctrl + shift + p`
+- **Vim/editor commands** — `gg`, `dd`, `ciw`
+- **Abbreviated commands** — `git stash pop` might need context
+- **Symbols or codes** — Any anchor that isn't self-explanatory
+
+```json
+{
+  "anchor": "gg",
+  "content": "Jump to visual top of history",
+  "label": "Go to start"
+}
+```
+
+If the anchor is self-explanatory (like `git status`), skip the label.
+
+## Choosing Retrieval Direction
+
+| Direction | Use When | Example Question |
+|-----------|----------|------------------|
+| `mechanism-to-meaning` | Users know the command, want to know what it does | "What does `git rebase -i` do?" |
+| `intent-to-mechanism` | Users know the goal, want to find the command | "How do I squash commits?" |
+
+**Default to `mechanism-to-meaning`** for most cheatsheets (command references, shortcuts). Use `intent-to-mechanism` when users will primarily search by goal.
+
+## Structuring Sections
+
+### Do
+
+- **Group by functionality**, not alphabetically
+- **Put common operations first** — Most-used commands at the top
+- **Use section descriptions** to provide context when needed
+- **Keep sections focused** — Split large sections into smaller ones
+
+### Don't
+
+- Don't create sections with only 1-2 entries (combine them)
+- Don't use vague section titles like "Other" or "Misc"
+- Don't alphabetize within sections (group by workflow instead)
+
+## Column Label Conventions
+
+Choose labels that match your content type:
+
+| Cheatsheet Type | anchorLabel | contentLabel |
+|-----------------|-------------|--------------|
+| Keyboard shortcuts | Shortcut | Action |
+| CLI commands | Command | Description |
+| CLI with examples | Example | Description |
+| Configuration | Option | Description |
+| Configuration with defaults | Option | Default |
+| Glossaries | Term | Definition |
+| API reference | Endpoint | Description |
+
+## File Naming
+
+Use kebab-case for cheatsheet files:
+
+```
+cheatsheets/
+├── git/
+│   ├── core.chson.json
+│   └── advanced.chson.json
+├── docker/
+│   └── core.chson.json
+└── atuin/
+    └── keybindings.chson.json
+```
+
+## Schema Reference
+
+Always include the schema URL for IDE support:
+
+```json
+{
+  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "title": "My Cheatsheet",
+  ...
+}
+```
+
+This enables:
+- Autocompletion in VS Code, WebStorm, etc.
+- Inline validation errors
+- Hover documentation
