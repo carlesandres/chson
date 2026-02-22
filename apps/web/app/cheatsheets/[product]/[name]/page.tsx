@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllCheatsheets, loadCheatsheet } from 'lib/cheatsheets';
+import { cn } from 'lib/utils';
 import { InlineCode } from 'components/chson';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
 import { Badge } from 'components/ui/badge';
@@ -215,7 +216,12 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                         {Array.isArray(section.entries) &&
                           section.entries.map((entry, entryIdx) => (
                             <TableRow key={entryIdx}>
-                              <TableCell className="align-top">
+                              <TableCell
+                                className={cn(
+                                  'align-middle',
+                                  anchorIsMechanism && 'p-0',
+                                )}
+                              >
                                 {anchorIsMechanism ? (
                                   entry.anchor && (
                                     <InlineCode language="bash">
@@ -228,7 +234,12 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                   </TextCell>
                                 )}
                               </TableCell>
-                              <TableCell className="align-top">
+                              <TableCell
+                                className={cn(
+                                  'align-middle',
+                                  !anchorIsMechanism && 'p-0',
+                                )}
+                              >
                                 {anchorIsMechanism ? (
                                   <TextCell label={entry.label}>
                                     {entry.content}
