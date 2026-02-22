@@ -42,6 +42,7 @@ The root object contains metadata about the cheatsheet and an array of sections.
 | `author`             | `string`   | The author or maintainer of this document.                                         |
 | `license`            | `string`   | License identifier (e.g., `"MIT"`, `"CC-BY-4.0"`).                                 |
 | `homepage`           | `string`   | URL of the official website or documentation for the subject matter.               |
+| `icon`               | `string`   | URL or relative path to an image representing this document.                       |
 | `tags`               | `string[]` | Keywords for categorization and discovery.                                         |
 | `retrievalDirection` | `string`   | Optional rendering hint. See [Retrieval Direction](#retrievaldirection).           |
 | `anchorLabel`        | `string`   | Display name for the anchor column. Default: `"Anchor"`.                           |
@@ -202,6 +203,28 @@ URL of the official website or documentation for the subject matter.
 - Type: `string`
 - Format: URI
 - Required: No
+
+---
+
+### `icon`
+
+```json
+{
+  "icon": "https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png"
+}
+```
+
+URL or relative path to an image representing this document (logo, icon, etc.).
+
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
+**Examples:**
+
+- Absolute URL: `"https://example.com/logo.png"`
+- Relative path: `"./icons/git.svg"`
 
 ---
 

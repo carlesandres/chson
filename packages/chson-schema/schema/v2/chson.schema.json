@@ -52,6 +52,10 @@
       "format": "uri",
       "description": "URL of the official website or documentation for the subject matter."
     },
+    "icon": {
+      "type": "string",
+      "description": "URL or relative path to an image representing this document (logo, icon, etc.)."
+    },
     "tags": {
       "type": "array",
       "items": { "type": "string" },
