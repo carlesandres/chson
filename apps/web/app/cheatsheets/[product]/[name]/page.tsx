@@ -23,12 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from 'components/ui/table';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from 'components/ui/tooltip';
 import { ScrollArea, ScrollBar } from 'components/ui/scroll-area';
 import { ExternalLink, Home } from 'lucide-react';
 
@@ -61,33 +55,7 @@ export async function generateMetadata({
 /**
  * Renders content as plain text (for intents: actions, descriptions)
  */
-function TextCell({
-  children,
-  label,
-}: {
-  children: React.ReactNode;
-  label?: string;
-}) {
-  if (label) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="cursor-help">
-              <div className="font-semibold">{label}</div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                {children}
-              </div>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Label: {label}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-
+function TextCell({ children }: { children: React.ReactNode }) {
   return <div>{children}</div>;
 }
 
@@ -229,9 +197,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                     </InlineCode>
                                   )
                                 ) : (
-                                  <TextCell label={entry.label}>
-                                    {entry.anchor}
-                                  </TextCell>
+                                  <TextCell>{entry.anchor}</TextCell>
                                 )}
                               </TableCell>
                               <TableCell
@@ -241,9 +207,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                 )}
                               >
                                 {anchorIsMechanism ? (
-                                  <TextCell label={entry.label}>
-                                    {entry.content}
-                                  </TextCell>
+                                  <TextCell>{entry.content}</TextCell>
                                 ) : (
                                   entry.content && (
                                     <InlineCode language="bash">

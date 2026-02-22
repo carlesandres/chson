@@ -1,19 +1,19 @@
 ---
 title: Schema Reference
-description: Complete field-by-field reference for the ChSON v2 schema
+description: Complete field-by-field reference for the ChSON schema
 ---
 
 # Schema Reference
 
-This page provides a complete reference for all fields in the ChSON v2 schema. For conceptual explanations, see [Core Concepts](/docs/core-concepts) and [Advanced Features](/docs/advanced-features).
+This page provides a complete reference for all fields in the ChSON schema. For conceptual explanations, see [Core Concepts](/docs/core-concepts) and [Advanced Features](/docs/advanced-features).
 
 ## Schema URL
 
-All ChSON v2 files should include the schema reference:
+All ChSON files should include the schema reference:
 
 ```json
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json"
+  "$schema": "https://chson.dev/schema/chson.schema.json"
 }
 ```
 
@@ -456,7 +456,7 @@ Additional context that doesn't fit in the content field. Can be any JSON type, 
 
 ```json
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "$schema": "https://chson.dev/schema/chson.schema.json",
   "title": "Git Core Commands",
   "version": "2.47.0",
   "publicationDate": "2026-02-15",
@@ -511,17 +511,17 @@ Additional context that doesn't fit in the content field. Can be any JSON type, 
 
 The full JSON Schema (Draft 2020-12) is available at:
 
-- **URL:** [https://chson.dev/schema/v2/chson.schema.json](https://chson.dev/schema/v2/chson.schema.json)
-- **Source:** [`packages/chson-schema/schema/v2/chson.schema.json`](https://github.com/chson-dev/chson/blob/main/packages/chson-schema/schema/v2/chson.schema.json)
+- **URL:** [https://chson.dev/schema/chson.schema.json](https://chson.dev/schema/chson.schema.json)
+- **Source:** [`packages/chson-schema/schema/chson.schema.json`](https://github.com/chson-dev/chson/blob/main/packages/chson-schema/schema/chson.schema.json)
 
 ### TypeScript Types
 
 Auto-generated TypeScript types are available in the `@chson/schema` package:
 
 ```typescript
-import type { ChSONv2 } from '@chson/schema';
+import type { ChsonDocument } from '@chson/schema';
 
-const cheatsheet: ChSONv2 = {
+const cheatsheet: ChsonDocument = {
   title: "My Cheatsheet",
   publicationDate: "2026-02-15",
   description: "A sample cheatsheet",

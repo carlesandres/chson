@@ -64,14 +64,13 @@ rm -rf .turbo build packages/chson-schema/types && npm run build
 
 **Key files**:
 - `packages/chson-cli/src/chson.js` - Single-file CLI with validate and render commands
-- `packages/chson-schema/schema/v2/chson.schema.json` - JSON Schema (Draft 2020-12) defining the ChSON v2 format
-- `packages/chson-schema/schema/v1/chson.schema.json` - Legacy v1 schema (still supported)
+- `packages/chson-schema/schema/chson.schema.json` - JSON Schema (Draft 2020-12) defining the ChSON format
 - `packages/chson-schema/types/` - Auto-generated TypeScript types (gitignored)
 - `packages/chson-registry/cheatsheets/` - Source cheatsheets
 - `apps/web/` - Next.js 16 website with shadcn/ui
 - `research/` - Cognitive science research supporting ChSON design
 
-**ChSON v2 schema structure** (based on cognitive retrieval theory):
+**ChSON schema structure** (based on cognitive retrieval theory):
 ```
 {
   title, version?, publicationDate, description, retrievalDirection?, metadata?,
@@ -92,11 +91,11 @@ Key terminology (see `research/cognitive-foundations.md`):
 
 **Adding cheatsheets**:
 1. Create `packages/chson-registry/cheatsheets/<product>/<name>.chson.json`
-2. Include `"$schema": "https://chson.dev/schema/v2/chson.schema.json"`
+2. Include `"$schema": "https://chson.dev/schema/chson.schema.json"`
 3. Run `npm run validate`
 4. Run `npm run build` to rebuild the site
 
-**Schema changes**: Keep backwards-compatible. New versions go in `schema/v2/`, etc.
+**Schema changes**: Keep backwards-compatible.
 
 ## Code Style
 

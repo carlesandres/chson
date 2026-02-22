@@ -8,10 +8,10 @@ can iterate without losing context.
 
 - **Name**: ChSON
 - **Canonical home (assumed)**: `chson.dev`
-- **Schema URL**: `https://chson.dev/schema/v2/chson.schema.json` (v1 still supported)
+- **Schema URL**: `https://chson.dev/schema/chson.schema.json`
 - **JSON Schema dialect**: Draft 2020-12
 - **Document schema pointer**: ChSON documents include a `$schema` field pointing to the canonical schema URL.
-- **Core structure (v2)** — based on cognitive retrieval theory (see `research/cognitive-foundations.md`):
+- **Core structure** — based on cognitive retrieval theory (see `research/cognitive-foundations.md`):
   - Top-level: `title`, optional `version`, `publicationDate`, `description`, `retrievalDirection`, `metadata`, `sections`
   - Section: `title`, optional `description`, `entries`
   - Entry: `anchor` (retrieval anchor), `content` (associated content), optional `label`, `comments`

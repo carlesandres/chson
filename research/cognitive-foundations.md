@@ -338,9 +338,9 @@ This theoretical framework has direct implications for the ChSON format:
 
 ### 6.1 Schema Alignment
 
-The ChSON v2 schema structure maps to our terminology:
+The ChSON schema structure maps to our terminology:
 
-| ChSON v2 Element | Cognitive Role |
+| ChSON Element | Cognitive Role |
 |------------------|----------------|
 | `entry.anchor` | Retrieval anchor |
 | `entry.content` | Associated content |
@@ -351,9 +351,9 @@ The ChSON v2 schema structure maps to our terminology:
 | `anchorLabel` | Domain-appropriate name for anchor column |
 | `contentLabel` | Domain-appropriate name for content column |
 
-### 6.2 Implemented in v2
+### 6.2 Implemented Features
 
-The following features have been implemented in ChSON v2:
+The following features have been implemented in ChSON:
 
 1. **`retrievalDirection`**: Explicit declaration at sheet level
    - Values: `"intent-to-mechanism"`, `"mechanism-to-meaning"`

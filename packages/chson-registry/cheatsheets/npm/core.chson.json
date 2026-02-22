@@ -1,5 +1,5 @@
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "$schema": "https://chson.dev/schema/chson.schema.json",
   "title": "npm Essentials",
   "version": "10.x",
   "publicationDate": "2026-01-16",
