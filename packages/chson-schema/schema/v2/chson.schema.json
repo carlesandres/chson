@@ -39,10 +39,28 @@
       "enum": ["cheatsheet", "checklist", "runbook", "tldr", "bookmarks"],
       "description": "The type of document, which may influence rendering. 'cheatsheet': quick reference for commands/shortcuts. 'checklist': ordered tasks to complete. 'runbook': step-by-step operational procedures. 'tldr': brief summaries of topics. 'bookmarks': curated link collections."
     },
+    "author": {
+      "type": "string",
+      "description": "The author or maintainer of this document."
+    },
+    "license": {
+      "type": "string",
+      "description": "License identifier for this document (e.g., 'MIT', 'CC-BY-4.0')."
+    },
+    "homepage": {
+      "type": "string",
+      "format": "uri",
+      "description": "URL of the official website or documentation for the subject matter."
+    },
+    "tags": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "Keywords for categorization and discovery."
+    },
     "retrievalDirection": {
       "type": "string",
       "enum": ["intent-to-mechanism", "mechanism-to-meaning"],
-      "description": "The cognitive lookup direction. 'intent-to-mechanism': user knows what they want to do, needs the command/shortcut. 'mechanism-to-meaning': user sees a command/syntax, needs to understand what it does."
+      "description": "Optional hint for renderers about the cognitive lookup direction. 'intent-to-mechanism': user knows what they want to do, needs the command/shortcut. 'mechanism-to-meaning': user sees a command/syntax, needs to understand what it does."
     },
     "anchorLabel": {
       "type": "string",
@@ -55,7 +73,7 @@
     "metadata": {
       "type": "object",
       "additionalProperties": true,
-      "description": "Additional metadata (homepage, category, tags, etc.)."
+      "description": "Additional freeform metadata (category, source, etc.)."
     },
     "sections": {
       "type": "array",

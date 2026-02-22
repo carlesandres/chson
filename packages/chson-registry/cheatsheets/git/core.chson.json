@@ -4,13 +4,11 @@
   "version": "2.x",
   "publicationDate": "2026-01-16",
   "description": "Essential git commands for day-to-day development.",
+  "homepage": "https://git-scm.com/",
+  "tags": ["cli", "version-control"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Example",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://git-scm.com/",
-    "category": "cli"
-  },
   "sections": [
     {
       "title": "Setup",

@@ -4,13 +4,11 @@
   "version": "9.x",
   "publicationDate": "2026-01-16",
   "description": "Essential Vim commands for text editing.",
+  "homepage": "https://www.vim.org/",
+  "tags": ["editor", "cli"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Example",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://www.vim.org/",
-    "category": "editor"
-  },
   "sections": [
     {
       "title": "Modes",

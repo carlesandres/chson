@@ -4,13 +4,11 @@
   "version": "24.x",
   "publicationDate": "2026-01-16",
   "description": "Essential Docker commands for container management.",
+  "homepage": "https://docs.docker.com/",
+  "tags": ["cli", "containers", "devops"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Example",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://docs.docker.com/",
-    "category": "cli"
-  },
   "sections": [
     {
       "title": "Images",

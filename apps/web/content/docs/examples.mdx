@@ -3,7 +3,7 @@ title: Complete Example
 description: A real-world ChSON cheatsheet demonstrating all features.
 ---
 
-Here's a real-world example: an [Atuin keybindings cheatsheet](/cheatsheets/atuin/keybindings) demonstrating the format with custom column labels, section descriptions, and metadata.
+Here's a real-world example: an [Atuin keybindings cheatsheet](/cheatsheets/atuin/keybindings) demonstrating the format with custom column labels, section descriptions, and top-level fields.
 
 ## Full Cheatsheet
 
@@ -14,13 +14,11 @@ Here's a real-world example: an [Atuin keybindings cheatsheet](/cheatsheets/atui
   "version": "18.x",
   "publicationDate": "2026-02-15",
   "description": "Keyboard shortcuts for Atuin's interactive shell history search UI.",
+  "homepage": "https://atuin.sh/",
+  "tags": ["cli", "shell", "keybindings"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Shortcut",
   "contentLabel": "Action",
-  "metadata": {
-    "homepage": "https://atuin.sh/",
-    "category": "cli"
-  },
   "sections": [
     {
       "title": "Navigation & Selection",
@@ -66,12 +64,12 @@ Here's a real-world example: an [Atuin keybindings cheatsheet](/cheatsheets/atui
 ## Key Features Demonstrated
 
 1. **Schema reference** — `$schema` enables IDE validation and autocompletion
-2. **Custom column labels** — `anchorLabel: "Shortcut"` and `contentLabel: "Action"`
-3. **Retrieval direction** — `mechanism-to-meaning` for command-first lookup
-4. **Section descriptions** — Vim Mode section has additional context
-5. **Details field** — Extended explanation for complex entries
-6. **URL field** — Links to official documentation
-7. **Metadata** — Homepage URL and category for tooling
+2. **Top-level fields** — `homepage` and `tags` for discoverability
+3. **Custom column labels** — `anchorLabel: "Shortcut"` and `contentLabel: "Action"`
+4. **Retrieval direction** — `mechanism-to-meaning` for command-first lookup
+5. **Section descriptions** — Vim Mode section has additional context
+6. **Details field** — Extended explanation for complex entries
+7. **URL field** — Links to official documentation
 
 ## View It Live
 

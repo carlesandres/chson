@@ -34,14 +34,19 @@ The root object contains metadata about the cheatsheet and an array of sections.
 
 ### Optional Fields
 
-| Field                | Type     | Description                                                                     |
-| -------------------- | -------- | ------------------------------------------------------------------------------- |
-| `$schema`            | `string` | JSON Schema reference URL for validation.                                       |
-| `version`            | `string` | Version of the software this cheatsheet documents (e.g., `"3.2.1"`).            |
-| `retrievalDirection` | `string` | The cognitive lookup direction. See [Retrieval Direction](#retrievaldirection). |
-| `anchorLabel`        | `string` | Display name for the anchor column. Default: `"Anchor"`.                        |
-| `contentLabel`       | `string` | Display name for the content column. Default: `"Content"`.                      |
-| `metadata`           | `object` | Additional metadata (homepage, category, tags, etc.).                           |
+| Field                | Type       | Description                                                                        |
+| -------------------- | ---------- | ---------------------------------------------------------------------------------- |
+| `$schema`            | `string`   | JSON Schema reference URL for validation.                                          |
+| `version`            | `string`   | Version of the software this document covers (e.g., `"3.2.1"`).                    |
+| `documentType`       | `string`   | Type of document: `cheatsheet`, `checklist`, `runbook`, `tldr`, or `bookmarks`.    |
+| `author`             | `string`   | The author or maintainer of this document.                                         |
+| `license`            | `string`   | License identifier (e.g., `"MIT"`, `"CC-BY-4.0"`).                                 |
+| `homepage`           | `string`   | URL of the official website or documentation for the subject matter.               |
+| `tags`               | `string[]` | Keywords for categorization and discovery.                                         |
+| `retrievalDirection` | `string`   | Optional rendering hint. See [Retrieval Direction](#retrievaldirection).           |
+| `anchorLabel`        | `string`   | Display name for the anchor column. Default: `"Anchor"`.                           |
+| `contentLabel`       | `string`   | Display name for the content column. Default: `"Content"`.                         |
+| `metadata`           | `object`   | Additional freeform metadata.                                                      |
 
 ---
 
@@ -132,7 +137,7 @@ A brief summary explaining what this cheatsheet covers and who it's for.
 }
 ```
 
-Declares the cognitive lookup direction for this cheatsheet. This affects how renderers may present the data.
+Optional hint for renderers about the cognitive lookup direction. This may influence how the data is presented but has no effect on validation.
 
 **Constraints:**
 
@@ -143,6 +148,77 @@ Declares the cognitive lookup direction for this cheatsheet. This affects how re
 - Required: No
 
 See [Advanced Features](/docs/advanced-features#retrieval-direction) for detailed explanation.
+
+---
+
+### `author`
+
+```json
+{
+  "author": "Jane Developer"
+}
+```
+
+The author or maintainer of this document.
+
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
+---
+
+### `license`
+
+```json
+{
+  "license": "MIT"
+}
+```
+
+License identifier for this document. Use standard identifiers like SPDX license IDs.
+
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
+**Common values:** `"MIT"`, `"CC-BY-4.0"`, `"CC0-1.0"`, `"Apache-2.0"`
+
+---
+
+### `homepage`
+
+```json
+{
+  "homepage": "https://git-scm.com"
+}
+```
+
+URL of the official website or documentation for the subject matter.
+
+**Constraints:**
+
+- Type: `string`
+- Format: URI
+- Required: No
+
+---
+
+### `tags`
+
+```json
+{
+  "tags": ["cli", "devtools", "version-control"]
+}
+```
+
+Keywords for categorization and discovery.
+
+**Constraints:**
+
+- Type: `array` of `string`
+- Required: No
 
 ---
 
@@ -202,28 +278,19 @@ Custom display name for the content column.
 ```json
 {
   "metadata": {
-    "homepage": "https://git-scm.com",
-    "category": "version-control",
-    "tags": ["cli", "devtools"]
+    "source": "official-docs",
+    "difficulty": "beginner"
   }
 }
 ```
 
-Freeform object for additional metadata. No specific structure is enforced.
+Freeform object for additional metadata not covered by the standard fields.
 
 **Constraints:**
 
 - Type: `object`
 - Additional properties: Allowed
 - Required: No
-
-**Common fields:**
-
-- `homepage` - Project website
-- `category` - Classification
-- `tags` - Array of keywords
-- `author` - Cheatsheet author
-- `license` - License identifier
 
 ---
 
@@ -371,13 +438,13 @@ Additional context that doesn't fit in the content field. Can be any JSON type, 
   "version": "2.47.0",
   "publicationDate": "2026-02-15",
   "description": "Essential Git commands for daily workflows",
+  "author": "ChSON Contributors",
+  "license": "CC-BY-4.0",
+  "homepage": "https://git-scm.com",
+  "tags": ["cli", "version-control"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Command",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://git-scm.com",
-    "category": "version-control"
-  },
   "sections": [
     {
       "title": "Getting Started",

@@ -4,13 +4,13 @@
   "version": "18.x",
   "publicationDate": "2026-02-15",
   "description": "Keyboard shortcuts for Atuin's interactive shell history search UI.",
+  "homepage": "https://atuin.sh/",
+  "tags": ["cli", "shell", "keybindings"],
   "retrievalDirection": "intent-to-mechanism",
   "anchorLabel": "Action",
   "contentLabel": "Shortcut",
   "metadata": {
-    "homepage": "https://atuin.sh/",
-    "docs": "https://docs.atuin.sh/cli/configuration/key-binding/",
-    "category": "cli"
+    "docs": "https://docs.atuin.sh/cli/configuration/key-binding/"
   },
   "sections": [
     {
