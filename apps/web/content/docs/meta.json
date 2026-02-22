@@ -3,6 +3,7 @@
   "pages": [
     "index",
     "core-concepts",
+    "use-cases",
     "advanced-features",
     "schema-reference",
     "examples",

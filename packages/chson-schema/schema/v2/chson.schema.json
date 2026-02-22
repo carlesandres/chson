@@ -1,8 +1,8 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://chson.dev/schema/v2/chson.schema.json",
-  "title": "ChSON Cheatsheet",
-  "description": "A structured format for software cheatsheets, based on cognitive science principles of retrieval and chunking.",
+  "title": "ChSON Document",
+  "description": "A structured format for knowledge fragments based on cognitive science principles of retrieval and chunking. Supports cheatsheets, checklists, runbooks, TLDRs, bookmarks, and more.",
   "type": "object",
   "additionalProperties": true,
   "required": ["title", "publicationDate", "description", "sections"],
@@ -14,12 +14,12 @@
     "title": {
       "type": "string",
       "minLength": 1,
-      "description": "The name of this cheatsheet."
+      "description": "The name of this document."
     },
     "version": {
       "type": "string",
       "minLength": 1,
-      "description": "Version of the software this cheatsheet documents."
+      "description": "Version of the subject matter this document covers."
     },
     "publicationDate": {
       "type": "string",
@@ -27,17 +27,22 @@
         { "format": "date" },
         { "format": "date-time" }
       ],
-      "description": "When this cheatsheet was published or last updated."
+      "description": "When this document was published or last updated."
     },
     "description": {
       "type": "string",
       "minLength": 1,
-      "description": "A brief summary of what this cheatsheet covers."
+      "description": "A brief summary of what this document covers."
+    },
+    "documentType": {
+      "type": "string",
+      "enum": ["cheatsheet", "checklist", "runbook", "tldr", "bookmarks"],
+      "description": "The type of document, which may influence rendering. 'cheatsheet': quick reference for commands/shortcuts. 'checklist': ordered tasks to complete. 'runbook': step-by-step operational procedures. 'tldr': brief summaries of topics. 'bookmarks': curated link collections."
     },
     "retrievalDirection": {
       "type": "string",
       "enum": ["intent-to-mechanism", "mechanism-to-meaning"],
-      "description": "The cognitive lookup direction for this cheatsheet. 'intent-to-mechanism': user knows what they want to do, needs the command/shortcut. 'mechanism-to-meaning': user sees a command/syntax, needs to understand what it does."
+      "description": "The cognitive lookup direction. 'intent-to-mechanism': user knows what they want to do, needs the command/shortcut. 'mechanism-to-meaning': user sees a command/syntax, needs to understand what it does."
     },
     "anchorLabel": {
       "type": "string",
