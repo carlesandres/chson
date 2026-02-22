@@ -1,6 +1,9 @@
-import { highlightCode } from 'lib/shiki';
-import { CopyButton } from './CopyButton';
+'use client';
+
+import { Streamdown } from 'streamdown';
+import { code } from '@streamdown/code';
 import { cn } from 'lib/utils';
+import 'streamdown/styles.css';
 
 interface CodeBlockProps {
   children: string;
@@ -10,14 +13,15 @@ interface CodeBlockProps {
   className?: string;
 }
 
-export async function CodeBlock({
+export function CodeBlock({
   children,
   language,
   title,
   showCopy = true,
   className,
 }: CodeBlockProps) {
-  const highlightedHtml = await highlightCode(children, language);
+  // Wrap the code in a markdown code fence for Streamdown to highlight
+  const markdown = `\`\`\`${language || ''}\n${children}\n\`\`\``;
 
   return (
     <div className={cn('group relative', className)}>
@@ -28,10 +32,23 @@ export async function CodeBlock({
       )}
       <div className="relative">
         <div
-          className="shiki-container overflow-auto rounded-xl border border-border p-4 pr-12 text-[13px] [&_pre]:m-0 [&_pre]:bg-transparent [&_pre]:p-0"
-          dangerouslySetInnerHTML={{ __html: highlightedHtml }}
-        />
-        {showCopy && <CopyButton text={children} />}
+          className={cn(
+            // Hide streamdown's internal border and header
+            'chson-code-block overflow-auto text-[13px]',
+            '[&_[data-streamdown="code-block"]]:my-0 [&_[data-streamdown="code-block"]]:border-0 [&_[data-streamdown="code-block"]]:rounded-none',
+            '[&_[data-streamdown="code-block-header"]]:hidden',
+            '[&_pre]:m-0 [&_pre]:bg-transparent [&_pre]:p-0',
+          )}
+        >
+          <Streamdown
+            plugins={{ code }}
+            mode="static"
+            shikiTheme={['github-light', 'github-dark']}
+            controls={{ code: showCopy }}
+          >
+            {markdown}
+          </Streamdown>
+        </div>
       </div>
     </div>
   );
