@@ -102,9 +102,14 @@
           "minLength": 1,
           "description": "The associated content: what users need to know once they find the anchor."
         },
-        "label": {
+        "details": {
           "type": "string",
-          "description": "Optional human-readable label when the anchor is cryptic (e.g., 'gg' might have label 'Go to start')."
+          "description": "Extended explanation beyond the brief content. Typically interpreted as markdown by renderers."
+        },
+        "url": {
+          "type": "string",
+          "format": "uri",
+          "description": "Reference link to learn more about this entry."
         },
         "comments": {
           "description": "Optional notes, warnings, or additional context."

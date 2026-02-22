@@ -25,8 +25,7 @@
         },
         {
           "anchor": "npm ci",
-          "content": "Install exact versions from package-lock.json.",
-          "label": "Clean install"
+          "content": "Install exact versions from package-lock.json."
         }
       ]
     },

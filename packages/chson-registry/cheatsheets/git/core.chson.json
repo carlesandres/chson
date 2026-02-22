@@ -17,13 +17,11 @@
       "entries": [
         {
           "anchor": "git config --global user.name \"Your Name\"",
-          "content": "Configure your name for commits (also set user.email).",
-          "label": "Set identity"
+          "content": "Configure your name for commits (also set user.email)."
         },
         {
           "anchor": "git config --global init.defaultBranch main",
-          "content": "Use 'main' as the default branch for new repos.",
-          "label": "Set default branch"
+          "content": "Use 'main' as the default branch for new repos."
         }
       ]
     },

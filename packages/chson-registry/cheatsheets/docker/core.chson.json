@@ -104,8 +104,7 @@
         },
         {
           "anchor": "docker run -v $(pwd):<path> <image>",
-          "content": "Mount host directory into container.",
-          "label": "Bind mount"
+          "content": "Mount host directory into container."
         }
       ]
     },

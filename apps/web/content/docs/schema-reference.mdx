@@ -263,8 +263,9 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
     {
       "anchor": "git status",
       "content": "Show working tree status",
-      "label": null,
-      "comments": "Use -s for short format"
+      "details": "Displays staged, unstaged, and untracked files. Use -s for short format.",
+      "url": "https://git-scm.com/docs/git-status",
+      "comments": "Most commonly used command"
     }
   ]
 }
@@ -276,7 +277,8 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
 | ---------- | -------- | -------- | ------------------------------------------------------------ |
 | `anchor`   | `string` | Yes      | The retrieval anchor—what users scan for. Must be non-empty. |
 | `content`  | `string` | Yes      | The associated content—what users need. Must be non-empty.   |
-| `label`    | `string` | No       | Human-readable label for cryptic anchors.                    |
+| `details`  | `string` | No       | Extended explanation, typically interpreted as markdown.     |
+| `url`      | `string` | No       | Reference link to learn more (URI format).                   |
 | `comments` | `any`    | No       | Additional notes, warnings, or context.                      |
 
 ### `anchor`
@@ -299,23 +301,52 @@ The associated content is what users need once they find the anchor.
 - Mechanism → Meaning: `"Create a commit with the specified message"`
 - Intent → Mechanism: `"Save the current file"`
 
-### `label`
+### `details`
 
-Optional human-readable label when the anchor is cryptic or non-obvious.
+Extended explanation beyond the brief content. Renderers typically interpret this as markdown, allowing for formatted text, lists, and code blocks.
 
 ```json
 {
-  "anchor": "gg",
-  "content": "Move cursor to start of document",
-  "label": "Go to start"
+  "anchor": "git rebase -i",
+  "content": "Interactive rebase for editing commit history.",
+  "details": "Opens an editor with a list of commits. Commands:\n- `pick` - use commit\n- `squash` - meld into previous\n- `reword` - change message\n- `drop` - remove commit"
 }
 ```
 
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
 **When to use:**
 
-- Vim-style single-key commands (`dd`, `yy`, `gg`)
-- Abbreviated shortcuts (`C-x C-s`)
-- Symbolic anchors (`::`, `=>`, `??`)
+- Complex commands needing step-by-step explanation
+- Entries with multiple options or modes
+- Runbook steps requiring detailed instructions
+
+### `url`
+
+Reference link to external documentation or resources.
+
+```json
+{
+  "anchor": "git bisect",
+  "content": "Binary search to find the commit that introduced a bug.",
+  "url": "https://git-scm.com/docs/git-bisect"
+}
+```
+
+**Constraints:**
+
+- Type: `string`
+- Format: URI
+- Required: No
+
+**When to use:**
+
+- Link to official documentation
+- Reference tutorials or guides
+- Point to related tools or resources
 
 ### `comments`
 

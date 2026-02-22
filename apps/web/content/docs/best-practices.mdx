@@ -5,24 +5,39 @@ description: Guidelines for writing effective ChSON cheatsheets.
 
 Follow these guidelines to create cheatsheets that are easy to scan and use.
 
-## When to Use Labels
+## When to Use Details
 
-Add a `label` field when the anchor isn't immediately clear:
+Add a `details` field when the `content` needs elaboration:
 
-- **Keyboard shortcuts** — `ctrl + shift + p`
-- **Vim/editor commands** — `gg`, `dd`, `ciw`
-- **Abbreviated commands** — `git stash pop` might need context
-- **Symbols or codes** — Any anchor that isn't self-explanatory
+- **Complex commands** — Multiple options or modes
+- **Nuanced behavior** — Edge cases or gotchas
+- **Step-by-step guidance** — For runbook-style entries
 
 ```json
 {
-  "anchor": "gg",
-  "content": "Jump to visual top of history",
-  "label": "Go to start"
+  "anchor": "git rebase -i",
+  "content": "Interactive rebase for editing commit history.",
+  "details": "Opens an editor where you can pick, squash, reword, or drop commits."
 }
 ```
 
-If the anchor is self-explanatory (like `git status`), skip the label.
+Keep `content` brief and scannable. Move longer explanations to `details`.
+
+## When to Use URL
+
+Add a `url` field to link to authoritative documentation:
+
+- **Official docs** — Primary source of truth
+- **Tutorials** — For complex topics
+- **Related resources** — Tools, plugins, extensions
+
+```json
+{
+  "anchor": "git bisect",
+  "content": "Binary search to find the commit that introduced a bug.",
+  "url": "https://git-scm.com/docs/git-bisect"
+}
+```
 
 ## Choosing Retrieval Direction
 
@@ -50,7 +65,7 @@ If the anchor is self-explanatory (like `git status`), skip the label.
 
 ## Column Label Conventions
 
-Choose labels that match your content type:
+Choose column labels that match your content type:
 
 | Cheatsheet Type             | anchorLabel | contentLabel |
 | --------------------------- | ----------- | ------------ |
