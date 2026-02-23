@@ -17,6 +17,13 @@ interface LayoutProps {
 export default function RootLayout({ children }: LayoutProps) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          defer
+          data-domain="favycons.com"
+          src="https://plausible.io/js/script.tagged-events.js"
+        ></script>
+      </head>
       <body className="min-h-screen">
         <ThemeProvider>
           <QueryProvider>
