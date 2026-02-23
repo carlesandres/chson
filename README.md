@@ -128,8 +128,8 @@ This repo currently ships a minimal Node CLI:
 
 The format is based on cognitive retrieval theory. The `anchor` field represents
 what users scan for (command, shortcut, keyword), and `content` represents what they need
-(description, action, result). Optional `label` fields provide human-readable descriptions
-when anchors are cryptic. See `research/cognitive-foundations.md` for details.
+(description, action, result). Optional `details` and `url` fields provide additional
+context and reference links. See `research/cognitive-foundations.md` for details.
 
 If you want to build a renderer (PDF, flashcards, etc.), the current schema is intentionally
 minimal — the `comments` field can hold any extra structure you need while the standard

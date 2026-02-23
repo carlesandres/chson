@@ -121,16 +121,28 @@ function renderMarkdownTable(chson) {
     for (const entry of entries) {
       const anchor = entry.anchor ?? "";
       const content = entry.content ?? "";
+      const details = entry.details ?? "";
+      const url = entry.url ?? "";
 
       let lhs, rhs;
 
       if (anchorIsMechanism) {
         // mechanism-to-meaning: anchor is code, content is text
         lhs = anchor ? `<pre>${escapeMarkdown(anchor)}</pre>` : "";
-        rhs = escapeMarkdown(content);
+        // Build content cell with optional details and url
+        const rhsParts = [];
+        if (content) rhsParts.push(escapeMarkdown(content));
+        if (details) rhsParts.push(escapeMarkdown(details));
+        if (url) rhsParts.push(`[Link](${escapeMarkdown(url)})`);
+        rhs = rhsParts.join("<br>");
       } else {
         // intent-to-mechanism: anchor is text, content is code
-        lhs = anchor ? `${escapeMarkdown(anchor)}` : "";
+        // Build anchor cell with optional details and url
+        const lhsParts = [];
+        if (anchor) lhsParts.push(escapeMarkdown(anchor));
+        if (details) lhsParts.push(escapeMarkdown(details));
+        if (url) lhsParts.push(`[Link](${escapeMarkdown(url)})`);
+        lhs = lhsParts.join("<br>");
         rhs = content ? `<pre>${escapeMarkdown(content)}</pre>` : "";
       }
 

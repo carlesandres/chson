@@ -5,7 +5,7 @@ import { Badge } from 'components/ui/badge';
 import { Button } from 'components/ui/button';
 import { ArrowRight } from 'lucide-react';
 
-const schemaUrl = 'https://chson.dev/schema/v2/chson.schema.json';
+const schemaUrl = 'https://chson.dev/schema/chson.schema.json';
 
 export default function Home() {
   const sheets = getAllCheatsheets().slice(0, 4);

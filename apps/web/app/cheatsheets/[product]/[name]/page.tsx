@@ -53,10 +53,36 @@ export async function generateMetadata({
 }
 
 /**
- * Renders content as plain text (for intents: actions, descriptions)
+ * Renders content as plain text with optional details and URL
  */
-function TextCell({ children }: { children: React.ReactNode }) {
-  return <div>{children}</div>;
+function TextCell({
+  children,
+  details,
+  url,
+}: {
+  children: React.ReactNode;
+  details?: string;
+  url?: string;
+}) {
+  return (
+    <div className="space-y-1">
+      <div>{children}</div>
+      {details && (
+        <div className="text-sm text-muted-foreground">{details}</div>
+      )}
+      {url && (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+        >
+          <ExternalLink className="h-3 w-3" />
+          <span>Link</span>
+        </a>
+      )}
+    </div>
+  );
 }
 
 export default async function CheatsheetPage({ params }: { params: Params }) {
@@ -197,7 +223,12 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                     </InlineCode>
                                   )
                                 ) : (
-                                  <TextCell>{entry.anchor}</TextCell>
+                                  <TextCell
+                                    details={entry.details}
+                                    url={entry.url}
+                                  >
+                                    {entry.anchor}
+                                  </TextCell>
                                 )}
                               </TableCell>
                               <TableCell
@@ -207,7 +238,12 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                 )}
                               >
                                 {anchorIsMechanism ? (
-                                  <TextCell>{entry.content}</TextCell>
+                                  <TextCell
+                                    details={entry.details}
+                                    url={entry.url}
+                                  >
+                                    {entry.content}
+                                  </TextCell>
                                 ) : (
                                   entry.content && (
                                     <InlineCode language="bash">

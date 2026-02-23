@@ -344,7 +344,8 @@ The ChSON schema structure maps to our terminology:
 |------------------|----------------|
 | `entry.anchor` | Retrieval anchor |
 | `entry.content` | Associated content |
-| `entry.label` | Human-readable label for cryptic anchors |
+| `entry.details` | Additional context or explanation |
+| `entry.url` | Reference link for more information |
 | `section.title` | Chunk category label |
 | `section.entries` | Entries within a chunk |
 | `retrievalDirection` | Explicit declaration of lookup direction |
@@ -362,7 +363,8 @@ The following features have been implemented in ChSON:
    - `items` → `entries`
    - `item.title` + `item.example` → `entry.anchor`
    - `item.description` → `entry.content`
-   - New `entry.label` for human-readable names when anchor is cryptic
+   - `entry.details` for additional context
+   - `entry.url` for reference links
 
 3. **Custom column labels**:
    - `anchorLabel`: Display name for anchor column (e.g., "Example", "Shortcut", "Command")
