@@ -1,29 +1,25 @@
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "$schema": "https://chson.dev/schema/chson.schema.json",
   "title": "Git Essentials",
   "version": "2.x",
   "publicationDate": "2026-01-16",
   "description": "Essential git commands for day-to-day development.",
+  "homepage": "https://git-scm.com/",
+  "tags": ["cli", "version-control"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Example",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://git-scm.com/",
-    "category": "cli"
-  },
   "sections": [
     {
       "title": "Setup",
       "entries": [
         {
           "anchor": "git config --global user.name \"Your Name\"",
-          "content": "Configure your name for commits (also set user.email).",
-          "label": "Set identity"
+          "content": "Configure your name for commits (also set user.email)."
         },
         {
           "anchor": "git config --global init.defaultBranch main",
-          "content": "Use 'main' as the default branch for new repos.",
-          "label": "Set default branch"
+          "content": "Use 'main' as the default branch for new repos."
         }
       ]
     },

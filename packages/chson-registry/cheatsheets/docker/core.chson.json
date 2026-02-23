@@ -1,16 +1,14 @@
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "$schema": "https://chson.dev/schema/chson.schema.json",
   "title": "Docker Essentials",
   "version": "24.x",
   "publicationDate": "2026-01-16",
   "description": "Essential Docker commands for container management.",
+  "homepage": "https://docs.docker.com/",
+  "tags": ["cli", "containers", "devops"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Example",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://docs.docker.com/",
-    "category": "cli"
-  },
   "sections": [
     {
       "title": "Images",
@@ -104,8 +102,7 @@
         },
         {
           "anchor": "docker run -v $(pwd):<path> <image>",
-          "content": "Mount host directory into container.",
-          "label": "Bind mount"
+          "content": "Mount host directory into container."
         }
       ]
     },

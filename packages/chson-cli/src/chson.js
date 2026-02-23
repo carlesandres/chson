@@ -7,9 +7,8 @@ import process from "node:process";
 import Ajv from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
 
-// Import schemas from workspace package
-import schemaV1 from "@chson/schema/v1" with { type: "json" };
-import schemaV2 from "@chson/schema/v2" with { type: "json" };
+// Import schema from workspace package
+import schema from "@chson/schema" with { type: "json" };
 
 function usage() {
   return [
@@ -22,7 +21,6 @@ function usage() {
     "Notes:",
     "  - If a directory is provided, scans for *.chson.json recursively.",
     "  - render outputs 2-column Markdown tables.",
-    "  - Supports both v1 and v2 schemas (auto-detected from $schema URL).",
   ].join("\n");
 }
 
@@ -58,22 +56,6 @@ function parseJsonFile(filePath) {
   }
 }
 
-function detectSchemaVersion(data) {
-  const schemaUrl = data.$schema || "";
-  if (schemaUrl.includes("/v2/")) {
-    return "v2";
-  }
-  // Default to v1 for backwards compatibility
-  return "v1";
-}
-
-function loadSchemas() {
-  return {
-    v1: { schemaPath: "@chson/schema/v1/chson.schema.json", schema: schemaV1 },
-    v2: { schemaPath: "@chson/schema/v2/chson.schema.json", schema: schemaV2 },
-  };
-}
-
 function escapeMarkdown(text) {
   return String(text)
     .replaceAll("\\", "\\\\")
@@ -89,67 +71,10 @@ function escapeMarkdown(text) {
 }
 
 /**
- * Render v1 format: items with title, example, description
- */
-function renderMarkdownTableV1(chson) {
-  const lines = [];
-  lines.push(`# ${escapeMarkdown(chson.title ?? "")}`);
-  lines.push("");
-
-  if (chson.version) {
-    lines.push(`Version: ${escapeMarkdown(chson.version)}`);
-  }
-  if (chson.publicationDate) {
-    lines.push(`Published: ${escapeMarkdown(chson.publicationDate)}`);
-  }
-  if (chson.description) {
-    lines.push("");
-    lines.push(escapeMarkdown(chson.description));
-  }
-
-  const sections = Array.isArray(chson.sections) ? chson.sections : [];
-  for (const section of sections) {
-    lines.push("");
-    lines.push(`## ${escapeMarkdown(section.title ?? "")}`);
-
-    if (section.description) {
-      lines.push("");
-      lines.push(escapeMarkdown(section.description));
-    }
-
-    lines.push("");
-    lines.push("| Example | Description |");
-    lines.push("| --- | --- |");
-
-    const items = Array.isArray(section.items) ? section.items : [];
-    for (const item of items) {
-      let example = "";
-      if (item.example !== undefined) {
-        if (typeof item.example === "string") {
-          example = item.example;
-        } else {
-          example = JSON.stringify(item.example, null, 2);
-        }
-      } else if (item.title !== undefined) {
-        example = String(item.title);
-      }
-
-      const lhs = example ? `<pre>${escapeMarkdown(example)}</pre>` : "";
-      const rhs = escapeMarkdown(item.description ?? "");
-
-      lines.push(`| ${lhs} | ${rhs} |`);
-    }
-  }
-
-  lines.push("");
-  return lines.join("\n");
-}
-
-/**
- * Render v2 format: entries with anchor, content, optional label
+ * Render ChSON format: entries with anchor, content, optional details/url
  * Applies <pre> formatting to mechanism column based on retrievalDirection
  */
-function renderMarkdownTableV2(chson) {
+function renderMarkdownTable(chson) {
   const lines = [];
   lines.push(`# ${escapeMarkdown(chson.title ?? "")}`);
   lines.push("");
@@ -196,17 +121,28 @@ function renderMarkdownTableV2(chson) {
     for (const entry of entries) {
       const anchor = entry.anchor ?? "";
       const content = entry.content ?? "";
-      const label = entry.label ? ` (${entry.label})` : "";
+      const details = entry.details ?? "";
+      const url = entry.url ?? "";
 
       let lhs, rhs;
 
       if (anchorIsMechanism) {
         // mechanism-to-meaning: anchor is code, content is text
-        lhs = anchor ? `<pre>${escapeMarkdown(anchor)}</pre>${escapeMarkdown(label)}` : "";
-        rhs = escapeMarkdown(content);
+        lhs = anchor ? `<pre>${escapeMarkdown(anchor)}</pre>` : "";
+        // Build content cell with optional details and url
+        const rhsParts = [];
+        if (content) rhsParts.push(escapeMarkdown(content));
+        if (details) rhsParts.push(escapeMarkdown(details));
+        if (url) rhsParts.push(`[Link](${escapeMarkdown(url)})`);
+        rhs = rhsParts.join("<br>");
       } else {
         // intent-to-mechanism: anchor is text, content is code
-        lhs = anchor ? `${escapeMarkdown(anchor)}${escapeMarkdown(label)}` : "";
+        // Build anchor cell with optional details and url
+        const lhsParts = [];
+        if (anchor) lhsParts.push(escapeMarkdown(anchor));
+        if (details) lhsParts.push(escapeMarkdown(details));
+        if (url) lhsParts.push(`[Link](${escapeMarkdown(url)})`);
+        lhs = lhsParts.join("<br>");
         rhs = content ? `<pre>${escapeMarkdown(content)}</pre>` : "";
       }
 
@@ -218,47 +154,24 @@ function renderMarkdownTableV2(chson) {
   return lines.join("\n");
 }
 
-function renderMarkdownTable(chson) {
-  const version = detectSchemaVersion(chson);
-  if (version === "v2") {
-    return renderMarkdownTableV2(chson);
-  }
-  return renderMarkdownTableV1(chson);
-}
-
 function validateFiles(filePaths) {
-  const schemas = loadSchemas();
-  const validators = {};
-
-  // Compile validators lazily
-  function getValidator(version) {
-    if (!validators[version]) {
-      const { schema } = schemas[version];
-      const ajv = new Ajv({ allErrors: true, strict: false });
-      addFormats(ajv);
-      validators[version] = ajv.compile(schema);
-    }
-    return validators[version];
-  }
+  const ajv = new Ajv({ allErrors: true, strict: false });
+  addFormats(ajv);
+  const validate = ajv.compile(schema);
 
   let ok = true;
   for (const filePath of filePaths) {
     const data = parseJsonFile(filePath);
-    const version = detectSchemaVersion(data);
-    const validate = getValidator(version);
-    const { schemaPath } = schemas[version];
-
     const valid = validate(data);
 
     if (!valid) {
       ok = false;
-      console.error(`✗ ${filePath} (${version})`);
-      console.error(`  schema: ${schemaPath}`);
+      console.error(`✗ ${filePath}`);
       for (const err of validate.errors ?? []) {
         console.error(`  - ${err.instancePath || "/"}: ${err.message}`);
       }
     } else {
-      console.log(`✓ ${filePath} (${version})`);
+      console.log(`✓ ${filePath}`);
     }
   }
 

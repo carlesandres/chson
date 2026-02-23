@@ -1,19 +1,19 @@
 ---
 title: Schema Reference
-description: Complete field-by-field reference for the ChSON v2 schema
+description: Complete field-by-field reference for the ChSON schema
 ---
 
 # Schema Reference
 
-This page provides a complete reference for all fields in the ChSON v2 schema. For conceptual explanations, see [Core Concepts](/docs/core-concepts) and [Advanced Features](/docs/advanced-features).
+This page provides a complete reference for all fields in the ChSON schema. For conceptual explanations, see [Core Concepts](/docs/core-concepts) and [Advanced Features](/docs/advanced-features).
 
 ## Schema URL
 
-All ChSON v2 files should include the schema reference:
+All ChSON files should include the schema reference:
 
 ```json
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json"
+  "$schema": "https://chson.dev/schema/chson.schema.json"
 }
 ```
 
@@ -34,14 +34,20 @@ The root object contains metadata about the cheatsheet and an array of sections.
 
 ### Optional Fields
 
-| Field                | Type     | Description                                                                     |
-| -------------------- | -------- | ------------------------------------------------------------------------------- |
-| `$schema`            | `string` | JSON Schema reference URL for validation.                                       |
-| `version`            | `string` | Version of the software this cheatsheet documents (e.g., `"3.2.1"`).            |
-| `retrievalDirection` | `string` | The cognitive lookup direction. See [Retrieval Direction](#retrievaldirection). |
-| `anchorLabel`        | `string` | Display name for the anchor column. Default: `"Anchor"`.                        |
-| `contentLabel`       | `string` | Display name for the content column. Default: `"Content"`.                      |
-| `metadata`           | `object` | Additional metadata (homepage, category, tags, etc.).                           |
+| Field                | Type       | Description                                                                        |
+| -------------------- | ---------- | ---------------------------------------------------------------------------------- |
+| `$schema`            | `string`   | JSON Schema reference URL for validation.                                          |
+| `version`            | `string`   | Version of the software this document covers (e.g., `"3.2.1"`).                    |
+| `documentType`       | `string`   | Type of document: `cheatsheet`, `checklist`, `runbook`, `tldr`, or `bookmarks`.    |
+| `author`             | `string`   | The author or maintainer of this document.                                         |
+| `license`            | `string`   | License identifier (e.g., `"MIT"`, `"CC-BY-4.0"`).                                 |
+| `homepage`           | `string`   | URL of the official website or documentation for the subject matter.               |
+| `icon`               | `string`   | URL or relative path to an image representing this document.                       |
+| `tags`               | `string[]` | Keywords for categorization and discovery.                                         |
+| `retrievalDirection` | `string`   | Optional rendering hint. See [Retrieval Direction](#retrievaldirection).           |
+| `anchorLabel`        | `string`   | Display name for the anchor column. Default: `"Anchor"`.                           |
+| `contentLabel`       | `string`   | Display name for the content column. Default: `"Content"`.                         |
+| `metadata`           | `object`   | Additional freeform metadata.                                                      |
 
 ---
 
@@ -132,7 +138,7 @@ A brief summary explaining what this cheatsheet covers and who it's for.
 }
 ```
 
-Declares the cognitive lookup direction for this cheatsheet. This affects how renderers may present the data.
+Optional hint for renderers about the cognitive lookup direction. This may influence how the data is presented but has no effect on validation.
 
 **Constraints:**
 
@@ -143,6 +149,99 @@ Declares the cognitive lookup direction for this cheatsheet. This affects how re
 - Required: No
 
 See [Advanced Features](/docs/advanced-features#retrieval-direction) for detailed explanation.
+
+---
+
+### `author`
+
+```json
+{
+  "author": "Jane Developer"
+}
+```
+
+The author or maintainer of this document.
+
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
+---
+
+### `license`
+
+```json
+{
+  "license": "MIT"
+}
+```
+
+License identifier for this document. Use standard identifiers like SPDX license IDs.
+
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
+**Common values:** `"MIT"`, `"CC-BY-4.0"`, `"CC0-1.0"`, `"Apache-2.0"`
+
+---
+
+### `homepage`
+
+```json
+{
+  "homepage": "https://git-scm.com"
+}
+```
+
+URL of the official website or documentation for the subject matter.
+
+**Constraints:**
+
+- Type: `string`
+- Format: URI
+- Required: No
+
+---
+
+### `icon`
+
+```json
+{
+  "icon": "https://git-scm.com/images/logos/downloads/Git-Icon-1788C.png"
+}
+```
+
+URL or relative path to an image representing this document (logo, icon, etc.).
+
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
+**Examples:**
+
+- Absolute URL: `"https://example.com/logo.png"`
+- Relative path: `"./icons/git.svg"`
+
+---
+
+### `tags`
+
+```json
+{
+  "tags": ["cli", "devtools", "version-control"]
+}
+```
+
+Keywords for categorization and discovery.
+
+**Constraints:**
+
+- Type: `array` of `string`
+- Required: No
 
 ---
 
@@ -202,28 +301,19 @@ Custom display name for the content column.
 ```json
 {
   "metadata": {
-    "homepage": "https://git-scm.com",
-    "category": "version-control",
-    "tags": ["cli", "devtools"]
+    "source": "official-docs",
+    "difficulty": "beginner"
   }
 }
 ```
 
-Freeform object for additional metadata. No specific structure is enforced.
+Freeform object for additional metadata not covered by the standard fields.
 
 **Constraints:**
 
 - Type: `object`
 - Additional properties: Allowed
 - Required: No
-
-**Common fields:**
-
-- `homepage` - Project website
-- `category` - Classification
-- `tags` - Array of keywords
-- `author` - Cheatsheet author
-- `license` - License identifier
 
 ---
 
@@ -263,8 +353,9 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
     {
       "anchor": "git status",
       "content": "Show working tree status",
-      "label": null,
-      "comments": "Use -s for short format"
+      "details": "Displays staged, unstaged, and untracked files. Use -s for short format.",
+      "url": "https://git-scm.com/docs/git-status",
+      "comments": "Most commonly used command"
     }
   ]
 }
@@ -276,7 +367,8 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
 | ---------- | -------- | -------- | ------------------------------------------------------------ |
 | `anchor`   | `string` | Yes      | The retrieval anchor—what users scan for. Must be non-empty. |
 | `content`  | `string` | Yes      | The associated content—what users need. Must be non-empty.   |
-| `label`    | `string` | No       | Human-readable label for cryptic anchors.                    |
+| `details`  | `string` | No       | Extended explanation, typically interpreted as markdown.     |
+| `url`      | `string` | No       | Reference link to learn more (URI format).                   |
 | `comments` | `any`    | No       | Additional notes, warnings, or context.                      |
 
 ### `anchor`
@@ -299,23 +391,52 @@ The associated content is what users need once they find the anchor.
 - Mechanism → Meaning: `"Create a commit with the specified message"`
 - Intent → Mechanism: `"Save the current file"`
 
-### `label`
+### `details`
 
-Optional human-readable label when the anchor is cryptic or non-obvious.
+Extended explanation beyond the brief content. Renderers typically interpret this as markdown, allowing for formatted text, lists, and code blocks.
 
 ```json
 {
-  "anchor": "gg",
-  "content": "Move cursor to start of document",
-  "label": "Go to start"
+  "anchor": "git rebase -i",
+  "content": "Interactive rebase for editing commit history.",
+  "details": "Opens an editor with a list of commits. Commands:\n- `pick` - use commit\n- `squash` - meld into previous\n- `reword` - change message\n- `drop` - remove commit"
 }
 ```
 
+**Constraints:**
+
+- Type: `string`
+- Required: No
+
 **When to use:**
 
-- Vim-style single-key commands (`dd`, `yy`, `gg`)
-- Abbreviated shortcuts (`C-x C-s`)
-- Symbolic anchors (`::`, `=>`, `??`)
+- Complex commands needing step-by-step explanation
+- Entries with multiple options or modes
+- Runbook steps requiring detailed instructions
+
+### `url`
+
+Reference link to external documentation or resources.
+
+```json
+{
+  "anchor": "git bisect",
+  "content": "Binary search to find the commit that introduced a bug.",
+  "url": "https://git-scm.com/docs/git-bisect"
+}
+```
+
+**Constraints:**
+
+- Type: `string`
+- Format: URI
+- Required: No
+
+**When to use:**
+
+- Link to official documentation
+- Reference tutorials or guides
+- Point to related tools or resources
 
 ### `comments`
 
@@ -335,18 +456,18 @@ Additional context that doesn't fit in the content field. Can be any JSON type, 
 
 ```json
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "$schema": "https://chson.dev/schema/chson.schema.json",
   "title": "Git Core Commands",
   "version": "2.47.0",
   "publicationDate": "2026-02-15",
   "description": "Essential Git commands for daily workflows",
+  "author": "ChSON Contributors",
+  "license": "CC-BY-4.0",
+  "homepage": "https://git-scm.com",
+  "tags": ["cli", "version-control"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Command",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://git-scm.com",
-    "category": "version-control"
-  },
   "sections": [
     {
       "title": "Getting Started",
@@ -390,17 +511,17 @@ Additional context that doesn't fit in the content field. Can be any JSON type, 
 
 The full JSON Schema (Draft 2020-12) is available at:
 
-- **URL:** [https://chson.dev/schema/v2/chson.schema.json](https://chson.dev/schema/v2/chson.schema.json)
-- **Source:** [`packages/chson-schema/schema/v2/chson.schema.json`](https://github.com/chson-dev/chson/blob/main/packages/chson-schema/schema/v2/chson.schema.json)
+- **URL:** [https://chson.dev/schema/chson.schema.json](https://chson.dev/schema/chson.schema.json)
+- **Source:** [`packages/chson-schema/schema/chson.schema.json`](https://github.com/chson-dev/chson/blob/main/packages/chson-schema/schema/chson.schema.json)
 
 ### TypeScript Types
 
 Auto-generated TypeScript types are available in the `@chson/schema` package:
 
 ```typescript
-import type { ChSONv2 } from '@chson/schema';
+import type { ChsonDocument } from '@chson/schema';
 
-const cheatsheet: ChSONv2 = {
+const cheatsheet: ChsonDocument = {
   title: "My Cheatsheet",
   publicationDate: "2026-02-15",
   description: "A sample cheatsheet",

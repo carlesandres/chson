@@ -1,0 +1,138 @@
+---
+title: Use Cases
+description: How ChSON adapts to cheatsheets, checklists, runbooks, TLDRs, and bookmarks.
+---
+
+ChSON's anchor-content model generalizes beyond cheatsheets. The same cognitive principle—scanning for something you recognize to find related information—applies to many structured knowledge formats.
+
+Use the `documentType` field to indicate how your document should be interpreted and rendered.
+
+## Cheatsheets
+
+The original use case. Quick reference for commands, shortcuts, or syntax.
+
+- **anchor**: Command, shortcut, or syntax
+- **content**: What it does or means
+
+```json title="Cheatsheet example"
+{
+  "documentType": "cheatsheet",
+  "title": "Git Basics",
+  "sections": [{
+    "title": "Staging",
+    "entries": [
+      { "anchor": "git add -p", "content": "Interactively stage hunks" }
+    ]
+  }]
+}
+```
+
+## Checklists
+
+Ordered tasks or steps to complete. ChSON defines the template—actual checkbox state is handled by consuming applications.
+
+- **anchor**: Task or step name
+- **content**: Details, criteria, or instructions
+
+```json title="Checklist example"
+{
+  "documentType": "checklist",
+  "title": "Production Deployment",
+  "anchorLabel": "Task",
+  "contentLabel": "Details",
+  "sections": [{
+    "title": "Pre-deployment",
+    "entries": [
+      { "anchor": "Run test suite", "content": "All tests must pass before proceeding" },
+      { "anchor": "Update changelog", "content": "Document breaking changes and new features" }
+    ]
+  }]
+}
+```
+
+## Runbooks
+
+Step-by-step operational procedures. Array order defines execution sequence. Conditionals are described in the content—no built-in branching logic.
+
+- **anchor**: Step or action
+- **content**: Expected result, notes, or next action
+
+```json title="Runbook example"
+{
+  "documentType": "runbook",
+  "title": "Database Failover",
+  "anchorLabel": "Step",
+  "contentLabel": "Expected Result",
+  "sections": [{
+    "title": "Initiate Failover",
+    "entries": [
+      { "anchor": "Check replica lag", "content": "Should be < 100ms. If higher, wait or investigate." },
+      { "anchor": "Promote replica", "content": "Run: pg_ctl promote -D /data" }
+    ]
+  }]
+}
+```
+
+## TLDRs
+
+Brief summaries of topics, concepts, or documentation. Useful for quick reference cards or study guides.
+
+- **anchor**: Topic, term, or concept
+- **content**: Brief explanation or summary
+
+```json title="TLDR example"
+{
+  "documentType": "tldr",
+  "title": "HTTP Status Codes",
+  "anchorLabel": "Code",
+  "contentLabel": "Meaning",
+  "sections": [{
+    "title": "Success",
+    "entries": [
+      { "anchor": "200 OK", "content": "Request succeeded" },
+      { "anchor": "201 Created", "content": "Resource created successfully" }
+    ]
+  }]
+}
+```
+
+## Bookmarks
+
+Curated link collections. The content field typically contains the URL, with optional description in comments.
+
+- **anchor**: Title or name of the resource
+- **content**: URL (and optionally, a brief description)
+
+```json title="Bookmarks example"
+{
+  "documentType": "bookmarks",
+  "title": "TypeScript Resources",
+  "anchorLabel": "Resource",
+  "contentLabel": "Link",
+  "sections": [{
+    "title": "Official",
+    "entries": [
+      { "anchor": "TypeScript Handbook", "content": "https://www.typescriptlang.org/docs/handbook/" },
+      { "anchor": "Playground", "content": "https://www.typescriptlang.org/play" }
+    ]
+  }]
+}
+```
+
+## The Cognitive Model
+
+All these use cases share the same underlying pattern: users scan for an **anchor** (what they're looking for) to retrieve **content** (what they need). The `documentType` field signals to renderers how to present the data, but the core structure remains consistent.
+
+| Document Type | Anchor Is...         | Content Is...              |
+|---------------|----------------------|----------------------------|
+| cheatsheet    | Command/shortcut     | Meaning/effect             |
+| checklist     | Task/step            | Details/criteria           |
+| runbook       | Step/action          | Expected result/notes      |
+| tldr          | Topic/term           | Brief explanation          |
+| bookmarks     | Title/name           | URL + description          |
+
+## Next Steps
+
+- [Core Concepts](/docs/core-concepts) — Anchors, content, details, and sections
+- [Schema Reference](/docs/schema-reference) — Complete field documentation
+- [Examples](/docs/examples) — Real-world ChSON documents

@@ -1,6 +1,6 @@
 ---
 title: Core Concepts
-description: Understanding anchors, content, labels, and sections in ChSON v2.
+description: Understanding anchors, content, details, url, and sections in ChSON.
 ---
 
 Every cheatsheet entry has two key parts that mirror how people actually look up information.
@@ -19,23 +19,35 @@ Think of it like a dictionary: you scan for the word (anchor) to find its defini
 }
 ```
 
-## Optional Labels
+## Optional Fields
 
-Sometimes the anchor is cryptic—a keyboard shortcut, obscure command, or symbol. The optional `label` field provides a human-readable description.
+Entries can include additional optional fields for deeper information.
 
-```json title="Entry with label"
+### Details
+
+When a brief `content` isn't enough, use `details` for extended explanation. Renderers typically interpret this as markdown.
+
+```json title="Entry with details"
 {
-  "anchor": "gg",
-  "content": "Jump to visual top of history",
-  "label": "Go to start"
+  "anchor": "git rebase -i",
+  "content": "Interactive rebase for editing commit history.",
+  "details": "Opens an editor with a list of commits. You can:\n- `pick` to keep a commit\n- `squash` to combine with previous\n- `reword` to change the message\n- `drop` to remove entirely"
 }
 ```
 
-Labels are useful for:
+### URL
 
-- Vim commands (`gg`, `dd`, `ciw`)
-- Keyboard shortcuts (`ctrl + shift + p`)
-- Any anchor that isn't immediately self-explanatory
+Link to external documentation or resources with the `url` field.
+
+```json title="Entry with url"
+{
+  "anchor": "git bisect",
+  "content": "Binary search to find the commit that introduced a bug.",
+  "url": "https://git-scm.com/docs/git-bisect"
+}
+```
+
+Both fields can be combined when appropriate.
 
 ## Sections
 

@@ -1,49 +1,41 @@
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "$schema": "https://chson.dev/schema/chson.schema.json",
   "title": "Vim Essentials",
   "version": "9.x",
   "publicationDate": "2026-01-16",
   "description": "Essential Vim commands for text editing.",
+  "homepage": "https://www.vim.org/",
+  "tags": ["editor", "cli"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Example",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://www.vim.org/",
-    "category": "editor"
-  },
   "sections": [
     {
       "title": "Modes",
       "entries": [
         {
           "anchor": "Esc",
-          "content": "Return to normal mode from any other mode.",
-          "label": "Normal mode"
+          "content": "Return to normal mode from any other mode."
         },
         {
           "anchor": "i",
-          "content": "Enter insert mode before cursor.",
-          "label": "Insert mode"
+          "content": "Enter insert mode before cursor."
         },
         {
           "anchor": "a",
-          "content": "Enter insert mode after cursor.",
-          "label": "Append"
+          "content": "Enter insert mode after cursor."
         },
         {
           "anchor": "v",
-          "content": "Start character-wise visual selection.",
-          "label": "Visual mode"
+          "content": "Start character-wise visual selection."
         },
         {
           "anchor": "V",
-          "content": "Start line-wise visual selection.",
-          "label": "Visual line"
+          "content": "Start line-wise visual selection."
         },
         {
           "anchor": ":",
-          "content": "Enter command-line mode.",
-          "label": "Command mode"
+          "content": "Enter command-line mode."
         }
       ]
     },
@@ -52,8 +44,7 @@
       "entries": [
         {
           "anchor": "h j k l",
-          "content": "Left, down, up, right.",
-          "label": "Move by character"
+          "content": "Left, down, up, right."
         },
         {
           "anchor": "w",
@@ -65,28 +56,23 @@
         },
         {
           "anchor": "0",
-          "content": "Jump to beginning of line.",
-          "label": "Line start"
+          "content": "Jump to beginning of line."
         },
         {
           "anchor": "$",
-          "content": "Jump to end of line.",
-          "label": "Line end"
+          "content": "Jump to end of line."
         },
         {
           "anchor": "gg",
-          "content": "Jump to first line of file.",
-          "label": "File start"
+          "content": "Jump to first line of file."
         },
         {
           "anchor": "G",
-          "content": "Jump to last line of file.",
-          "label": "File end"
+          "content": "Jump to last line of file."
         },
         {
           "anchor": "<n>G",
-          "content": "Jump to line n.",
-          "label": "Go to line"
+          "content": "Jump to line n."
         }
       ]
     },
@@ -132,13 +118,11 @@
       "entries": [
         {
           "anchor": "yy",
-          "content": "Copy current line.",
-          "label": "Yank line"
+          "content": "Copy current line."
         },
         {
           "anchor": "yw",
-          "content": "Copy from cursor to start of next word.",
-          "label": "Yank word"
+          "content": "Copy from cursor to start of next word."
         },
         {
           "anchor": "p",
@@ -180,28 +164,23 @@
       "entries": [
         {
           "anchor": ":w",
-          "content": "Write current file to disk.",
-          "label": "Save"
+          "content": "Write current file to disk."
         },
         {
           "anchor": ":q",
-          "content": "Quit (fails if unsaved changes).",
-          "label": "Quit"
+          "content": "Quit (fails if unsaved changes)."
         },
         {
           "anchor": ":wq",
-          "content": "Write and quit.",
-          "label": "Save and quit"
+          "content": "Write and quit."
         },
         {
           "anchor": ":q!",
-          "content": "Quit without saving changes.",
-          "label": "Force quit"
+          "content": "Quit without saving changes."
         },
         {
           "anchor": ":e <file>",
-          "content": "Open another file for editing.",
-          "label": "Open file"
+          "content": "Open another file for editing."
         }
       ]
     }

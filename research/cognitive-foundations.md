@@ -338,22 +338,23 @@ This theoretical framework has direct implications for the ChSON format:
 
 ### 6.1 Schema Alignment
 
-The ChSON v2 schema structure maps to our terminology:
+The ChSON schema structure maps to our terminology:
 
-| ChSON v2 Element | Cognitive Role |
+| ChSON Element | Cognitive Role |
 |------------------|----------------|
 | `entry.anchor` | Retrieval anchor |
 | `entry.content` | Associated content |
-| `entry.label` | Human-readable label for cryptic anchors |
+| `entry.details` | Additional context or explanation |
+| `entry.url` | Reference link for more information |
 | `section.title` | Chunk category label |
 | `section.entries` | Entries within a chunk |
 | `retrievalDirection` | Explicit declaration of lookup direction |
 | `anchorLabel` | Domain-appropriate name for anchor column |
 | `contentLabel` | Domain-appropriate name for content column |
 
-### 6.2 Implemented in v2
+### 6.2 Implemented Features
 
-The following features have been implemented in ChSON v2:
+The following features have been implemented in ChSON:
 
 1. **`retrievalDirection`**: Explicit declaration at sheet level
    - Values: `"intent-to-mechanism"`, `"mechanism-to-meaning"`
@@ -362,7 +363,8 @@ The following features have been implemented in ChSON v2:
    - `items` → `entries`
    - `item.title` + `item.example` → `entry.anchor`
    - `item.description` → `entry.content`
-   - New `entry.label` for human-readable names when anchor is cryptic
+   - `entry.details` for additional context
+   - `entry.url` for reference links
 
 3. **Custom column labels**:
    - `anchorLabel`: Display name for anchor column (e.g., "Example", "Shortcut", "Command")

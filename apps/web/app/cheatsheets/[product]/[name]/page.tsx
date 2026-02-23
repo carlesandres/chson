@@ -2,6 +2,7 @@ import Link from 'next/link';
 import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllCheatsheets, loadCheatsheet } from 'lib/cheatsheets';
+import { cn } from 'lib/utils';
 import { InlineCode } from 'components/chson';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
 import { Badge } from 'components/ui/badge';
@@ -22,12 +23,6 @@ import {
   TableHeader,
   TableRow,
 } from 'components/ui/table';
-import {
-  Tooltip,
-  TooltipContent,
-  TooltipProvider,
-  TooltipTrigger,
-} from 'components/ui/tooltip';
 import { ScrollArea, ScrollBar } from 'components/ui/scroll-area';
 import { ExternalLink, Home } from 'lucide-react';
 
@@ -58,36 +53,36 @@ export async function generateMetadata({
 }
 
 /**
- * Renders content as plain text (for intents: actions, descriptions)
+ * Renders content as plain text with optional details and URL
  */
 function TextCell({
   children,
-  label,
+  details,
+  url,
 }: {
   children: React.ReactNode;
-  label?: string;
+  details?: string;
+  url?: string;
 }) {
-  if (label) {
-    return (
-      <TooltipProvider>
-        <Tooltip>
-          <TooltipTrigger asChild>
-            <div className="cursor-help">
-              <div className="font-semibold">{label}</div>
-              <div className="mt-1 text-sm text-muted-foreground">
-                {children}
-              </div>
-            </div>
-          </TooltipTrigger>
-          <TooltipContent>
-            <p>Label: {label}</p>
-          </TooltipContent>
-        </Tooltip>
-      </TooltipProvider>
-    );
-  }
-
-  return <div>{children}</div>;
+  return (
+    <div className="space-y-1">
+      <div>{children}</div>
+      {details && (
+        <div className="text-sm text-muted-foreground">{details}</div>
+      )}
+      {url && (
+        <a
+          href={url}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
+        >
+          <ExternalLink className="h-3 w-3" />
+          <span>Link</span>
+        </a>
+      )}
+    </div>
+  );
 }
 
 export default async function CheatsheetPage({ params }: { params: Params }) {
@@ -215,7 +210,12 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                         {Array.isArray(section.entries) &&
                           section.entries.map((entry, entryIdx) => (
                             <TableRow key={entryIdx}>
-                              <TableCell className="align-top">
+                              <TableCell
+                                className={cn(
+                                  'align-middle',
+                                  anchorIsMechanism && 'p-0',
+                                )}
+                              >
                                 {anchorIsMechanism ? (
                                   entry.anchor && (
                                     <InlineCode language="bash">
@@ -223,14 +223,25 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                     </InlineCode>
                                   )
                                 ) : (
-                                  <TextCell label={entry.label}>
+                                  <TextCell
+                                    details={entry.details}
+                                    url={entry.url}
+                                  >
                                     {entry.anchor}
                                   </TextCell>
                                 )}
                               </TableCell>
-                              <TableCell className="align-top">
+                              <TableCell
+                                className={cn(
+                                  'align-middle',
+                                  !anchorIsMechanism && 'p-0',
+                                )}
+                              >
                                 {anchorIsMechanism ? (
-                                  <TextCell label={entry.label}>
+                                  <TextCell
+                                    details={entry.details}
+                                    url={entry.url}
+                                  >
                                     {entry.content}
                                   </TextCell>
                                 ) : (

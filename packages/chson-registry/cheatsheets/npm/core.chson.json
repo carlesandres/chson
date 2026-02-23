@@ -1,16 +1,14 @@
 {
-  "$schema": "https://chson.dev/schema/v2/chson.schema.json",
+  "$schema": "https://chson.dev/schema/chson.schema.json",
   "title": "npm Essentials",
   "version": "10.x",
   "publicationDate": "2026-01-16",
   "description": "Essential npm commands for Node.js package management.",
+  "homepage": "https://docs.npmjs.com/",
+  "tags": ["cli", "nodejs", "package-manager"],
   "retrievalDirection": "mechanism-to-meaning",
   "anchorLabel": "Example",
   "contentLabel": "Description",
-  "metadata": {
-    "homepage": "https://docs.npmjs.com/",
-    "category": "cli"
-  },
   "sections": [
     {
       "title": "Project Setup",
@@ -25,8 +23,7 @@
         },
         {
           "anchor": "npm ci",
-          "content": "Install exact versions from package-lock.json.",
-          "label": "Clean install"
+          "content": "Install exact versions from package-lock.json."
         }
       ]
     },

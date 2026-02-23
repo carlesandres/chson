@@ -19,7 +19,7 @@ npm install
 node packages/chson-cli/src/chson.js validate path/to/file.chson.json
 ```
 
-Validates against the v2 schema (auto-detected from the `$schema` field).
+Validates against the ChSON schema.
 
 ### Validate All Cheatsheets
 
@@ -60,9 +60,4 @@ Renders all registry cheatsheets to the `build/` directory.
 
 ## Schema Validation
 
-The CLI automatically detects the schema version from the `$schema` field:
-
-- `https://chson.dev/schema/v2/chson.schema.json` → v2 validation
-- `https://chson.dev/schema/v1/chson.schema.json` → v1 validation (legacy)
-
-If no `$schema` is specified, v2 is assumed.
+The CLI validates against the ChSON schema at `https://chson.dev/schema/chson.schema.json`.

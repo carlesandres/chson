@@ -23,15 +23,15 @@ Files use the extension `.chson.json`.
 
 ## Schema
 
-ChSON files validate against the canonical JSON Schema (currently v2):
+ChSON files validate against the canonical JSON Schema:
 
-- `https://chson.dev/schema/v2/chson.schema.json`
+- `https://chson.dev/schema/chson.schema.json`
 
 In each cheatsheet, set:
 
   ```json
   {
-    "$schema": "https://chson.dev/schema/v2/chson.schema.json"
+    "$schema": "https://chson.dev/schema/chson.schema.json"
   }
   ```
 
@@ -123,13 +123,13 @@ Turborepo automatically builds packages in the correct order.
 
 This repo currently ships a minimal Node CLI:
 
-- Validate ChSON files using AJV (auto-detects v2 schema)
+- Validate ChSON files using AJV
 - Render ChSON to Markdown using 2-column tables (Anchor / Content, with custom labels)
 
-The v2 format is based on cognitive retrieval theory. The `anchor` field represents
+The format is based on cognitive retrieval theory. The `anchor` field represents
 what users scan for (command, shortcut, keyword), and `content` represents what they need
-(description, action, result). Optional `label` fields provide human-readable descriptions
-when anchors are cryptic. See `research/cognitive-foundations.md` for details.
+(description, action, result). Optional `details` and `url` fields provide additional
+context and reference links. See `research/cognitive-foundations.md` for details.
 
 If you want to build a renderer (PDF, flashcards, etc.), the current schema is intentionally
 minimal — the `comments` field can hold any extra structure you need while the standard
