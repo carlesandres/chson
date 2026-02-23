@@ -1,0 +1,220 @@
+---
+title: Rendering Tips
+description: Practical advice for building ChSON renderers.
+---
+
+This guide covers common challenges when building renderers for ChSON documents, whether you're outputting Markdown, HTML, PDF, or another format.
+
+## Escaping Code Fences in Markdown
+
+When rendering ChSON to Markdown, you may wrap `anchor` or `content` values in code fences. This creates a problem if the content itself contains triple backticks.
+
+### The Problem
+
+```json
+{
+  "anchor": "```bash\necho hello\n```",
+  "content": "Embed a code block in Markdown"
+}
+```
+
+If your renderer wraps this in a code fence:
+
+````markdown
+```bash
+```bash
+echo hello
+```
+```
+````
+
+The nested backticks break the fence, causing malformed output.
+
+### Solutions
+
+**1. Use HTML `<pre>` tags instead of fences**
+
+The ChSON CLI uses this approach for inline code in tables:
+
+```markdown
+| <pre>git status</pre> | Show working tree status |
+```
+
+This avoids fence-breaking entirely since `<pre>` doesn't conflict with backticks.
+
+**2. Use longer fence delimiters**
+
+Markdown allows fences with more than 3 backticks. Use 4+ backticks to wrap content that contains triple backticks:
+
+`````markdown
+````bash
+```
+This contains backticks
+```
+````
+`````
+
+**3. Escape or encode backticks**
+
+Replace `` ` `` with an HTML entity or escape sequence:
+
+```javascript
+const escaped = content.replace(/`/g, '&#96;');
+```
+
+This is the most defensive approach but may affect copy-paste behavior.
+
+**4. Detect and handle dynamically**
+
+Count the longest backtick sequence in content and use a longer fence:
+
+```javascript
+function wrapInFence(code, language = '') {
+  const maxBackticks = (code.match(/`+/g) || [])
+    .reduce((max, seq) => Math.max(max, seq.length), 2);
+  const fence = '`'.repeat(maxBackticks + 1);
+  return `${fence}${language}\n${code}\n${fence}`;
+}
+```
+
+### Recommendation
+
+For table-based Markdown output, use `<pre>` tags. For standalone code blocks or when targeting platforms that support extended fences, use dynamic fence lengths.
+
+## Handling Special Characters
+
+ChSON content may contain characters that need escaping depending on your output format.
+
+### Markdown
+
+Escape these characters to prevent unwanted formatting:
+
+| Character | Escape As | Reason |
+| --------- | --------- | ------ |
+| `{` `}` | `\{` `\}` | MDX/JSX interpolation |
+| `<` `>` | `\<` `\>` or `&lt;` `&gt;` | HTML tags |
+| `|` | `\|` | Table cell delimiters |
+| `*` `_` | `\*` `\_` | Bold/italic |
+| `[` `]` | `\[` `\]` | Links |
+
+Example escape function:
+
+```javascript
+function escapeMarkdown(str) {
+  return str
+    .replace(/([\\`*_{}[\]()#+\-.!|<>])/g, '\\$1');
+}
+```
+
+### HTML
+
+Use standard HTML entity encoding:
+
+```javascript
+function escapeHtml(str) {
+  return str
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;');
+}
+```
+
+## Rendering `details` and `url` Fields
+
+The optional `details` and `url` fields provide supplementary information. How you render them depends on your format and design goals.
+
+### Markdown Tables
+
+Append details and URL to the content cell using line breaks:
+
+```javascript
+const parts = [content];
+if (details) parts.push(details);
+if (url) parts.push(`[Link](${url})`);
+const cell = parts.join('<br>');
+```
+
+### HTML/Web
+
+Display details as secondary text and URL as an external link icon:
+
+```html
+<div class="entry">
+  <div class="content">Push local commits to remote</div>
+  <div class="details">Uploads commits from the current branch</div>
+  <a href="https://git-scm.com/docs/git-push" target="_blank">
+    <ExternalLinkIcon />
+  </a>
+</div>
+```
+
+### Considerations
+
+- **Keep primary content scannable** — Don't let details overwhelm the main content
+- **Make URLs unobtrusive** — Use icons or "Link" text rather than full URLs
+- **Consider progressive disclosure** — Show details on hover or expand
+
+## Respecting Retrieval Direction
+
+The `retrievalDirection` field tells you which column contains code vs. text:
+
+| Direction | Anchor | Content |
+| --------- | ------ | ------- |
+| `mechanism-to-meaning` | Code (command, shortcut) | Text (description) |
+| `intent-to-mechanism` | Text (action, goal) | Code (command) |
+
+Apply code formatting (monospace, syntax highlighting) to the appropriate column:
+
+```javascript
+const anchorIsMechanism = retrievalDirection === 'mechanism-to-meaning';
+
+if (anchorIsMechanism) {
+  // anchor is code, content is text
+  renderCode(entry.anchor);
+  renderText(entry.content);
+} else {
+  // anchor is text, content is code
+  renderText(entry.anchor);
+  renderCode(entry.content);
+}
+```
+
+## Testing Your Renderer
+
+Create test cheatsheets with edge cases:
+
+```json
+{
+  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "title": "Renderer Test Cases",
+  "sections": [
+    {
+      "title": "Special Characters",
+      "entries": [
+        { "anchor": "echo \"hello\"", "content": "Quotes in command" },
+        { "anchor": "ls | grep foo", "content": "Pipe character" },
+        { "anchor": "a < b && b > c", "content": "Angle brackets" },
+        { "anchor": "foo_bar*baz", "content": "Underscores and asterisks" }
+      ]
+    },
+    {
+      "title": "Backticks",
+      "entries": [
+        { "anchor": "echo `date`", "content": "Command substitution" },
+        { "anchor": "```js\nconsole.log('hi')\n```", "content": "Code fence in content" }
+      ]
+    },
+    {
+      "title": "Unicode",
+      "entries": [
+        { "anchor": "ctrl + ->", "content": "Arrow symbol" },
+        { "anchor": "cmd + shift + 4", "content": "Command key" }
+      ]
+    }
+  ]
+}
+```
+
+Run your renderer against this file and verify the output renders correctly in your target format.

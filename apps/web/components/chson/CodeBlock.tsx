@@ -3,7 +3,6 @@
 import { Streamdown } from 'streamdown';
 import { code } from '@streamdown/code';
 import { cn } from 'lib/utils';
-import 'streamdown/styles.css';
 
 interface CodeBlockProps {
   children: string;
