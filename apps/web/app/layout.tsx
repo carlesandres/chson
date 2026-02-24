@@ -20,7 +20,7 @@ export default function RootLayout({ children }: LayoutProps) {
       <head>
         <script
           defer
-          data-domain="favycons.com"
+          data-domain="chson.dev"
           src="https://plausible.io/js/script.tagged-events.js"
         ></script>
       </head>
