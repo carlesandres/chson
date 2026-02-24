@@ -8,6 +8,20 @@
       "type": "registry:item",
       "title": "Atuin Keybindings",
       "description": "Keyboard shortcuts for Atuin's interactive shell history search UI.",
+      "categories": [
+        "atuin"
+      ],
+      "keywords": [
+        "cli",
+        "shell",
+        "keybindings"
+      ],
+      "meta": {
+        "publicationDate": "2026-02-15",
+        "retrievalDirection": "intent-to-mechanism",
+        "version": "18.x",
+        "homepage": "https://atuin.sh/"
+      },
       "files": [
         {
           "path": "registry/default/atuin/keybindings.chson.json",
@@ -21,6 +35,21 @@
       "type": "registry:item",
       "title": "Release Checklist",
       "description": "Pre-release, release, and post-release checks for safe production deployments.",
+      "categories": [
+        "checklist",
+        "devops"
+      ],
+      "keywords": [
+        "devops",
+        "release",
+        "checklist"
+      ],
+      "meta": {
+        "publicationDate": "2026-02-23",
+        "retrievalDirection": "intent-to-mechanism",
+        "version": "1.0",
+        "documentType": "checklist"
+      },
       "files": [
         {
           "path": "registry/default/devops/release-checklist.chson.json",
@@ -34,6 +63,20 @@
       "type": "registry:item",
       "title": "Docker Essentials",
       "description": "Essential Docker commands for container management.",
+      "categories": [
+        "docker"
+      ],
+      "keywords": [
+        "cli",
+        "containers",
+        "devops"
+      ],
+      "meta": {
+        "publicationDate": "2026-01-16",
+        "retrievalDirection": "mechanism-to-meaning",
+        "version": "24.x",
+        "homepage": "https://docs.docker.com/"
+      },
       "files": [
         {
           "path": "registry/default/docker/core.chson.json",
@@ -47,6 +90,19 @@
       "type": "registry:item",
       "title": "Git Essentials",
       "description": "Essential git commands for day-to-day development.",
+      "categories": [
+        "git"
+      ],
+      "keywords": [
+        "cli",
+        "version-control"
+      ],
+      "meta": {
+        "publicationDate": "2026-01-16",
+        "retrievalDirection": "mechanism-to-meaning",
+        "version": "2.x",
+        "homepage": "https://git-scm.com/"
+      },
       "files": [
         {
           "path": "registry/default/git/core.chson.json",
@@ -60,6 +116,21 @@
       "type": "registry:item",
       "title": "Git Rebase TLDR",
       "description": "Quick reference for when and how to use git rebase safely.",
+      "categories": [
+        "tldr",
+        "git"
+      ],
+      "keywords": [
+        "git",
+        "tldr",
+        "version-control"
+      ],
+      "meta": {
+        "publicationDate": "2026-02-23",
+        "retrievalDirection": "intent-to-mechanism",
+        "version": "2.x",
+        "documentType": "tldr"
+      },
       "files": [
         {
           "path": "registry/default/git/rebase-tldr.chson.json",
@@ -73,6 +144,21 @@
       "type": "registry:item",
       "title": "Kubernetes Pod Troubleshooting Runbook",
       "description": "Operational runbook for diagnosing and recovering unhealthy Kubernetes pods.",
+      "categories": [
+        "runbook",
+        "kubernetes"
+      ],
+      "keywords": [
+        "kubernetes",
+        "ops",
+        "runbook"
+      ],
+      "meta": {
+        "publicationDate": "2026-02-23",
+        "retrievalDirection": "intent-to-mechanism",
+        "version": "1.29+",
+        "documentType": "runbook"
+      },
       "files": [
         {
           "path": "registry/default/kubernetes/pod-troubleshooting-runbook.chson.json",
@@ -86,6 +172,20 @@
       "type": "registry:item",
       "title": "npm Essentials",
       "description": "Essential npm commands for Node.js package management.",
+      "categories": [
+        "npm"
+      ],
+      "keywords": [
+        "cli",
+        "nodejs",
+        "package-manager"
+      ],
+      "meta": {
+        "publicationDate": "2026-01-16",
+        "retrievalDirection": "mechanism-to-meaning",
+        "version": "10.x",
+        "homepage": "https://docs.npmjs.com/"
+      },
       "files": [
         {
           "path": "registry/default/npm/core.chson.json",
@@ -99,6 +199,19 @@
       "type": "registry:item",
       "title": "Vim Essentials",
       "description": "Essential Vim commands for text editing.",
+      "categories": [
+        "vim"
+      ],
+      "keywords": [
+        "editor",
+        "cli"
+      ],
+      "meta": {
+        "publicationDate": "2026-01-16",
+        "retrievalDirection": "mechanism-to-meaning",
+        "version": "9.x",
+        "homepage": "https://www.vim.org/"
+      },
       "files": [
         {
           "path": "registry/default/vim/core.chson.json",
@@ -112,12 +225,45 @@
       "type": "registry:item",
       "title": "Web Performance Bookmarks",
       "description": "Curated references for measuring and improving frontend performance.",
+      "categories": [
+        "bookmarks",
+        "web"
+      ],
+      "keywords": [
+        "web",
+        "performance",
+        "bookmarks"
+      ],
+      "meta": {
+        "publicationDate": "2026-02-23",
+        "retrievalDirection": "intent-to-mechanism",
+        "version": "2026",
+        "documentType": "bookmarks"
+      },
       "files": [
         {
           "path": "registry/default/web/performance-bookmarks.chson.json",
           "type": "registry:file",
           "target": "~/chson-files/web/performance-bookmarks.chson.json"
         }
+      ]
+    },
+    {
+      "name": "git-pack",
+      "type": "registry:item",
+      "title": "Git Pack",
+      "description": "Installs 2 ChSON files from git.",
+      "categories": [
+        "pack"
+      ],
+      "meta": {
+        "packStrategy": "by-directory",
+        "group": "git",
+        "itemCount": 2
+      },
+      "registryDependencies": [
+        "git-core",
+        "git-rebase-tldr"
       ]
     }
   ]

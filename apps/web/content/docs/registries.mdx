@@ -33,7 +33,7 @@ There is also an in-repo example under `examples/chson-shadcn-registry/` used by
 Use the ChSON CLI to scaffold a shadcn-compatible registry source tree:
 
 ```bash
-node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev
+node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev --packs by-directory
 ```
 
 Defaults:
@@ -41,6 +41,7 @@ Defaults:
 - Namespace: `@chson`
 - Installed target base directory: `~/chson-files/...`
 - Output directory: `registry/`
+- Packs mode: `none` (optional `by-directory`)
 
 The command generates:
 
@@ -52,6 +53,17 @@ Each item is emitted as `registry:item` with a `registry:file` entry targeting:
 ```text
 ~/chson-files/<product>/<name>.chson.json
 ```
+
+Metadata mapping:
+
+- `tags` -> `keywords`
+- `documentType` + first path segment -> `categories`
+- `publicationDate`, `retrievalDirection`, `version`, `homepage`, `documentType` -> `meta`
+
+Optional packs:
+
+- `--packs by-directory` adds aggregate items (for example `git-pack`)
+- Pack items install their children via `registryDependencies`
 
 ## Build and publish
 
@@ -84,6 +96,12 @@ Install one cheatsheet item:
 npx shadcn@latest add @chson/git-core
 ```
 
+Install a pack item:
+
+```bash
+npx shadcn@latest add @chson/git-pack
+```
+
 Validate installed files:
 
 ```bash
@@ -93,5 +111,6 @@ chson validate chson-files
 ## Notes
 
 - Item names come from file paths (for example `git/core.chson.json` -> `git-core`)
+- Use `--fail-on-collision` to enforce strict item naming and fail instead of suffixing on slug collisions
 - For private registries, use shadcn's `registries` object form with auth headers and env vars
 - Prefer HTTPS for hosted registries

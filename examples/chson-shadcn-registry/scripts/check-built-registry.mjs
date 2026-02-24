@@ -14,6 +14,12 @@ if (!Array.isArray(registryIndex.items) || registryIndex.items.length === 0) {
   throw new Error("Built registry.json has no items");
 }
 
+const itemNames = new Set(
+  registryIndex.items
+    .map((item) => item?.name)
+    .filter((name) => typeof name === "string" && name.length > 0),
+);
+
 for (const item of registryIndex.items) {
   if (!item.name) {
     throw new Error("Encountered item without a name in built registry index");
@@ -24,7 +30,17 @@ for (const item of registryIndex.items) {
     throw new Error(`Missing item payload: ${itemFilePath}`);
   }
 
-  JSON.parse(fs.readFileSync(itemFilePath, "utf8"));
+  const payload = JSON.parse(fs.readFileSync(itemFilePath, "utf8"));
+
+  if (Array.isArray(payload.registryDependencies)) {
+    for (const dependency of payload.registryDependencies) {
+      if (!itemNames.has(dependency)) {
+        throw new Error(
+          `Item '${item.name}' references unknown registry dependency '${dependency}'`,
+        );
+      }
+    }
+  }
 }
 
 console.log(

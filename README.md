@@ -89,8 +89,13 @@ You can distribute `.chson.json` collections using shadcn's registry format (`re
 Generate a shadcn-compatible registry source tree from ChSON files:
 
 ```bash
-node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev
+node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev --packs by-directory
 ```
+
+Useful flags:
+
+- `--packs by-directory` creates pack items such as `git-pack` using `registryDependencies`
+- `--fail-on-collision` fails when item slug collisions are detected
 
 Then build installable registry payloads:
 
@@ -113,6 +118,7 @@ and install with:
 
 ```bash
 npx shadcn@latest add @chson/git-core
+npx shadcn@latest add @chson/git-pack
 ```
 
 See docs: `/docs/registries` and prototype: `https://github.com/carlesandres/chson-files/tree/main/json-registry`.
