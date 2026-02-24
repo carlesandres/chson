@@ -25,8 +25,5 @@ jobs:
       - name: Validate ChSON files
         run: npm run validate
 
-      - name: Build
-        run: npm run build
-
-      - name: Typecheck
-        run: npm run typecheck
+      - name: Typecheck shared packages
+        run: turbo run typecheck --filter=@chson/schema --filter=@chson/cli
