@@ -26,7 +26,7 @@ jobs:
         run: npm run validate
 
       - name: Typecheck shared packages
-        run: turbo run typecheck --filter=@chson/schema --filter=@chson/cli
+        run: npx turbo run typecheck --filter=@chson/schema --filter=@chson/cli
 
   registry-prototype:
     runs-on: ubuntu-latest
