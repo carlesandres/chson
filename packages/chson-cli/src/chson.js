@@ -17,10 +17,12 @@ function usage() {
     "Usage:",
     "  chson validate <file-or-dir> [...more]",
     "  chson render markdown <file-or-dir> [...more] [--out <dir>]",
+    "  chson registry init <file-or-dir> [...more] [--out <dir>] [--target-base <dir>] [--namespace <name>] [--homepage <url>]",
     "",
     "Notes:",
     "  - If a directory is provided, scans for *.chson.json recursively.",
     "  - render outputs 2-column Markdown tables.",
+    "  - registry init generates a shadcn-compatible registry source tree.",
   ].join("\n");
 }
 
@@ -56,18 +58,218 @@ function parseJsonFile(filePath) {
   }
 }
 
+function toPosixPath(inputPath) {
+  return inputPath.split(path.sep).join("/");
+}
+
+function stripChsonExtension(filePath) {
+  return filePath.replace(/\.chson\.json$/i, "");
+}
+
+function toKebabCase(input) {
+  return String(input)
+    .trim()
+    .toLowerCase()
+    .replaceAll(/[^a-z0-9]+/g, "-")
+    .replaceAll(/^-+|-+$/g, "")
+    .replaceAll(/-{2,}/g, "-");
+}
+
+function uniqueSlug(baseSlug, seen) {
+  if (!seen.has(baseSlug)) {
+    seen.add(baseSlug);
+    return baseSlug;
+  }
+
+  let index = 2;
+  while (seen.has(`${baseSlug}-${index}`)) {
+    index += 1;
+  }
+
+  const next = `${baseSlug}-${index}`;
+  seen.add(next);
+  return next;
+}
+
+function collectRegistrySources(inputs) {
+  const sources = [];
+  for (const input of inputs) {
+    if (!fs.existsSync(input)) {
+      throw new Error(`Path not found: ${input}`);
+    }
+
+    const stat = fs.statSync(input);
+    if (stat.isDirectory()) {
+      for (const filePath of collectChsonFiles(input)) {
+        sources.push({
+          filePath,
+          relativePath: toPosixPath(path.relative(input, filePath)),
+        });
+      }
+    } else {
+      const parentDirName = path.basename(path.dirname(input));
+      sources.push({
+        filePath: input,
+        relativePath: toPosixPath(
+          path.join(parentDirName, path.basename(input)),
+        ),
+      });
+    }
+  }
+
+  return sources;
+}
+
+function parseRegistryInitArgs(args) {
+  let outputDir = "registry";
+  let targetBase = "chson-files";
+  let namespace = "@chson";
+  let homepage = "https://chson.dev";
+  const inputs = [];
+
+  for (let i = 0; i < args.length; i++) {
+    const arg = args[i];
+
+    if (arg === "--out") {
+      outputDir = args[i + 1];
+      i += 1;
+      continue;
+    }
+
+    if (arg === "--target-base") {
+      targetBase = args[i + 1];
+      i += 1;
+      continue;
+    }
+
+    if (arg === "--namespace") {
+      namespace = args[i + 1];
+      i += 1;
+      continue;
+    }
+
+    if (arg === "--homepage") {
+      homepage = args[i + 1];
+      i += 1;
+      continue;
+    }
+
+    inputs.push(arg);
+  }
+
+  if (!namespace.startsWith("@")) {
+    throw new Error("--namespace must start with '@' (example: @chson)");
+  }
+
+  if (!outputDir || !targetBase || !homepage || inputs.length === 0) {
+    throw new Error(usage());
+  }
+
+  return {
+    outputDir,
+    targetBase,
+    namespace,
+    homepage,
+    inputs,
+  };
+}
+
+function buildRegistryItems(sources, targetBase) {
+  const items = [];
+  const seenNames = new Set();
+
+  const sortedSources = [...sources].sort((left, right) =>
+    left.relativePath.localeCompare(right.relativePath),
+  );
+
+  for (const source of sortedSources) {
+    const relativeInputPath = source.relativePath;
+    const withoutExt = stripChsonExtension(relativeInputPath);
+    const slugBase =
+      toKebabCase(withoutExt.replaceAll("/", "-")) || "chson-item";
+    const itemName = uniqueSlug(slugBase, seenNames);
+
+    const chson = parseJsonFile(source.filePath);
+    const title = chson.title || itemName;
+    const description = chson.description || `Installs ${title} ChSON file.`;
+
+    const sourcePath = `registry/default/${withoutExt}.chson.json`;
+    const targetPath = `~/${toPosixPath(path.join(targetBase, `${withoutExt}.chson.json`))}`;
+
+    items.push({
+      name: itemName,
+      type: "registry:item",
+      title,
+      description,
+      files: [
+        {
+          path: sourcePath,
+          type: "registry:file",
+          target: targetPath,
+        },
+      ],
+      _meta: {
+        inputFilePath: source.filePath,
+        sourcePath,
+      },
+    });
+  }
+
+  return items;
+}
+
+function writeRegistrySource({ outputDir, namespace, homepage, items }) {
+  fs.mkdirSync(outputDir, { recursive: true });
+
+  for (const item of items) {
+    const absoluteSourcePath = path.join(outputDir, item._meta.sourcePath);
+    fs.mkdirSync(path.dirname(absoluteSourcePath), { recursive: true });
+    fs.copyFileSync(item._meta.inputFilePath, absoluteSourcePath);
+  }
+
+  const cleanedItems = items.map(({ _meta, ...item }) => item);
+  const registryName = namespace.replace(/^@/, "") || "chson";
+
+  const registryJson = {
+    $schema: "https://ui.shadcn.com/schema/registry.json",
+    name: registryName,
+    homepage,
+    items: cleanedItems,
+  };
+
+  const registryPath = path.join(outputDir, "registry.json");
+  fs.writeFileSync(
+    registryPath,
+    `${JSON.stringify(registryJson, null, 2)}\n`,
+    "utf8",
+  );
+}
+
+function initRegistry(args) {
+  const { outputDir, targetBase, namespace, homepage, inputs } =
+    parseRegistryInitArgs(args);
+  const sources = collectRegistrySources(inputs);
+  const items = buildRegistryItems(sources, targetBase);
+  writeRegistrySource({ outputDir, namespace, homepage, items });
+
+  console.log(`Created registry source in ${outputDir}`);
+  console.log(`Generated ${items.length} items`);
+}
+
 function escapeMarkdown(text) {
-  return String(text)
-    .replaceAll("\\", "\\\\")
-    .replaceAll("|", "\\|")
-    // Docusaurus treats .md as MDX; escape braces/angles to avoid MDX expressions/JSX.
-    .replaceAll("{", "&#123;")
-    .replaceAll("}", "&#125;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll("\r\n", "\n")
-    .replaceAll("\r", "\n")
-    .replaceAll("\n", "<br/>");
+  return (
+    String(text)
+      .replaceAll("\\", "\\\\")
+      .replaceAll("|", "\\|")
+      // Docusaurus treats .md as MDX; escape braces/angles to avoid MDX expressions/JSX.
+      .replaceAll("{", "&#123;")
+      .replaceAll("}", "&#125;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll("\r\n", "\n")
+      .replaceAll("\r", "\n")
+      .replaceAll("\n", "<br/>")
+  );
 }
 
 /**
@@ -91,7 +293,9 @@ function renderMarkdownTable(chson) {
   }
   if (chson.retrievalDirection) {
     lines.push("");
-    lines.push(`*Retrieval direction: ${escapeMarkdown(chson.retrievalDirection)}*`);
+    lines.push(
+      `*Retrieval direction: ${escapeMarkdown(chson.retrievalDirection)}*`,
+    );
   }
 
   const anchorLabel = chson.anchorLabel ?? "Anchor";
@@ -114,7 +318,9 @@ function renderMarkdownTable(chson) {
     }
 
     lines.push("");
-    lines.push(`| ${escapeMarkdown(anchorLabel)} | ${escapeMarkdown(contentLabel)} |`);
+    lines.push(
+      `| ${escapeMarkdown(anchorLabel)} | ${escapeMarkdown(contentLabel)} |`,
+    );
     lines.push("| --- | --- |");
 
     const entries = Array.isArray(section.entries) ? section.entries : [];
@@ -273,6 +479,22 @@ function main(argv) {
     }
 
     return 0;
+  }
+
+  if (command === "registry") {
+    if (subcommand !== "init") {
+      console.error("Only supported: chson registry init ...");
+      return 2;
+    }
+
+    try {
+      initRegistry(rest);
+      return 0;
+    } catch (error) {
+      const message = error instanceof Error ? error.message : String(error);
+      console.error(message);
+      return 2;
+    }
   }
 
   console.error(usage());
