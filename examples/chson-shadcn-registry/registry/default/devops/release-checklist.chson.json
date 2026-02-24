@@ -1,0 +1,61 @@
+{
+  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "title": "Release Checklist",
+  "version": "1.0",
+  "publicationDate": "2026-02-23",
+  "description": "Pre-release, release, and post-release checks for safe production deployments.",
+  "documentType": "checklist",
+  "tags": ["devops", "release", "checklist"],
+  "retrievalDirection": "intent-to-mechanism",
+  "anchorLabel": "Task",
+  "contentLabel": "Action",
+  "sections": [
+    {
+      "title": "Before Release",
+      "entries": [
+        {
+          "anchor": "Freeze main branch for release",
+          "content": "Announce freeze window in team channel and update project board."
+        },
+        {
+          "anchor": "Confirm CI pipeline green",
+          "content": "Verify test, lint, and build checks are passing on release commit."
+        },
+        {
+          "anchor": "Prepare release notes",
+          "content": "Summarize user-facing changes, breaking changes, and migration steps."
+        }
+      ]
+    },
+    {
+      "title": "During Release",
+      "entries": [
+        {
+          "anchor": "Create and tag release",
+          "content": "Tag semver release and publish the changelog entry."
+        },
+        {
+          "anchor": "Deploy to production",
+          "content": "Run deployment workflow and monitor rollout progress."
+        },
+        {
+          "anchor": "Run smoke tests",
+          "content": "Validate login, core API endpoints, and primary user journey."
+        }
+      ]
+    },
+    {
+      "title": "After Release",
+      "entries": [
+        {
+          "anchor": "Monitor error and latency dashboards",
+          "content": "Watch metrics for at least 30 minutes and compare against baseline."
+        },
+        {
+          "anchor": "Communicate release completion",
+          "content": "Post release summary with version and key changes to stakeholders."
+        }
+      ]
+    }
+  ]
+}

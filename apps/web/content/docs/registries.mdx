@@ -1,0 +1,97 @@
+---
+title: Registries
+description: Create and distribute ChSON collections with shadcn registry tooling.
+---
+
+You can use the shadcn registry system to distribute ChSON files as installable items.
+
+This is useful when you want to publish a curated set of cheatsheets and let users install them with `shadcn add`.
+
+## Why shadcn registries?
+
+- They already support JSON registry payloads and namespaced registries (`@namespace/item`)
+- They can distribute any file type, not only UI components
+- They include build tooling (`shadcn build`) and consumer tooling (`shadcn add`, `shadcn view`, `shadcn search`)
+
+References:
+
+- [shadcn registry getting started](https://ui.shadcn.com/docs/registry/getting-started)
+- [shadcn namespaced registries](https://ui.shadcn.com/docs/registry/namespace)
+- [shadcn registry.json schema](https://ui.shadcn.com/docs/registry/registry-json)
+- [shadcn registry-item.json schema](https://ui.shadcn.com/docs/registry/registry-item-json)
+
+## Prototype
+
+We maintain a prototype repository here:
+
+- [carlesandres/chson-files/json-registry](https://github.com/carlesandres/chson-files/tree/main/json-registry)
+
+There is also an in-repo example under `examples/chson-shadcn-registry/` used by CI.
+
+## Create a registry source from ChSON files
+
+Use the ChSON CLI to scaffold a shadcn-compatible registry source tree:
+
+```bash
+node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev
+```
+
+Defaults:
+
+- Namespace: `@chson`
+- Installed target base directory: `~/chson-files/...`
+- Output directory: `registry/`
+
+The command generates:
+
+- `registry.json`
+- `registry/default/**` source files for each `.chson.json`
+
+Each item is emitted as `registry:item` with a `registry:file` entry targeting:
+
+```text
+~/chson-files/<product>/<name>.chson.json
+```
+
+## Build and publish
+
+In your registry project:
+
+```bash
+npm install
+npm run registry:build
+```
+
+This runs `shadcn build` and generates installable payloads in `public/r/` (for example `public/r/git-core.json`).
+
+Deploy that project and serve `public/r/*.json` over HTTPS.
+
+## Consume a ChSON registry
+
+In a consumer project, configure `components.json`:
+
+```json
+{
+  "registries": {
+    "@chson": "https://your-registry-domain.com/r/{name}.json"
+  }
+}
+```
+
+Install one cheatsheet item:
+
+```bash
+npx shadcn@latest add @chson/git-core
+```
+
+Validate installed files:
+
+```bash
+chson validate chson-files
+```
+
+## Notes
+
+- Item names come from file paths (for example `git/core.chson.json` -> `git-core`)
+- For private registries, use shadcn's `registries` object form with auth headers and env vars
+- Prefer HTTPS for hosted registries

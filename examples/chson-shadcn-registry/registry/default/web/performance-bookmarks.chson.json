@@ -1,0 +1,59 @@
+{
+  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "title": "Web Performance Bookmarks",
+  "version": "2026",
+  "publicationDate": "2026-02-23",
+  "description": "Curated references for measuring and improving frontend performance.",
+  "documentType": "bookmarks",
+  "tags": ["web", "performance", "bookmarks"],
+  "retrievalDirection": "intent-to-mechanism",
+  "anchorLabel": "Page",
+  "contentLabel": "URL",
+  "sections": [
+    {
+      "title": "Core Metrics",
+      "entries": [
+        {
+          "anchor": "Core Web Vitals Overview",
+          "content": "https://web.dev/vitals/",
+          "details": "Definitions and thresholds for LCP, INP, and CLS."
+        },
+        {
+          "anchor": "INP Documentation",
+          "content": "https://web.dev/inp/",
+          "details": "Deep dive into improving interaction responsiveness."
+        }
+      ]
+    },
+    {
+      "title": "Tooling",
+      "entries": [
+        {
+          "anchor": "PageSpeed Insights",
+          "content": "https://pagespeed.web.dev/",
+          "details": "URL-level performance audits with lab and field data."
+        },
+        {
+          "anchor": "Lighthouse Performance Scoring",
+          "content": "https://developer.chrome.com/docs/lighthouse/performance/performance-scoring",
+          "details": "How Lighthouse computes the performance score and opportunities."
+        }
+      ]
+    },
+    {
+      "title": "Framework Guidance",
+      "entries": [
+        {
+          "anchor": "Vercel Next.js Performance Best Practices",
+          "content": "https://vercel.com/guides/optimizing-nextjs-core-web-vitals",
+          "details": "Recommended rendering, caching, and asset optimization patterns."
+        },
+        {
+          "anchor": "MDN Lazy Loading",
+          "content": "https://developer.mozilla.org/en-US/docs/Web/Performance/Lazy_loading",
+          "details": "Browser-level lazy loading techniques for images and iframes."
+        }
+      ]
+    }
+  ]
+}

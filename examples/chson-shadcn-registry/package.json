@@ -1,0 +1,13 @@
+{
+  "name": "@chson/example-shadcn-registry",
+  "private": true,
+  "scripts": {
+    "registry:build": "shadcn build",
+    "registry:serve": "serve . -l 3000",
+    "registry:check": "npm run registry:build && node scripts/check-built-registry.mjs"
+  },
+  "devDependencies": {
+    "serve": "^14.2.5",
+    "shadcn": "^3.5.0"
+  }
+}
