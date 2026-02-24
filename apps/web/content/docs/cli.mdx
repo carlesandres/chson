@@ -61,3 +61,20 @@ Renders all registry cheatsheets to the `build/` directory.
 ## Schema Validation
 
 The CLI validates against the ChSON schema at `https://chson.dev/schema/chson.schema.json`.
+
+## Scaffold a shadcn Registry
+
+You can generate a shadcn-compatible registry source tree from `.chson.json` files:
+
+```bash
+node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev
+```
+
+This generates `registry.json` and `registry/default/**` files that can be built with `shadcn build`.
+
+Defaults:
+
+- target base directory: `chson-files` (`~/chson-files/...` when installed)
+- namespace: `@chson`
+
+See [Registries](/docs/registries) for the full publisher and consumer workflow.
