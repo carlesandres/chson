@@ -120,7 +120,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
           <BreadcrumbSeparator />
           <BreadcrumbItem>
             <BreadcrumbLink asChild>
-              <Link href="/cheatsheets">Cheatsheets</Link>
+              <Link href="/use-cases">Use Cases</Link>
             </BreadcrumbLink>
           </BreadcrumbItem>
           <BreadcrumbSeparator />
@@ -162,7 +162,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
         </div>
         <div className="flex gap-2">
           <Button asChild variant="outline" size="sm">
-            <Link href="/cheatsheets">All cheatsheets</Link>
+            <Link href="/use-cases">All use cases</Link>
           </Button>
           <Button asChild variant="secondary" size="sm" className="gap-1.5">
             <a

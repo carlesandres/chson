@@ -1,0 +1,69 @@
+{
+  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "title": "Kubernetes Pod Troubleshooting Runbook",
+  "version": "1.29+",
+  "publicationDate": "2026-02-23",
+  "description": "Operational runbook for diagnosing and recovering unhealthy Kubernetes pods.",
+  "documentType": "runbook",
+  "tags": ["kubernetes", "ops", "runbook"],
+  "retrievalDirection": "intent-to-mechanism",
+  "anchorLabel": "Situation",
+  "contentLabel": "Procedure",
+  "sections": [
+    {
+      "title": "Initial Triage",
+      "entries": [
+        {
+          "anchor": "Pod is CrashLoopBackOff",
+          "content": "Inspect recent logs and events, then check startup command and environment variables."
+        },
+        {
+          "anchor": "Pod is Pending",
+          "content": "Check scheduler events for resource pressure, node selectors, and taints/tolerations."
+        },
+        {
+          "anchor": "Pod restarts frequently",
+          "content": "Review liveness/readiness probes, memory limits, and OOMKilled events."
+        }
+      ]
+    },
+    {
+      "title": "Diagnostics",
+      "entries": [
+        {
+          "anchor": "Get high-level pod status",
+          "content": "kubectl get pods -n <namespace>"
+        },
+        {
+          "anchor": "Describe pod events and conditions",
+          "content": "kubectl describe pod <pod-name> -n <namespace>"
+        },
+        {
+          "anchor": "Check current container logs",
+          "content": "kubectl logs <pod-name> -c <container-name> -n <namespace>"
+        },
+        {
+          "anchor": "Check previous crash logs",
+          "content": "kubectl logs <pod-name> -c <container-name> -n <namespace> --previous"
+        }
+      ]
+    },
+    {
+      "title": "Recovery",
+      "entries": [
+        {
+          "anchor": "Roll back deployment",
+          "content": "kubectl rollout undo deployment/<deployment-name> -n <namespace>"
+        },
+        {
+          "anchor": "Restart deployment after config fix",
+          "content": "kubectl rollout restart deployment/<deployment-name> -n <namespace>"
+        },
+        {
+          "anchor": "Escalate incident",
+          "content": "Open incident channel and attach timeline, logs, and suspected root cause."
+        }
+      ]
+    }
+  ]
+}

@@ -3,6 +3,8 @@
 @import 'fumadocs-ui/css/shadcn.css';
 @import 'fumadocs-ui/css/preset.css';
 
+@source '../../../node_modules/streamdown/dist/*.js';
+
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));
@@ -57,7 +59,7 @@
   margin-inline: auto;
   padding-inline: 2rem;
 
-  @media (width >= theme(--breakpoint-sm)) {
+  @media (width >= theme('screens.sm')) {
     max-width: none;
   }
 
@@ -259,21 +261,16 @@
   }
 }
 
-/* Shiki dual-theme support */
+/* Shiki + Streamdown dual-theme support */
 .shiki-container {
   background-color: var(--muted);
 }
 
-/* Light mode: use the default theme colors */
-.shiki,
-.shiki span {
-  color: var(--shiki) !important;
-  background-color: transparent !important;
-}
+/* Keep light mode inline token colors from Shiki untouched. */
 
-/* Dark mode: use the dark theme colors */
-.dark .shiki,
-.dark .shiki span {
+/* In dark mode, override inline token colors with --shiki-dark vars. */
+.dark [data-streamdown='code-block-body'],
+.dark [data-streamdown='code-block-body'] span {
   color: var(--shiki-dark) !important;
-  background-color: transparent !important;
+  background-color: var(--shiki-dark-bg, transparent) !important;
 }

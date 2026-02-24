@@ -15,6 +15,7 @@
     "render:build": "turbo run render:build"
   },
   "devDependencies": {
+    "favicons": "7.2.0",
     "turbo": "^2.8.10"
   }
 }
