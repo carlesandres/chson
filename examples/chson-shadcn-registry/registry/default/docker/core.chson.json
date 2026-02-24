@@ -1,0 +1,144 @@
+{
+  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "title": "Docker Essentials",
+  "version": "24.x",
+  "publicationDate": "2026-01-16",
+  "description": "Essential Docker commands for container management.",
+  "homepage": "https://docs.docker.com/",
+  "tags": ["cli", "containers", "devops"],
+  "retrievalDirection": "mechanism-to-meaning",
+  "anchorLabel": "Example",
+  "contentLabel": "Description",
+  "sections": [
+    {
+      "title": "Images",
+      "entries": [
+        {
+          "anchor": "docker pull <image>:<tag>",
+          "content": "Download an image from a registry."
+        },
+        {
+          "anchor": "docker images",
+          "content": "Show all local images."
+        },
+        {
+          "anchor": "docker build -t <name>:<tag> .",
+          "content": "Build image from Dockerfile in current directory."
+        },
+        {
+          "anchor": "docker rmi <image>",
+          "content": "Delete a local image."
+        },
+        {
+          "anchor": "docker image prune -a",
+          "content": "Remove all unused images."
+        }
+      ]
+    },
+    {
+      "title": "Containers",
+      "entries": [
+        {
+          "anchor": "docker run -d -p <host>:<container> <image>",
+          "content": "Start a container in detached mode with port mapping."
+        },
+        {
+          "anchor": "docker ps",
+          "content": "Show running containers."
+        },
+        {
+          "anchor": "docker ps -a",
+          "content": "Show all containers including stopped."
+        },
+        {
+          "anchor": "docker stop <container>",
+          "content": "Gracefully stop a running container."
+        },
+        {
+          "anchor": "docker rm <container>",
+          "content": "Delete a stopped container."
+        },
+        {
+          "anchor": "docker logs -f <container>",
+          "content": "Follow container logs in real-time."
+        }
+      ]
+    },
+    {
+      "title": "Exec & Debug",
+      "entries": [
+        {
+          "anchor": "docker exec -it <container> /bin/sh",
+          "content": "Open interactive shell in running container."
+        },
+        {
+          "anchor": "docker exec <container> <command>",
+          "content": "Execute a command in a running container."
+        },
+        {
+          "anchor": "docker inspect <container>",
+          "content": "View detailed container configuration as JSON."
+        },
+        {
+          "anchor": "docker stats",
+          "content": "Live resource usage for all containers."
+        }
+      ]
+    },
+    {
+      "title": "Volumes",
+      "entries": [
+        {
+          "anchor": "docker volume create <name>",
+          "content": "Create a named volume for persistent data."
+        },
+        {
+          "anchor": "docker volume ls",
+          "content": "Show all volumes."
+        },
+        {
+          "anchor": "docker run -v <volume>:<path> <image>",
+          "content": "Attach a volume to a container."
+        },
+        {
+          "anchor": "docker run -v $(pwd):<path> <image>",
+          "content": "Mount host directory into container."
+        }
+      ]
+    },
+    {
+      "title": "Networks",
+      "entries": [
+        {
+          "anchor": "docker network ls",
+          "content": "Show all Docker networks."
+        },
+        {
+          "anchor": "docker network create <name>",
+          "content": "Create a custom bridge network."
+        },
+        {
+          "anchor": "docker network connect <network> <container>",
+          "content": "Add a container to a network."
+        }
+      ]
+    },
+    {
+      "title": "Cleanup",
+      "entries": [
+        {
+          "anchor": "docker container prune",
+          "content": "Delete all stopped containers."
+        },
+        {
+          "anchor": "docker system prune -a --volumes",
+          "content": "Remove all unused data (images, containers, volumes)."
+        },
+        {
+          "anchor": "docker system df",
+          "content": "Show Docker disk usage summary."
+        }
+      ]
+    }
+  ]
+}

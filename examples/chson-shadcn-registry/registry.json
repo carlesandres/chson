@@ -1,0 +1,124 @@
+{
+  "$schema": "https://ui.shadcn.com/schema/registry.json",
+  "name": "chson",
+  "homepage": "https://chson.dev",
+  "items": [
+    {
+      "name": "atuin-keybindings",
+      "type": "registry:item",
+      "title": "Atuin Keybindings",
+      "description": "Keyboard shortcuts for Atuin's interactive shell history search UI.",
+      "files": [
+        {
+          "path": "registry/default/atuin/keybindings.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/atuin/keybindings.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "devops-release-checklist",
+      "type": "registry:item",
+      "title": "Release Checklist",
+      "description": "Pre-release, release, and post-release checks for safe production deployments.",
+      "files": [
+        {
+          "path": "registry/default/devops/release-checklist.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/devops/release-checklist.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "docker-core",
+      "type": "registry:item",
+      "title": "Docker Essentials",
+      "description": "Essential Docker commands for container management.",
+      "files": [
+        {
+          "path": "registry/default/docker/core.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/docker/core.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "git-core",
+      "type": "registry:item",
+      "title": "Git Essentials",
+      "description": "Essential git commands for day-to-day development.",
+      "files": [
+        {
+          "path": "registry/default/git/core.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/git/core.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "git-rebase-tldr",
+      "type": "registry:item",
+      "title": "Git Rebase TLDR",
+      "description": "Quick reference for when and how to use git rebase safely.",
+      "files": [
+        {
+          "path": "registry/default/git/rebase-tldr.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/git/rebase-tldr.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "kubernetes-pod-troubleshooting-runbook",
+      "type": "registry:item",
+      "title": "Kubernetes Pod Troubleshooting Runbook",
+      "description": "Operational runbook for diagnosing and recovering unhealthy Kubernetes pods.",
+      "files": [
+        {
+          "path": "registry/default/kubernetes/pod-troubleshooting-runbook.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/kubernetes/pod-troubleshooting-runbook.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "npm-core",
+      "type": "registry:item",
+      "title": "npm Essentials",
+      "description": "Essential npm commands for Node.js package management.",
+      "files": [
+        {
+          "path": "registry/default/npm/core.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/npm/core.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "vim-core",
+      "type": "registry:item",
+      "title": "Vim Essentials",
+      "description": "Essential Vim commands for text editing.",
+      "files": [
+        {
+          "path": "registry/default/vim/core.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/vim/core.chson.json"
+        }
+      ]
+    },
+    {
+      "name": "web-performance-bookmarks",
+      "type": "registry:item",
+      "title": "Web Performance Bookmarks",
+      "description": "Curated references for measuring and improving frontend performance.",
+      "files": [
+        {
+          "path": "registry/default/web/performance-bookmarks.chson.json",
+          "type": "registry:file",
+          "target": "~/chson-files/web/performance-bookmarks.chson.json"
+        }
+      ]
+    }
+  ]
+}

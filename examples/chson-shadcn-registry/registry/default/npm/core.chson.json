@@ -1,0 +1,132 @@
+{
+  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "title": "npm Essentials",
+  "version": "10.x",
+  "publicationDate": "2026-01-16",
+  "description": "Essential npm commands for Node.js package management.",
+  "homepage": "https://docs.npmjs.com/",
+  "tags": ["cli", "nodejs", "package-manager"],
+  "retrievalDirection": "mechanism-to-meaning",
+  "anchorLabel": "Example",
+  "contentLabel": "Description",
+  "sections": [
+    {
+      "title": "Project Setup",
+      "entries": [
+        {
+          "anchor": "npm init -y",
+          "content": "Create package.json with defaults."
+        },
+        {
+          "anchor": "npm install",
+          "content": "Install all dependencies from package.json."
+        },
+        {
+          "anchor": "npm ci",
+          "content": "Install exact versions from package-lock.json."
+        }
+      ]
+    },
+    {
+      "title": "Dependencies",
+      "entries": [
+        {
+          "anchor": "npm install <package>",
+          "content": "Install and save as dependency."
+        },
+        {
+          "anchor": "npm install -D <package>",
+          "content": "Install as devDependency."
+        },
+        {
+          "anchor": "npm install -g <package>",
+          "content": "Install package globally."
+        },
+        {
+          "anchor": "npm uninstall <package>",
+          "content": "Remove package and update package.json."
+        },
+        {
+          "anchor": "npm ls --depth=0",
+          "content": "Show top-level installed packages."
+        }
+      ]
+    },
+    {
+      "title": "Scripts",
+      "entries": [
+        {
+          "anchor": "npm run <script>",
+          "content": "Execute a script defined in package.json."
+        },
+        {
+          "anchor": "npm test",
+          "content": "Run the test script (shorthand)."
+        },
+        {
+          "anchor": "npm start",
+          "content": "Run the start script (shorthand)."
+        },
+        {
+          "anchor": "npm run",
+          "content": "Show all available scripts."
+        }
+      ]
+    },
+    {
+      "title": "Updates",
+      "entries": [
+        {
+          "anchor": "npm outdated",
+          "content": "Show packages with newer versions available."
+        },
+        {
+          "anchor": "npm update",
+          "content": "Update packages within semver range."
+        },
+        {
+          "anchor": "npm install -g npm@latest",
+          "content": "Update npm itself to latest version."
+        }
+      ]
+    },
+    {
+      "title": "Info & Debug",
+      "entries": [
+        {
+          "anchor": "npm info <package>",
+          "content": "Show registry information for a package."
+        },
+        {
+          "anchor": "npm audit",
+          "content": "Scan dependencies for security issues."
+        },
+        {
+          "anchor": "npm audit fix",
+          "content": "Automatically fix security issues when possible."
+        },
+        {
+          "anchor": "npm explain <package>",
+          "content": "Show why a package is installed."
+        }
+      ]
+    },
+    {
+      "title": "Publishing",
+      "entries": [
+        {
+          "anchor": "npm login",
+          "content": "Authenticate with npm registry."
+        },
+        {
+          "anchor": "npm publish",
+          "content": "Publish package to registry."
+        },
+        {
+          "anchor": "npm version <patch|minor|major>",
+          "content": "Increment version (patch/minor/major)."
+        }
+      ]
+    }
+  ]
+}

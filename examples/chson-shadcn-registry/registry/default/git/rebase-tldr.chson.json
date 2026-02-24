@@ -1,0 +1,61 @@
+{
+  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "title": "Git Rebase TLDR",
+  "version": "2.x",
+  "publicationDate": "2026-02-23",
+  "description": "Quick reference for when and how to use git rebase safely.",
+  "documentType": "tldr",
+  "tags": ["git", "tldr", "version-control"],
+  "retrievalDirection": "intent-to-mechanism",
+  "anchorLabel": "Need",
+  "contentLabel": "Quick Answer",
+  "sections": [
+    {
+      "title": "When to Use Rebase",
+      "entries": [
+        {
+          "anchor": "Keep feature branch up to date with main",
+          "content": "Use rebase to replay your commits on top of latest main and keep history linear."
+        },
+        {
+          "anchor": "Clean up local commit history before opening a PR",
+          "content": "Interactive rebase can squash or reorder commits into a clearer story."
+        },
+        {
+          "anchor": "Rebase commits already shared with teammates",
+          "content": "Avoid this unless coordinated, because rebasing rewrites commit hashes."
+        }
+      ]
+    },
+    {
+      "title": "Core Commands",
+      "entries": [
+        {
+          "anchor": "Rebase current branch onto main",
+          "content": "git fetch origin && git rebase origin/main"
+        },
+        {
+          "anchor": "Continue after resolving conflicts",
+          "content": "git add <resolved-files> && git rebase --continue"
+        },
+        {
+          "anchor": "Abort the rebase",
+          "content": "git rebase --abort"
+        }
+      ]
+    },
+    {
+      "title": "Safety Rules",
+      "entries": [
+        {
+          "anchor": "After rebasing a remote branch",
+          "content": "Push with --force-with-lease, never plain --force."
+        },
+        {
+          "anchor": "Before rebasing",
+          "content": "Make sure working tree is clean, or stash local changes first."
+        }
+      ]
+    }
+  ]
+}
