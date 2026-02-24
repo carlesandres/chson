@@ -33,7 +33,7 @@ export default function RootLayout({ children }: LayoutProps) {
               className="pointer-events-none fixed inset-[-20vh] -z-10 blur-2xl [background:radial-gradient(900px_500px_at_20%_10%,rgba(11,91,211,0.18),transparent_60%),radial-gradient(800px_520px_at_85%_15%,rgba(216,75,42,0.16),transparent_62%),radial-gradient(900px_700px_at_50%_85%,rgba(0,0,0,0.05),transparent_65%)] dark:opacity-50"
             />
 
-            <div className="mx-auto max-w-5xl px-4 pb-14 pt-7">
+            <div className="mx-auto px-4 pb-14 pt-7">
               <Header />
               <main className="animate-fade-up px-2 pt-9">{children}</main>
               <Footer />
