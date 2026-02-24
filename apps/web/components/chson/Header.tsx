@@ -13,7 +13,7 @@ import {
 const navigation = [
   { name: 'Home', href: '/' },
   { name: 'Docs', href: '/docs' },
-  { name: 'Cheatsheets', href: '/cheatsheets' },
+  { name: 'Use Cases', href: '/use-cases' },
 ];
 
 export function Header() {

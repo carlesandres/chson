@@ -1,7 +1,6 @@
 import Link from 'next/link';
 import { getAllCheatsheets } from 'lib/cheatsheets';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Badge } from 'components/ui/badge';
 import { Button } from 'components/ui/button';
 import { CodeBlock } from 'components/chson';
 import {
@@ -84,8 +83,14 @@ export default function Home() {
               <ArrowRight className="ml-2 h-4 w-4" />
             </Link>
           </Button>
+          <Button asChild size="lg" variant="secondary">
+            <Link href="/docs/schema-reference">
+              View schema reference
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Link>
+          </Button>
           <Button asChild variant="outline" size="lg">
-            <Link href="/cheatsheets">Browse examples</Link>
+            <Link href="/use-cases">Browse use cases</Link>
           </Button>
         </div>
       </div>
@@ -125,6 +130,16 @@ export default function Home() {
               </div>
             </div>
           </div>
+          <p className="text-sm text-muted-foreground">
+            Want a full production-style document?{' '}
+            <Link
+              href="/docs/full-example"
+              className="text-primary underline-offset-4 hover:underline"
+            >
+              View complete CHSON example
+            </Link>
+            .
+          </p>
         </CardContent>
       </Card>
 
@@ -207,6 +222,17 @@ export default function Home() {
                     — Complete field documentation
                   </span>
                 </li>
+                <li>
+                  <Link
+                    href={schemaUrl}
+                    className="text-primary underline-offset-4 hover:underline"
+                  >
+                    Raw Schema JSON
+                  </Link>{' '}
+                  <span className="text-muted-foreground">
+                    — Direct machine-readable schema
+                  </span>
+                </li>
               </ul>
             </div>
             <Button asChild size="lg" className="gap-2">
@@ -232,16 +258,13 @@ export default function Home() {
                 href={`/cheatsheets/${s.product}/${s.name}`}
               >
                 <span className="font-medium">{s.data.title}</span>
-                <Badge variant="secondary" className="font-mono text-xs">
-                  {s.product}
-                </Badge>
               </Link>
             </li>
           ))}
         </ul>
         <Button asChild className="mt-4 gap-2" variant="outline">
-          <Link href="/cheatsheets">
-            See all cheatsheets
+          <Link href="/use-cases">
+            See all use cases
             <ArrowRight className="h-4 w-4" />
           </Link>
         </Button>
