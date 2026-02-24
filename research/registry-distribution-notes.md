@@ -23,6 +23,9 @@ This document tracks decisions for distributing ChSON files through shadcn regis
   - `registry/default/**` copied `.chson.json` files
 - Generated item type: `registry:item`
 - Generated file type: `registry:file`
+- Added optional flags:
+  - `--packs by-directory` to emit aggregate pack items via `registryDependencies`
+  - `--fail-on-collision` to fail on slug collisions instead of auto-suffixing
 
 ## Prototype strategy
 
@@ -41,19 +44,27 @@ This document tracks decisions for distributing ChSON files through shadcn regis
 
 Current behavior derives item names from relative file paths (example: `git/core.chson.json` -> `git-core`).
 
+Current guardrail:
+
+- `--fail-on-collision` can now enforce strict naming for CI/publisher workflows.
+
 Questions:
 
 - Should we support explicit item names in source metadata?
-- Should the generator fail on collisions instead of suffixing (`-2`, `-3`)?
+- Should strict collision mode become default in a future major version?
 
 ## 2) Bundles / packs
 
-Current generator creates one item per file.
+Current generator creates one item per file, with optional directory packs.
+
+Current behavior:
+
+- `--packs by-directory` emits pack items (example: `git-pack`) that depend on per-file items.
 
 Questions:
 
-- Should we generate optional pack items (example: `starter-pack`) using `registryDependencies`?
-- If yes, should packs be inferred by directory, tags, or explicit config?
+- Should we also support explicit/custom packs (not only inferred by directory)?
+- Should we support nested pack composition and top-level starter packs?
 
 ## 3) Versioning strategy
 
@@ -74,11 +85,15 @@ Questions:
 
 ## 5) Rich metadata mapping
 
-Current generator maps title/description directly and copies the file.
+Current generator maps title/description and also lifts selected ChSON fields:
+
+- `tags` -> `keywords`
+- `documentType` + first path segment -> `categories`
+- `publicationDate`, `retrievalDirection`, `version`, `homepage`, `documentType` -> `meta`
 
 Questions:
 
-- Should we surface ChSON fields (`tags`, `publicationDate`, `retrievalDirection`) into `meta`/`categories` in registry items?
+- Do we want a configurable metadata mapping (field allow/deny list)?
 
 ## Review Triggers
 

@@ -67,7 +67,7 @@ The CLI validates against the ChSON schema at `https://chson.dev/schema/chson.sc
 You can generate a shadcn-compatible registry source tree from `.chson.json` files:
 
 ```bash
-node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev
+node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev --packs by-directory
 ```
 
 This generates `registry.json` and `registry/default/**` files that can be built with `shadcn build`.
@@ -76,5 +76,11 @@ Defaults:
 
 - target base directory: `chson-files` (`~/chson-files/...` when installed)
 - namespace: `@chson`
+- packs mode: `none` (optional `by-directory` generates `registryDependencies` pack items)
+
+Optional flags:
+
+- `--packs by-directory` creates installable pack items per directory (for example `git-pack`)
+- `--fail-on-collision` exits when two paths map to the same item slug instead of auto-suffixing (`-2`, `-3`)
 
 See [Registries](/docs/registries) for the full publisher and consumer workflow.

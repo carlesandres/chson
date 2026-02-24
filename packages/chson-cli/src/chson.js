@@ -17,12 +17,13 @@ function usage() {
     "Usage:",
     "  chson validate <file-or-dir> [...more]",
     "  chson render markdown <file-or-dir> [...more] [--out <dir>]",
-    "  chson registry init <file-or-dir> [...more] [--out <dir>] [--target-base <dir>] [--namespace <name>] [--homepage <url>]",
+    "  chson registry init <file-or-dir> [...more] [--out <dir>] [--target-base <dir>] [--namespace <name>] [--homepage <url>] [--packs <mode>] [--fail-on-collision]",
     "",
     "Notes:",
     "  - If a directory is provided, scans for *.chson.json recursively.",
     "  - render outputs 2-column Markdown tables.",
     "  - registry init generates a shadcn-compatible registry source tree.",
+    "  - --packs supports: none (default), by-directory",
   ].join("\n");
 }
 
@@ -91,6 +92,22 @@ function uniqueSlug(baseSlug, seen) {
   return next;
 }
 
+function titleCase(input) {
+  return String(input)
+    .split(/[^a-zA-Z0-9]+/)
+    .filter(Boolean)
+    .map((chunk) => `${chunk[0].toUpperCase()}${chunk.slice(1).toLowerCase()}`)
+    .join(" ");
+}
+
+function requireFlagValue(args, index, flagName) {
+  const value = args[index + 1];
+  if (!value || value.startsWith("--")) {
+    throw new Error(`Missing value for ${flagName}`);
+  }
+  return value;
+}
+
 function collectRegistrySources(inputs) {
   const sources = [];
   for (const input of inputs) {
@@ -107,6 +124,9 @@ function collectRegistrySources(inputs) {
         });
       }
     } else {
+      if (!input.endsWith(".chson.json")) {
+        throw new Error(`Expected a .chson.json file: ${input}`);
+      }
       const parentDirName = path.basename(path.dirname(input));
       sources.push({
         filePath: input,
@@ -125,32 +145,45 @@ function parseRegistryInitArgs(args) {
   let targetBase = "chson-files";
   let namespace = "@chson";
   let homepage = "https://chson.dev";
+  let packs = "none";
+  let failOnCollision = false;
   const inputs = [];
 
   for (let i = 0; i < args.length; i++) {
     const arg = args[i];
 
     if (arg === "--out") {
-      outputDir = args[i + 1];
+      outputDir = requireFlagValue(args, i, "--out");
       i += 1;
       continue;
     }
 
     if (arg === "--target-base") {
-      targetBase = args[i + 1];
+      targetBase = requireFlagValue(args, i, "--target-base");
       i += 1;
       continue;
     }
 
     if (arg === "--namespace") {
-      namespace = args[i + 1];
+      namespace = requireFlagValue(args, i, "--namespace");
       i += 1;
       continue;
     }
 
     if (arg === "--homepage") {
-      homepage = args[i + 1];
+      homepage = requireFlagValue(args, i, "--homepage");
       i += 1;
+      continue;
+    }
+
+    if (arg === "--packs") {
+      packs = requireFlagValue(args, i, "--packs");
+      i += 1;
+      continue;
+    }
+
+    if (arg === "--fail-on-collision") {
+      failOnCollision = true;
       continue;
     }
 
@@ -159,6 +192,10 @@ function parseRegistryInitArgs(args) {
 
   if (!namespace.startsWith("@")) {
     throw new Error("--namespace must start with '@' (example: @chson)");
+  }
+
+  if (packs !== "none" && packs !== "by-directory") {
+    throw new Error("--packs must be one of: none, by-directory");
   }
 
   if (!outputDir || !targetBase || !homepage || inputs.length === 0) {
@@ -170,37 +207,100 @@ function parseRegistryInitArgs(args) {
     targetBase,
     namespace,
     homepage,
+    packs,
+    failOnCollision,
     inputs,
   };
 }
 
-function buildRegistryItems(sources, targetBase) {
-  const items = [];
+function buildRegistryItems(sources, { targetBase, packs, failOnCollision }) {
+  const fileItems = [];
   const seenNames = new Set();
 
   const sortedSources = [...sources].sort((left, right) =>
     left.relativePath.localeCompare(right.relativePath),
   );
 
-  for (const source of sortedSources) {
+  const prepared = sortedSources.map((source) => {
     const relativeInputPath = source.relativePath;
     const withoutExt = stripChsonExtension(relativeInputPath);
     const slugBase =
       toKebabCase(withoutExt.replaceAll("/", "-")) || "chson-item";
-    const itemName = uniqueSlug(slugBase, seenNames);
+    return {
+      source,
+      relativeInputPath,
+      withoutExt,
+      slugBase,
+    };
+  });
 
-    const chson = parseJsonFile(source.filePath);
+  if (failOnCollision) {
+    const collisions = new Map();
+    for (const entry of prepared) {
+      if (!collisions.has(entry.slugBase)) {
+        collisions.set(entry.slugBase, []);
+      }
+      collisions.get(entry.slugBase).push(entry.source.filePath);
+    }
+
+    const conflictLines = [];
+    for (const [slug, filePaths] of collisions.entries()) {
+      if (filePaths.length > 1) {
+        conflictLines.push(`- ${slug}: ${filePaths.join(", ")}`);
+      }
+    }
+
+    if (conflictLines.length > 0) {
+      throw new Error(
+        `Item name collisions detected (rerun without --fail-on-collision to auto-suffix):\n${conflictLines.join("\n")}`,
+      );
+    }
+  }
+
+  const itemsByGroup = new Map();
+
+  for (const entry of prepared) {
+    const itemName = uniqueSlug(entry.slugBase, seenNames);
+
+    const chson = parseJsonFile(entry.source.filePath);
     const title = chson.title || itemName;
     const description = chson.description || `Installs ${title} ChSON file.`;
+    const tags = Array.isArray(chson.tags)
+      ? chson.tags.filter((tag) => typeof tag === "string" && tag.length > 0)
+      : [];
 
-    const sourcePath = `registry/default/${withoutExt}.chson.json`;
-    const targetPath = `~/${toPosixPath(path.join(targetBase, `${withoutExt}.chson.json`))}`;
+    const groupKey = path.posix.dirname(entry.withoutExt);
+    if (!itemsByGroup.has(groupKey)) {
+      itemsByGroup.set(groupKey, []);
+    }
+    itemsByGroup.get(groupKey).push(itemName);
 
-    items.push({
+    const sourcePath = `registry/default/${entry.withoutExt}.chson.json`;
+    const targetPath = `~/${toPosixPath(path.join(targetBase, `${entry.withoutExt}.chson.json`))}`;
+
+    const categories = [];
+    if (chson.documentType) {
+      categories.push(chson.documentType);
+    }
+    const productCategory = entry.withoutExt.split("/")[0];
+    if (productCategory) {
+      categories.push(productCategory);
+    }
+
+    fileItems.push({
       name: itemName,
       type: "registry:item",
       title,
       description,
+      categories: Array.from(new Set(categories)),
+      keywords: Array.from(new Set(tags)),
+      meta: {
+        publicationDate: chson.publicationDate,
+        retrievalDirection: chson.retrievalDirection,
+        version: chson.version,
+        homepage: chson.homepage,
+        documentType: chson.documentType,
+      },
       files: [
         {
           path: sourcePath,
@@ -209,19 +309,62 @@ function buildRegistryItems(sources, targetBase) {
         },
       ],
       _meta: {
-        inputFilePath: source.filePath,
+        inputFilePath: entry.source.filePath,
         sourcePath,
       },
     });
   }
 
-  return items;
+  const packItems = [];
+  if (packs === "by-directory") {
+    const groups = [...itemsByGroup.entries()].sort(([left], [right]) =>
+      left.localeCompare(right),
+    );
+
+    for (const [groupKey, groupItems] of groups) {
+      if (groupItems.length < 2) {
+        continue;
+      }
+
+      const basePackSlug = `${toKebabCase(groupKey.replaceAll("/", "-")) || "root"}-pack`;
+      const packName = uniqueSlug(basePackSlug, seenNames);
+      const groupLabel =
+        groupKey === "." ? "Root" : titleCase(groupKey.replaceAll("/", " "));
+
+      packItems.push({
+        name: packName,
+        type: "registry:item",
+        title: `${groupLabel} Pack`,
+        description: `Installs ${groupItems.length} ChSON files from ${groupKey === "." ? "the root group" : groupKey}.`,
+        categories: ["pack"],
+        meta: {
+          packStrategy: "by-directory",
+          group: groupKey,
+          itemCount: groupItems.length,
+        },
+        registryDependencies: [...groupItems].sort((left, right) =>
+          left.localeCompare(right),
+        ),
+      });
+    }
+  }
+
+  return {
+    items: [...fileItems, ...packItems],
+    stats: {
+      files: fileItems.length,
+      packs: packItems.length,
+    },
+  };
 }
 
 function writeRegistrySource({ outputDir, namespace, homepage, items }) {
   fs.mkdirSync(outputDir, { recursive: true });
 
   for (const item of items) {
+    if (!item._meta) {
+      continue;
+    }
     const absoluteSourcePath = path.join(outputDir, item._meta.sourcePath);
     fs.mkdirSync(path.dirname(absoluteSourcePath), { recursive: true });
     fs.copyFileSync(item._meta.inputFilePath, absoluteSourcePath);
@@ -246,14 +389,28 @@ function writeRegistrySource({ outputDir, namespace, homepage, items }) {
 }
 
 function initRegistry(args) {
-  const { outputDir, targetBase, namespace, homepage, inputs } =
-    parseRegistryInitArgs(args);
+  const {
+    outputDir,
+    targetBase,
+    namespace,
+    homepage,
+    packs,
+    failOnCollision,
+    inputs,
+  } = parseRegistryInitArgs(args);
   const sources = collectRegistrySources(inputs);
-  const items = buildRegistryItems(sources, targetBase);
+  const { items, stats } = buildRegistryItems(sources, {
+    targetBase,
+    packs,
+    failOnCollision,
+  });
   writeRegistrySource({ outputDir, namespace, homepage, items });
 
   console.log(`Created registry source in ${outputDir}`);
   console.log(`Generated ${items.length} items`);
+  if (stats.packs > 0) {
+    console.log(`Generated ${stats.packs} pack items`);
+  }
 }
 
 function escapeMarkdown(text) {
