@@ -5,6 +5,7 @@ import { QueryProvider } from 'providers/query-provider';
 import { ThemeProvider } from 'providers/theme-provider';
 
 export const metadata: Metadata = {
+  metadataBase: new URL('https://chson.dev'),
   title: 'ChSON',
   description:
     'A JSON format for writing software cheatsheets. Write once, render anywhere.',
