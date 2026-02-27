@@ -3,7 +3,6 @@ import type { Metadata } from 'next';
 import { notFound } from 'next/navigation';
 import { getAllCheatsheets, loadCheatsheet } from 'lib/cheatsheets';
 import { cn } from 'lib/utils';
-import { InlineCode } from 'components/chson';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
 import { Badge } from 'components/ui/badge';
 import { Button } from 'components/ui/button';
@@ -25,6 +24,7 @@ import {
 } from 'components/ui/table';
 import { ScrollArea, ScrollBar } from 'components/ui/scroll-area';
 import { ExternalLink, Home } from 'lucide-react';
+import { Preformatted } from '@/components/chson/Preformatted';
 
 type Params = Promise<{ product: string; name: string }>;
 
@@ -218,9 +218,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                               >
                                 {anchorIsMechanism ? (
                                   entry.anchor && (
-                                    <InlineCode language="bash">
-                                      {entry.anchor}
-                                    </InlineCode>
+                                    <Preformatted>{entry.anchor}</Preformatted>
                                   )
                                 ) : (
                                   <TextCell
@@ -246,9 +244,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                                   </TextCell>
                                 ) : (
                                   entry.content && (
-                                    <InlineCode language="bash">
-                                      {entry.content}
-                                    </InlineCode>
+                                    <Preformatted>{entry.content}</Preformatted>
                                   )
                                 )}
                               </TableCell>
