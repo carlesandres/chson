@@ -8,17 +8,20 @@ interface CodeBlockProps {
   children: string;
   language?: string;
   title?: string;
-  showCopy?: boolean;
   className?: string;
 }
 
-export function CodeBlock({
+interface CodeBlockRendererProps extends CodeBlockProps {
+  enableCopy: boolean;
+}
+
+function CodeBlockRenderer({
   children,
   language,
   title,
-  showCopy = true,
+  enableCopy,
   className,
-}: CodeBlockProps) {
+}: CodeBlockRendererProps) {
   // Wrap the code in a markdown code fence for Streamdown to highlight
   const markdown = `\`\`\`${language || ''}\n${children}\n\`\`\``;
 
@@ -43,7 +46,7 @@ export function CodeBlock({
             plugins={{ code }}
             mode="static"
             shikiTheme={['github-light', 'github-dark']}
-            controls={{ code: showCopy }}
+            controls={{ code: enableCopy }}
           >
             {markdown}
           </Streamdown>
@@ -51,4 +54,12 @@ export function CodeBlock({
       </div>
     </div>
   );
+}
+
+export function CodeBlock(props: CodeBlockProps) {
+  return <CodeBlockRenderer {...props} enableCopy={true} />;
+}
+
+export function CodeBlockStatic(props: CodeBlockProps) {
+  return <CodeBlockRenderer {...props} enableCopy={false} />;
 }

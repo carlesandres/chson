@@ -1,7 +1,5 @@
 'use client';
 
-import { Streamdown } from 'streamdown';
-import { code } from '@streamdown/code';
 import { cn } from 'lib/utils';
 
 interface PreformattedProps {
@@ -15,7 +13,6 @@ interface PreformattedProps {
  */
 export function Preformatted({
   children,
-  language,
   className,
 }: PreformattedProps) {
   return (
