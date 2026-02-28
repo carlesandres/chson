@@ -9,6 +9,10 @@ export const metadata: Metadata = {
   title: 'ChSON',
   description:
     'A JSON format for writing software cheatsheets. Write once, render anywhere.',
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 interface LayoutProps {
