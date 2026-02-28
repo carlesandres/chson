@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "favicon": "node scripts/generate-favicon.mjs",
     "typecheck": "tsc --noEmit",
     "csslint": "npx stylelint \"**/*.css\"",
     "prettify": "npx prettier --write --log-level silent .",

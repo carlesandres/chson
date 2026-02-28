@@ -2,7 +2,7 @@ import Link from 'next/link';
 import { getAllCheatsheets } from 'lib/cheatsheets';
 import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
 import { Button } from 'components/ui/button';
-import { CodeBlock } from 'components/chson';
+import { CodeBlockStatic } from 'components/chson';
 import {
   ArrowRight,
   BookOpen,
@@ -110,9 +110,9 @@ export default function Home() {
           </p>
           <div className="grid gap-4 lg:grid-cols-2">
             <div className="rounded-xl border border-border bg-muted/30 p-4">
-              <CodeBlock language="json" showCopy={false}>
+              <CodeBlockStatic language="json">
                 {exampleCode}
-              </CodeBlock>
+              </CodeBlockStatic>
             </div>
             <div className="flex flex-col justify-center space-y-3">
               <div className="rounded-lg border border-border bg-background/60 p-3">

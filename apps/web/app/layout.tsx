@@ -36,7 +36,9 @@ export default function RootLayout({ children }: LayoutProps) {
 
             <div className="mx-auto px-4 pb-14 pt-7">
               <Header />
-              <main className="animate-fade-up px-2 pt-9">{children}</main>
+              <main className="max-w-4xl mx-auto animate-fade-up px-2 pt-9">
+                {children}
+              </main>
               <Footer />
             </div>
           </QueryProvider>
