@@ -4,11 +4,12 @@ import path from "path";
 import { fileURLToPath } from "url";
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const projectRoot = path.resolve(__dirname, "..");
 
 async function generateFavicon() {
-  const source = path.join(__dirname, "app", "icon.svg");
-  const outputDir = path.join(__dirname, "app");
-  
+  const source = path.join(projectRoot, "app", "icon.svg");
+  const outputDir = path.join(projectRoot, "app");
+
   const config = {
     path: "/",
     appName: "ChSON",
@@ -19,7 +20,7 @@ async function generateFavicon() {
     icons: {
       favicons: true,
       android: false,
-      appleIcon: false,
+      appleIcon: true,
       appleStartup: false,
       coast: false,
       firefox: false,
@@ -30,19 +31,28 @@ async function generateFavicon() {
 
   try {
     const result = await favicons(source, config);
-    
-    // Find the ICO file in the result
-    const icoFile = result.files.find(f => f.name === "favicon.ico");
+
+    const icoFile = result.files.find((f) => f.name === "favicon.ico");
     if (icoFile) {
       await fs.writeFile(path.join(outputDir, "favicon.ico"), icoFile.contents);
       console.log("✓ Generated favicon.ico from icon.svg");
     } else {
-      // Fallback: use images if files array doesn't have it
-      const icoImage = result.images.find(img => img.name === "favicon.ico");
+      const icoImage = result.images.find((img) => img.name === "favicon.ico");
       if (icoImage) {
         await fs.writeFile(path.join(outputDir, "favicon.ico"), icoImage.contents);
         console.log("✓ Generated favicon.ico from icon.svg");
       }
+    }
+
+    const appleIcon = result.images.find(
+      (img) =>
+        img.name === "apple-touch-icon.png" ||
+        img.name === "apple-touch-icon-180x180.png",
+    );
+
+    if (appleIcon) {
+      await fs.writeFile(path.join(outputDir, "apple-icon.png"), appleIcon.contents);
+      console.log("✓ Generated apple-icon.png from icon.svg");
     }
   } catch (error) {
     console.error("Error generating favicon:", error);

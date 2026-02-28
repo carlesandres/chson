@@ -1,60 +1,29 @@
+## Favicon Setup (Next.js App Router)
 
-## Web Pack Setup Guide
+This app uses Next.js metadata file conventions as the only favicon source.
 
-### 1. Extract Files
-Extract the Web Pack ZIP to your project's `public/` folder:
+Canonical files:
 
 ```
-your-app/
-├── public/
-│   ├── favicon.ico
-│   ├── favicon-16.png
-│   ├── favicon-32.png
-│   ├── favicon-192.png
-│   ├── apple-touch-icon.png
-│   ├── site.webmanifest
-│   └── browserconfig.xml
+apps/web/app/icon.svg
+apps/web/app/favicon.ico
+apps/web/app/apple-icon.png
 ```
 
-### 2. Add Meta Tags
-Copy these tags into the `<head>` of your HTML:
+Notes:
 
-```html
-<!-- Favicon -->
-<link rel="icon" type="image/x-icon" href="/favicon.ico">
-<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+- Do not add favicon files in `public/` for normal usage.
+- Do not add manual icon `<link>` tags in `layout.tsx`.
+- Next.js auto-injects icon links from files in `app/`.
 
-<!-- Apple -->
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="mask-icon" href="/favicon.svg" color="#000000">
+Regenerate `favicon.ico` and `apple-icon.png` from `icon.svg`:
 
-<!-- Web App -->
-<link rel="manifest" href="/site.webmanifest">
-<meta name="theme-color" content="#ffffff">
-
-<!-- Windows -->
-<meta name="msapplication-config" content="/browserconfig.xml">
+```bash
+npm run favicon --workspace=@chson/web
 ```
 
-### 3. Customize Manifest
-Edit `site.webmanifest` to match your app:
+Verification:
 
-```json
-{
-  "name": "Your App Name",
-  "short_name": "App",
-  "start_url": "/",
-  "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#000000"
-}
-```
-
-### 4. Test
-- Browser tab: Should show icon
-- PWA install: Should show icon in install prompt
-- Apple pinned tab: Icon appears in Safari
-- Windows tile: Icon appears if pinned to Start menu
-
-That's it! Your icons are now live.
+- Run `npm run dev --workspace=@chson/web`.
+- Open `/` and `/docs`.
+- Confirm the tab icon is the same on both routes.
