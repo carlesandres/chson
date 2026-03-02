@@ -1,5 +1,5 @@
 {
-  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "$schema": "https://chson.dev/api/schema.json",
   "title": "Release Checklist",
   "version": "1.0",
   "publicationDate": "2026-02-23",

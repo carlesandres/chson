@@ -21,5 +21,5 @@ Each cheatsheet validates against `@chson/schema`.
 ## Adding Cheatsheets
 
 1. Create `cheatsheets/<product>/<name>.chson.json`
-2. Include `"$schema": "https://chson.dev/schema/chson.schema.json"` for IDE support
+2. Include `"$schema": "https://chson.dev/api/schema.json"` for IDE support
 3. Run `npm run validate` to ensure it's valid

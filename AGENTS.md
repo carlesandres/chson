@@ -62,6 +62,16 @@ rm -rf .turbo build packages/chson-schema/types && npm run build
 
 **Data flow**: `.chson.json` files → CLI validates against schema → CLI renders (Markdown or web) → site serves pages
 
+### Schema Source of Truth
+
+The ChSON JSON Schema has a single canonical source:
+
+- **File**: `packages/chson-schema/schema/chson.schema.json`
+- **Public URL**: `https://chson.dev/api/schema.json`
+- **Served by**: `apps/web/app/api/schema.json/route.ts` (imports from `@chson/schema`)
+
+The web route imports the schema from the `@chson/schema` package, ensuring there's only one schema to maintain. Changes to the schema automatically propagate through Turborepo's build system.
+
 **Key files**:
 - `packages/chson-cli/src/chson.js` - Single-file CLI with validate and render commands
 - `packages/chson-schema/schema/chson.schema.json` - JSON Schema (Draft 2020-12) defining the ChSON format
@@ -91,7 +101,7 @@ Key terminology (see `research/cognitive-foundations.md`):
 
 **Adding cheatsheets**:
 1. Create `packages/chson-registry/cheatsheets/<product>/<name>.chson.json`
-2. Include `"$schema": "https://chson.dev/schema/chson.schema.json"`
+2. Include `"$schema": "https://chson.dev/api/schema.json"`
 3. Run `npm run validate`
 4. Run `npm run build` to rebuild the site
 

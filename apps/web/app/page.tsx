@@ -12,7 +12,7 @@ import {
   Bookmark,
 } from 'lucide-react';
 
-const schemaUrl = 'https://chson.dev/schema/chson.schema.json';
+const schemaUrl = 'https://chson.dev/api/schema.json';
 
 const exampleCode = `{
   "$schema": "${schemaUrl}",

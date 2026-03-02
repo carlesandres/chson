@@ -1,6 +1,6 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://chson.dev/schema/chson.schema.json",
+  "$id": "https://chson.dev/api/schema.json",
   "title": "ChSON Document",
   "description": "A structured format for knowledge fragments based on cognitive science principles of retrieval and chunking. Supports cheatsheets, checklists, runbooks, TLDRs, bookmarks, and more.",
   "type": "object",
