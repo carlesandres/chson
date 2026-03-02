@@ -1,5 +1,5 @@
 {
-  "$schema": "https://chson.dev/schema/chson.schema.json",
+  "$schema": "https://chson.dev/api/schema.json",
   "title": "Git Rebase TLDR",
   "version": "2.x",
   "publicationDate": "2026-02-23",

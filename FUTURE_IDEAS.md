@@ -8,7 +8,7 @@ can iterate without losing context.
 
 - **Name**: ChSON
 - **Canonical home (assumed)**: `chson.dev`
-- **Schema URL**: `https://chson.dev/schema/chson.schema.json`
+- **Schema URL**: `https://chson.dev/api/schema.json`
 - **JSON Schema dialect**: Draft 2020-12
 - **Document schema pointer**: ChSON documents include a `$schema` field pointing to the canonical schema URL.
 - **Core structure** — based on cognitive retrieval theory (see `research/cognitive-foundations.md`):

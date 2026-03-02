@@ -12,7 +12,7 @@ import {
   Bookmark,
 } from 'lucide-react';
 
-const schemaUrl = 'https://chson.dev/schema/chson.schema.json';
+const schemaUrl = 'https://chson.dev/api/schema.json';
 
 const exampleCode = `{
   "$schema": "${schemaUrl}",
@@ -131,12 +131,12 @@ export default function Home() {
             </div>
           </div>
           <p className="text-sm text-muted-foreground">
-            Want a full production-style document?{' '}
+            Want a complete real-world document?{' '}
             <Link
-              href="/docs/full-example"
+              href="/docs/examples"
               className="text-primary underline-offset-4 hover:underline"
             >
-              View complete CHSON example
+              View complete ChSON example
             </Link>
             .
           </p>

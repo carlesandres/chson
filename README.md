@@ -25,13 +25,13 @@ Files use the extension `.chson.json`.
 
 ChSON files validate against the canonical JSON Schema:
 
-- `https://chson.dev/schema/chson.schema.json`
+- `https://chson.dev/api/schema.json`
 
 In each cheatsheet, set:
 
 ```json
 {
-  "$schema": "https://chson.dev/schema/chson.schema.json"
+  "$schema": "https://chson.dev/api/schema.json"
 }
 ```
 
@@ -139,6 +139,25 @@ npm run dev
 - Build: `npm run build -- --filter=@chson/web` (see `vercel.json`)
 - Output: `apps/web/.next` (see `vercel.json`)
 - DNS: create a `CNAME` record for `chson` pointing to `cname.vercel-dns.com`
+
+## Architecture
+
+### Schema Source of Truth
+
+ChSON has a **single source of truth** for the JSON Schema:
+
+- **Location**: `packages/chson-schema/schema/chson.schema.json`
+- **Public URL**: `https://chson.dev/api/schema.json`
+- **Package**: `@chson/schema`
+
+The web app serves the schema through a Next.js API route (`apps/web/app/api/schema.json/route.ts`) that imports from `@chson/schema`. This ensures:
+
+1. One canonical schema definition
+2. Automatic propagation of changes through the build system
+3. Type safety via auto-generated TypeScript types
+4. IDE support for all `.chson.json` files
+
+See `apps/web/app/api/schema.json/README.md` for details on how the schema is served.
 
 ## Repository layout
 
