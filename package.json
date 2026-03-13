@@ -1,5 +1,6 @@
 {
   "name": "chson",
+  "type": "module",
   "private": true,
   "packageManager": "npm@11.10.1",
   "workspaces": [
