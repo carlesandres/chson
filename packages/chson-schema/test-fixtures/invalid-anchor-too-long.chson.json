@@ -1,0 +1,17 @@
+{
+  "$schema": "https://chson.dev/api/schema.json",
+  "title": "Test Anchor Length",
+  "publicationDate": "2026-03-13",
+  "description": "Test fixture to verify entry.anchor maxLength constraint",
+  "sections": [
+    {
+      "title": "Test Section",
+      "entries": [
+        {
+          "anchor": "This is an intentionally very long anchor that exceeds the maximum allowed length of 100 characters for testing purposes and validating constraint enforcement in the ChSON schema",
+          "content": "Test content"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://chson.dev/api/schema.json",
+  "title": "Test Details Field Unbounded",
+  "publicationDate": "2026-03-13",
+  "description": "Valid fixture demonstrating entry.details has no length limit",
+  "sections": [
+    {
+      "title": "Test Section",
+      "entries": [
+        {
+          "anchor": "test",
+          "content": "Brief content",
+          "details": "This is a very long details field that demonstrates the progressive disclosure principle in ChSON. The details field is intentionally unbounded to allow for extensive explanations, documentation, examples, code snippets, and other supplementary information that doesn't fit in the brief content field. This supports cognitive science principles by hiding detailed information until the user explicitly requests it, thereby reducing cognitive load during initial scanning while still providing access to comprehensive information when needed. This approach aligns with the chunking and progressive disclosure concepts discussed in the cognitive foundations document. The details field can contain hundreds or even thousands of characters without violating any schema constraints, because it is designed specifically for extended explanations that go beyond the quick-reference nature of the anchor and content fields. This flexibility is crucial for different document types like runbooks, which may need detailed step-by-step instructions, or TLDRs, which may provide extended context for complex topics."
+        }
+      ]
+    }
+  ]
+}
