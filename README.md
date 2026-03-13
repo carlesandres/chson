@@ -21,6 +21,8 @@ A ChSON file is a single JSON document with:
 
 Files use the extension `.chson.json`.
 
+**Character limits**: ChSON enforces cognitive-science-based `maxLength` constraints on key text fields (title: 80, description: 150, anchor: 100, content: 150) to reduce cognitive load. See `packages/chson-schema/README.md` for details.
+
 ## Schema
 
 ChSON files validate against the canonical JSON Schema:

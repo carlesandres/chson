@@ -1,0 +1,17 @@
+{
+  "$schema": "https://chson.dev/api/schema.json",
+  "title": "Test Section Title Length",
+  "publicationDate": "2026-03-13",
+  "description": "Test fixture to verify section.title maxLength constraint",
+  "sections": [
+    {
+      "title": "This is an intentionally very long section title that exceeds the maximum allowed length of 100 characters for testing purposes and validating constraint enforcement",
+      "entries": [
+        {
+          "anchor": "test",
+          "content": "Test content"
+        }
+      ]
+    }
+  ]
+}

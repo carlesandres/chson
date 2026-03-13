@@ -51,6 +51,27 @@ This architecture ensures there's only one schema file to maintain.
 - `types/index.d.ts` - Generated TypeScript types (auto-generated, gitignored)
 - `scripts/build-types.js` - Type generation script
 
+## Character Limits
+
+ChSON enforces `maxLength` constraints on text fields based on cognitive science principles and current usage analysis. These limits reduce cognitive load and ensure content remains scannable while allowing flexibility where needed.
+
+| Field | Max Length | Rationale |
+|-------|-----------|-----------|
+| `title` | 80 | Fits typical editor widths, scannable at a glance |
+| `description` | 150 | Brief summary without overwhelming working memory |
+| `entry.anchor` | 100 | Commands/shortcuts should be concise |
+| `entry.content` | 150 | Descriptive but focused explanations |
+| `section.title` | 100 | Section headings should be scannable |
+| `anchorLabel` | 50 | Short metadata labels (e.g., "Command", "Shortcut") |
+| `contentLabel` | 50 | Short metadata labels (e.g., "Description", "Action") |
+
+**Note**: `entry.details` has **NO maxLength limit** - it supports progressive disclosure for extended explanations (see `research/cognitive-foundations.md`).
+
+These limits are based on:
+- Analysis of existing cheatsheets (2x current maximum + buffer)
+- Working memory research (Cowan 2001: ~4 chunks)
+- Alignment with cognitive science principles documented in the research folder
+
 ## Development
 
 Generate TypeScript types from schema:

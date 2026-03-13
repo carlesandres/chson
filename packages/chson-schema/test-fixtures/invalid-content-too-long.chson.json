@@ -1,0 +1,17 @@
+{
+  "$schema": "https://chson.dev/api/schema.json",
+  "title": "Test Content Length",
+  "publicationDate": "2026-03-13",
+  "description": "Test fixture to verify entry.content maxLength constraint",
+  "sections": [
+    {
+      "title": "Test Section",
+      "entries": [
+        {
+          "anchor": "test",
+          "content": "This is an intentionally very long content field that exceeds the maximum allowed length of 150 characters. This content is specifically designed to test and verify the maxLength constraint enforcement for the content field in the ChSON schema."
+        }
+      ]
+    }
+  ]
+}

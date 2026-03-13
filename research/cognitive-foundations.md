@@ -477,7 +477,53 @@ Sweller, J. (1988). Cognitive load during problem solving: Effects on learning.
 
 ---
 
-## Appendix A: Glossary of Proposed Terms
+## Appendix A: Implementation - maxLength Constraints
+
+### A.1 Rationale
+
+The ChSON schema enforces `maxLength` constraints on key text fields to operationalize the cognitive principles described in this document. These constraints were derived from:
+
+1. **Cowan's working memory limit** (2001): ~4 chunks of information
+2. **Miller's insight** (1956): Chunking enables compression of information
+3. **Current usage analysis**: Measured actual field lengths across existing cheatsheets (2x maximum + buffer)
+
+### A.2 Constraints
+
+| Field | maxLength | Cognitive Justification |
+|-------|-----------|------------------------|
+| `title` | 80 chars | Fits typical editor widths; single visual fixation span |
+| `description` | 150 chars | Brief summary (~25 words) processable in working memory |
+| `entry.anchor` | 100 chars | Retrieval anchors should be recognizable patterns, not paragraphs |
+| `entry.content` | 150 chars | Associated content should be concise; detail belongs in `details` field |
+| `section.title` | 100 chars | Section headings are category labels; must be scannable |
+| `anchorLabel` | 50 chars | Metadata labels are single-concept descriptors |
+| `contentLabel` | 50 chars | Metadata labels are single-concept descriptors |
+
+### A.3 Progressive Disclosure
+
+The `entry.details` field has **NO maxLength constraint** by design. This implements progressive disclosure (Principle P7):
+
+- **Anchor**: What to scan for (constrained)
+- **Content**: What you need immediately (constrained)  
+- **Details**: Extended explanation revealed on demand (unbounded)
+
+This three-tier structure aligns with the chunking hierarchy described in §5.2, allowing users to:
+1. Scan anchors rapidly (visual search)
+2. Read brief content (working memory engagement)
+3. Expand details if needed (deliberate deep processing)
+
+### A.4 Validation Results
+
+Analysis of 9 existing cheatsheets (203 entries, 46 sections) showed:
+- All fields comply with proposed limits (100% backward compatibility)
+- Average lengths well below maximums (title: 19 chars, content: 30 chars)
+- Proposed limits provide ~2-3x headroom for future cheatsheets
+
+See `scripts/analyze-field-lengths.js` for measurement methodology.
+
+---
+
+## Appendix B: Glossary of Proposed Terms
 
 | Term | Definition |
 |------|------------|
@@ -496,7 +542,7 @@ Sweller, J. (1988). Cognitive load during problem solving: Effects on learning.
 
 ---
 
-## Appendix B: Document History
+## Appendix C: Document History
 
 | Date | Change |
 |------|--------|

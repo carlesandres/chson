@@ -1,0 +1,17 @@
+{
+  "$schema": "https://chson.dev/api/schema.json",
+  "title": "This is an intentionally very long title that exceeds the maximum allowed length of 80 characters for testing purposes",
+  "publicationDate": "2026-03-13",
+  "description": "Test fixture to verify title maxLength constraint enforcement",
+  "sections": [
+    {
+      "title": "Test Section",
+      "entries": [
+        {
+          "anchor": "test",
+          "content": "Test content"
+        }
+      ]
+    }
+  ]
+}

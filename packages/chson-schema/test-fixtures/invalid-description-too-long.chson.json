@@ -1,0 +1,17 @@
+{
+  "$schema": "https://chson.dev/api/schema.json",
+  "title": "Test Description Length",
+  "publicationDate": "2026-03-13",
+  "description": "This is an intentionally very long description that exceeds the maximum allowed length of 150 characters. This description is specifically designed to test the maxLength constraint enforcement for the description field in the ChSON schema.",
+  "sections": [
+    {
+      "title": "Test Section",
+      "entries": [
+        {
+          "anchor": "test",
+          "content": "Test content"
+        }
+      ]
+    }
+  ]
+}

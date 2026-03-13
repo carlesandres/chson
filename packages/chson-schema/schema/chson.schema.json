@@ -14,7 +14,8 @@
     "title": {
       "type": "string",
       "minLength": 1,
-      "description": "The name of this document."
+      "maxLength": 80,
+      "description": "The name of this document (max 80 chars for readability)."
     },
     "version": {
       "type": "string",
@@ -32,7 +33,8 @@
     "description": {
       "type": "string",
       "minLength": 1,
-      "description": "A brief summary of what this document covers."
+      "maxLength": 150,
+      "description": "A brief summary of what this document covers (max 150 chars)."
     },
     "documentType": {
       "type": "string",
@@ -68,11 +70,13 @@
     },
     "anchorLabel": {
       "type": "string",
-      "description": "Display name for the anchor column (default: 'Anchor'). Use 'Example' for code samples, 'Shortcut' for keyboard shortcuts, etc."
+      "maxLength": 50,
+      "description": "Display name for the anchor column (default: 'Anchor', max 50 chars). Use 'Example' for code samples, 'Shortcut' for keyboard shortcuts, etc."
     },
     "contentLabel": {
       "type": "string",
-      "description": "Display name for the content column (default: 'Content'). Use 'Description' for explanations, 'Action' for intent-based lookups, etc."
+      "maxLength": 50,
+      "description": "Display name for the content column (default: 'Content', max 50 chars). Use 'Description' for explanations, 'Action' for intent-based lookups, etc."
     },
     "metadata": {
       "type": "object",
@@ -95,7 +99,8 @@
         "title": {
           "type": "string",
           "minLength": 1,
-          "description": "The name of this section (chunk category)."
+          "maxLength": 100,
+          "description": "The name of this section (max 100 chars for scannability)."
         },
         "description": {
           "type": "string",
@@ -117,16 +122,18 @@
         "anchor": {
           "type": "string",
           "minLength": 1,
-          "description": "The retrieval anchor: what users scan for. Typically a command, shortcut, or action name."
+          "maxLength": 100,
+          "description": "The retrieval anchor: what users scan for (max 100 chars). Typically a command, shortcut, or action name."
         },
         "content": {
           "type": "string",
           "minLength": 1,
-          "description": "The associated content: what users need to know once they find the anchor."
+          "maxLength": 150,
+          "description": "The associated content: what users need to know once they find the anchor (max 150 chars)."
         },
         "details": {
           "type": "string",
-          "description": "Extended explanation beyond the brief content. Typically interpreted as markdown by renderers."
+          "description": "Extended explanation beyond the brief content (no length limit to support progressive disclosure). Typically interpreted as markdown by renderers."
         },
         "url": {
           "type": "string",
