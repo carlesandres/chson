@@ -7,6 +7,10 @@ description: Complete field-by-field reference for the ChSON schema
 
 This page provides a complete reference for all fields in the ChSON schema. For conceptual explanations, see [Core Concepts](/docs/core-concepts) and [Advanced Features](/docs/advanced-features).
 
+<Callout>
+**Character Limits**: ChSON enforces `maxLength` constraints based on cognitive science research to reduce cognitive load. Key limits: title (80), description (150), anchor (100), content (150). The `details` field is unbounded for progressive disclosure.
+</Callout>
+
 ## Schema URL
 
 All ChSON files should include the schema reference:
@@ -102,7 +106,8 @@ When this cheatsheet was published or last updated. Accepts either date or datet
 **Constraints:**
 
 - Type: `string`
-- Format: ISO 8601 date (`YYYY-MM-DD`) or datetime (`YYYY-MM-DDTHH:MM:SSZ`)
+- Minimum length: 1 character
+- Maximum length: 80 characters
 - Required: Yes
 
 **Examples:**
@@ -126,6 +131,7 @@ A brief summary explaining what this cheatsheet covers and who it's for.
 
 - Type: `string`
 - Minimum length: 1 character
+- Maximum length: 150 characters
 - Required: Yes
 
 ---
@@ -258,6 +264,7 @@ Custom display name for the anchor column. Use domain-appropriate terminology.
 **Constraints:**
 
 - Type: `string`
+- Maximum length: 50 characters
 - Required: No
 - Default: `"Anchor"`
 
@@ -284,6 +291,7 @@ Custom display name for the content column.
 **Constraints:**
 
 - Type: `string`
+- Maximum length: 50 characters
 - Required: No
 - Default: `"Content"`
 
@@ -337,7 +345,7 @@ Sections group related entries together, forming cognitive "chunks."
 
 | Field         | Type     | Required | Description                                                                |
 | ------------- | -------- | -------- | -------------------------------------------------------------------------- |
-| `title`       | `string` | Yes      | The name of this section. Must be non-empty.                               |
+| `title`       | `string` | Yes      | The name of this section. Max 100 characters.                              |
 | `description` | `string` | No       | Optional explanation of what this section covers.                          |
 | `entries`     | `array`  | Yes      | The anchor-content pairs in this section. Must contain at least one entry. |
 
@@ -363,13 +371,13 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
 
 ### Fields
 
-| Field      | Type     | Required | Description                                                  |
-| ---------- | -------- | -------- | ------------------------------------------------------------ |
-| `anchor`   | `string` | Yes      | The retrieval anchor—what users scan for. Must be non-empty. |
-| `content`  | `string` | Yes      | The associated content—what users need. Must be non-empty.   |
-| `details`  | `string` | No       | Extended explanation, typically interpreted as markdown.     |
-| `url`      | `string` | No       | Reference link to learn more (URI format).                   |
-| `comments` | `any`    | No       | Additional notes, warnings, or context.                      |
+| Field      | Type     | Required | Description                                                           |
+| ---------- | -------- | -------- | --------------------------------------------------------------------- |
+| `anchor`   | `string` | Yes      | The retrieval anchor—what users scan for. Max 100 characters.         |
+| `content`  | `string` | Yes      | The associated content—what users need. Max 150 characters.           |
+| `details`  | `string` | No       | Extended explanation (no length limit). Typically markdown.           |
+| `url`      | `string` | No       | Reference link to learn more (URI format).                            |
+| `comments` | `any`    | No       | Additional notes, warnings, or context.                               |
 
 ### `anchor`
 
@@ -406,11 +414,10 @@ Extended explanation beyond the brief content. Renderers typically interpret thi
 **Constraints:**
 
 - Type: `string`
+- Maximum length: **No limit** (supports progressive disclosure)
 - Required: No
 
 **When to use:**
-
-- Complex commands needing step-by-step explanation
 - Entries with multiple options or modes
 - Runbook steps requiring detailed instructions
 
