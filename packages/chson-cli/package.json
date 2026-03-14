@@ -10,7 +10,9 @@
   "type": "module",
   "scripts": {
     "build": "echo 'CLI requires no build step'",
-    "typecheck": "tsc -p tsconfig.json"
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "vitest run",
+    "test:watch": "vitest"
   },
   "dependencies": {
     "@chson/schema": "*",
@@ -19,6 +21,7 @@
   },
   "devDependencies": {
     "@types/node": "^22.0.0",
-    "typescript": "~5.6.2"
+    "typescript": "~5.6.2",
+    "vitest": "^4.0.18"
   }
 }
