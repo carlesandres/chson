@@ -1,0 +1,48 @@
+{
+  "$schema": "https://chson.dev/api/schema.json",
+  "title": "Format Hints Test",
+  "publicationDate": "2026-03-14",
+  "description": "Testing markdown format hints with inline code, bold, italics, and links",
+  "retrievalDirection": "mechanism-to-meaning",
+  "formatHints": {
+    "content": "markdown"
+  },
+  "sections": [
+    {
+      "title": "Markdown Features",
+      "description": "Testing various markdown formatting options",
+      "entries": [
+        {
+          "anchor": "git status",
+          "content": "Show **working tree** status. Use `-s` for short format."
+        },
+        {
+          "anchor": "git commit",
+          "content": "Save changes to repository. Use `git commit -m \"message\"` for inline message."
+        },
+        {
+          "anchor": "git log",
+          "content": "Show *commit* history. See [Git docs](https://git-scm.com/docs/git-log) for more options."
+        },
+        {
+          "anchor": "git diff",
+          "content": "Show changes between commits. Supports **multiple modes**: `--staged`, `--cached`, and `HEAD~1..HEAD`."
+        }
+      ]
+    },
+    {
+      "title": "Mixed Formatting",
+      "description": "Testing different format combinations",
+      "entries": [
+        {
+          "anchor": "npm install",
+          "content": "Install dependencies from `package.json`. Use **`--save-dev`** for dev dependencies."
+        },
+        {
+          "anchor": "npm run",
+          "content": "Execute a script defined in *package.json*. Commonly used: `npm run build` and `npm run test`."
+        }
+      ]
+    }
+  ]
+}
