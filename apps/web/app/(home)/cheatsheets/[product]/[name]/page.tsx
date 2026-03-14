@@ -1,11 +1,9 @@
-import Link from 'next/link';
-import type { Metadata } from 'next';
-import { notFound } from 'next/navigation';
-import { getAllCheatsheets, loadCheatsheet } from 'lib/cheatsheets';
-import { cn } from 'lib/utils';
-import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Badge } from 'components/ui/badge';
-import { Button } from 'components/ui/button';
+import Link from 'next/link'
+import type { Metadata } from 'next'
+import { notFound } from 'next/navigation'
+import { getAllCheatsheets, loadCheatsheet } from 'lib/cheatsheets'
+import { Badge } from 'components/ui/badge'
+import { Button } from 'components/ui/button'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -13,142 +11,70 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from 'components/ui/breadcrumb';
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from 'components/ui/table';
-import { ScrollArea, ScrollBar } from 'components/ui/scroll-area';
-import { ExternalLink, Home } from 'lucide-react';
-import { Preformatted } from '@/components/chson/Preformatted';
-import { MarkdownCell } from 'components/chson/MarkdownCell';
+} from 'components/ui/breadcrumb'
+import { ExternalLink, Home } from 'lucide-react'
+import { CheatsheetRenderer } from 'components/chson/renderers/CheatsheetRenderer'
+import { ChecklistRenderer } from 'components/chson/renderers/ChecklistRenderer'
 
-type Params = Promise<{ product: string; name: string }>;
+import type { Cheatsheet } from 'lib/cheatsheets'
 
-/**
- * Determines the format for a column based on formatHints and retrievalDirection.
- */
-function determineFormat(
-  formatHint: string | undefined,
-  isMechanism: boolean
-): 'text' | 'markdown' | 'code' {
-  if (formatHint) {
-    return formatHint as 'text' | 'markdown' | 'code';
-  }
-  return isMechanism ? 'code' : 'text';
-}
-
-/**
- * Renders a table cell based on format type
- */
-function renderCell(
-  text: string,
-  format: 'text' | 'markdown' | 'code',
-  details?: string,
-  url?: string
-) {
-  if (format === 'code') {
-    return text ? <Preformatted>{text}</Preformatted> : null;
-  }
-  
-  if (format === 'markdown') {
-    return <MarkdownCell details={details} url={url}>{text}</MarkdownCell>;
-  }
-  
-  return <TextCell details={details} url={url}>{text}</TextCell>;
-}
+type Params = Promise<{ product: string; name: string }>
 
 export async function generateStaticParams() {
   return getAllCheatsheets().map((ref) => ({
     product: ref.product,
     name: ref.name,
-  }));
+  }))
 }
 
 export async function generateMetadata({
   params,
 }: {
-  params: Params;
+  params: Params
 }): Promise<Metadata> {
-  const { product, name } = await params;
+  const { product, name } = await params
   const ref = getAllCheatsheets().find(
     (r) => r.product === product && r.name === name,
-  );
-  if (!ref) return { title: 'Not Found' };
+  )
+  if (!ref) return { title: 'Not Found' }
 
   return {
     title: `${ref.data.title} | ChSON`,
     description: ref.data.description,
-  };
+  }
 }
 
 /**
- * Renders content as plain text with optional details and URL
+ * Dispatches to the appropriate renderer based on documentType.
  */
-function TextCell({
-  children,
-  details,
-  url,
-}: {
-  children: React.ReactNode;
-  details?: string;
-  url?: string;
-}) {
-  return (
-    <div className="space-y-1">
-      <div>{children}</div>
-      {details && (
-        <div className="text-sm text-muted-foreground">{details}</div>
-      )}
-      {url && (
-        <a
-          href={url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-1 text-sm text-primary hover:underline"
-        >
-          <ExternalLink className="h-3 w-3" />
-          <span>Link</span>
-        </a>
-      )}
-    </div>
-  );
+function renderDocument(data: Cheatsheet, product: string, name: string) {
+  const documentType = data.documentType || 'cheatsheet'
+
+  switch (documentType) {
+    case 'checklist':
+      return (
+        <ChecklistRenderer data={data} product={product} name={name} />
+      )
+    case 'cheatsheet':
+    default:
+      return (
+        <CheatsheetRenderer data={data} product={product} name={name} />
+      )
+  }
 }
 
 export default async function CheatsheetPage({ params }: { params: Params }) {
-  const { product, name } = await params;
+  const { product, name } = await params
   const ref = getAllCheatsheets().find(
     (r) => r.product === product && r.name === name,
-  );
+  )
 
   if (!ref) {
-    notFound();
+    notFound()
   }
 
-  const data = loadCheatsheet(ref.filePath);
-  const title = data.title || 'Cheatsheet';
-  const anchorLabel = data.anchorLabel || 'Anchor';
-  const contentLabel = data.contentLabel || 'Content';
-  const retrievalDirection = data.retrievalDirection || 'mechanism-to-meaning';
-
-  // Determine which column contains the mechanism (code) vs intent (text)
-  // - mechanism-to-meaning: anchor is mechanism (code), content is meaning (text)
-  // - intent-to-mechanism: anchor is intent (text), content is mechanism (code)
-  const anchorIsMechanism = retrievalDirection === 'mechanism-to-meaning';
-
-  // Determine formats from hints or infer from retrievalDirection
-  const anchorFormat = determineFormat(
-    data.formatHints?.anchor,
-    anchorIsMechanism
-  );
-  const contentFormat = determineFormat(
-    data.formatHints?.content,
-    !anchorIsMechanism
-  );
+  const data = loadCheatsheet(ref.filePath)
+  const title = data.title || 'Cheatsheet'
 
   return (
     <>
@@ -221,79 +147,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
         </div>
       </div>
 
-      {Array.isArray(data.sections) && data.sections.length > 0 ? (
-        <div className="mt-6 grid gap-5">
-          {data.sections.map((section, sectionIdx) => (
-            <Card
-              key={sectionIdx}
-              className="border-border/50 bg-card/70 shadow-soft"
-            >
-              <CardHeader className="pb-2">
-                <CardTitle className="text-base font-semibold">
-                  {section.title}
-                </CardTitle>
-                {section.description && (
-                  <p className="text-sm text-muted-foreground">
-                    {section.description}
-                  </p>
-                )}
-              </CardHeader>
-              <CardContent>
-                <ScrollArea className="w-full">
-                  <div className="min-w-[640px]">
-                    <Table>
-                      <TableHeader>
-                        <TableRow>
-                          <TableHead className="w-[40%]">
-                            {anchorLabel}
-                          </TableHead>
-                          <TableHead>{contentLabel}</TableHead>
-                        </TableRow>
-                      </TableHeader>
-                      <TableBody>
-                        {Array.isArray(section.entries) &&
-                          section.entries.map((entry, entryIdx) => (
-                            <TableRow key={entryIdx}>
-                              <TableCell
-                                className={cn(
-                                  'align-middle',
-                                  anchorFormat === 'code' && 'p-0',
-                                )}
-                              >
-                                {renderCell(
-                                  entry.anchor,
-                                  anchorFormat,
-                                  anchorFormat !== 'code' ? entry.details : undefined,
-                                  anchorFormat !== 'code' ? entry.url : undefined
-                                )}
-                              </TableCell>
-                              <TableCell
-                                className={cn(
-                                  'align-middle',
-                                  contentFormat === 'code' && 'p-0',
-                                )}
-                              >
-                                {renderCell(
-                                  entry.content,
-                                  contentFormat,
-                                  contentFormat !== 'code' ? entry.details : undefined,
-                                  contentFormat !== 'code' ? entry.url : undefined
-                                )}
-                              </TableCell>
-                            </TableRow>
-                          ))}
-                      </TableBody>
-                    </Table>
-                  </div>
-                  <ScrollBar orientation="horizontal" />
-                </ScrollArea>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      ) : (
-        <p>No sections found.</p>
-      )}
+      {renderDocument(data, ref.product, ref.name)}
     </>
-  );
+  )
 }
