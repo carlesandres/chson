@@ -25,8 +25,42 @@ import {
 import { ScrollArea, ScrollBar } from 'components/ui/scroll-area';
 import { ExternalLink, Home } from 'lucide-react';
 import { Preformatted } from '@/components/chson/Preformatted';
+import { MarkdownCell } from 'components/chson/MarkdownCell';
 
 type Params = Promise<{ product: string; name: string }>;
+
+/**
+ * Determines the format for a column based on formatHints and retrievalDirection.
+ */
+function determineFormat(
+  formatHint: string | undefined,
+  isMechanism: boolean
+): 'text' | 'markdown' | 'code' {
+  if (formatHint) {
+    return formatHint as 'text' | 'markdown' | 'code';
+  }
+  return isMechanism ? 'code' : 'text';
+}
+
+/**
+ * Renders a table cell based on format type
+ */
+function renderCell(
+  text: string,
+  format: 'text' | 'markdown' | 'code',
+  details?: string,
+  url?: string
+) {
+  if (format === 'code') {
+    return text ? <Preformatted>{text}</Preformatted> : null;
+  }
+  
+  if (format === 'markdown') {
+    return <MarkdownCell details={details} url={url}>{text}</MarkdownCell>;
+  }
+  
+  return <TextCell details={details} url={url}>{text}</TextCell>;
+}
 
 export async function generateStaticParams() {
   return getAllCheatsheets().map((ref) => ({
@@ -105,6 +139,16 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
   // - mechanism-to-meaning: anchor is mechanism (code), content is meaning (text)
   // - intent-to-mechanism: anchor is intent (text), content is mechanism (code)
   const anchorIsMechanism = retrievalDirection === 'mechanism-to-meaning';
+
+  // Determine formats from hints or infer from retrievalDirection
+  const anchorFormat = determineFormat(
+    data.formatHints?.anchor,
+    anchorIsMechanism
+  );
+  const contentFormat = determineFormat(
+    data.formatHints?.content,
+    !anchorIsMechanism
+  );
 
   return (
     <>
@@ -213,39 +257,27 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                               <TableCell
                                 className={cn(
                                   'align-middle',
-                                  anchorIsMechanism && 'p-0',
+                                  anchorFormat === 'code' && 'p-0',
                                 )}
                               >
-                                {anchorIsMechanism ? (
-                                  entry.anchor && (
-                                    <Preformatted>{entry.anchor}</Preformatted>
-                                  )
-                                ) : (
-                                  <TextCell
-                                    details={entry.details}
-                                    url={entry.url}
-                                  >
-                                    {entry.anchor}
-                                  </TextCell>
+                                {renderCell(
+                                  entry.anchor,
+                                  anchorFormat,
+                                  anchorFormat !== 'code' ? entry.details : undefined,
+                                  anchorFormat !== 'code' ? entry.url : undefined
                                 )}
                               </TableCell>
                               <TableCell
                                 className={cn(
                                   'align-middle',
-                                  !anchorIsMechanism && 'p-0',
+                                  contentFormat === 'code' && 'p-0',
                                 )}
                               >
-                                {anchorIsMechanism ? (
-                                  <TextCell
-                                    details={entry.details}
-                                    url={entry.url}
-                                  >
-                                    {entry.content}
-                                  </TextCell>
-                                ) : (
-                                  entry.content && (
-                                    <Preformatted>{entry.content}</Preformatted>
-                                  )
+                                {renderCell(
+                                  entry.content,
+                                  contentFormat,
+                                  contentFormat !== 'code' ? entry.details : undefined,
+                                  contentFormat !== 'code' ? entry.url : undefined
                                 )}
                               </TableCell>
                             </TableRow>
