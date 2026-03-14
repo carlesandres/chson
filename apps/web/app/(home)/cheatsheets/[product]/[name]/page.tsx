@@ -17,6 +17,7 @@ import { CheatsheetRenderer } from 'components/chson/renderers/CheatsheetRendere
 import { ChecklistRenderer } from 'components/chson/renderers/ChecklistRenderer'
 import { BookmarksRenderer } from 'components/chson/renderers/BookmarksRenderer'
 import { TldrRenderer } from 'components/chson/renderers/TldrRenderer'
+import { RunbookRenderer } from 'components/chson/renderers/RunbookRenderer'
 
 import type { Cheatsheet } from 'lib/cheatsheets'
 
@@ -64,6 +65,10 @@ function renderDocument(data: Cheatsheet, product: string, name: string) {
     case 'tldr':
       return (
         <TldrRenderer data={data} product={product} name={name} />
+      )
+    case 'runbook':
+      return (
+        <RunbookRenderer data={data} product={product} name={name} />
       )
     case 'cheatsheet':
     default:
