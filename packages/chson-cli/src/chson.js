@@ -430,6 +430,53 @@ function escapeMarkdown(text) {
 }
 
 /**
+ * Determines the format for a column based on formatHints and retrievalDirection.
+ * @param {string|undefined} formatHint - Explicit format from formatHints
+ * @param {boolean} isMechanism - Whether this column contains the mechanism (code)
+ * @returns {"text" | "markdown" | "code"}
+ */
+function determineFormat(formatHint, isMechanism) {
+  if (formatHint) {
+    return formatHint;
+  }
+  return isMechanism ? "code" : "text";
+}
+
+/**
+ * Escapes only markdown table special chars (preserves markdown syntax)
+ * @param {string} text
+ * @returns {string}
+ */
+function escapeMarkdownTableChars(text) {
+  return String(text)
+    .replaceAll("\\", "\\\\")
+    .replaceAll("|", "\\|")
+    .replaceAll("\r\n", "\n")
+    .replaceAll("\r", "\n")
+    .replaceAll("\n", "<br/>");
+}
+
+/**
+ * Renders text based on format type for CLI output
+ * @param {string} text - The text to render
+ * @param {"text" | "markdown" | "code"} format - The format type
+ * @returns {string} - Escaped markdown table cell content
+ */
+function renderTextForCLI(text, format) {
+  if (!text) return "";
+  
+  if (format === "code") {
+    return `<pre>${escapeMarkdown(text)}</pre>`;
+  }
+  
+  if (format === "markdown") {
+    return escapeMarkdownTableChars(text);
+  }
+  
+  return escapeMarkdown(text);
+}
+
+/**
  * Render ChSON format: entries with anchor, content, optional details/url
  * Applies <pre> formatting to mechanism column based on retrievalDirection
  */
@@ -464,6 +511,17 @@ function renderMarkdownTable(chson) {
   // - intent-to-mechanism: anchor is intent (text), content is mechanism (code)
   const anchorIsMechanism = retrievalDirection === "mechanism-to-meaning";
 
+  // Get format hints and determine formats
+  const formatHints = chson.formatHints ?? {};
+  const anchorFormat = determineFormat(
+    formatHints.anchor,
+    anchorIsMechanism
+  );
+  const contentFormat = determineFormat(
+    formatHints.content,
+    !anchorIsMechanism
+  );
+
   const sections = Array.isArray(chson.sections) ? chson.sections : [];
   for (const section of sections) {
     lines.push("");
@@ -487,27 +545,27 @@ function renderMarkdownTable(chson) {
       const details = entry.details ?? "";
       const url = entry.url ?? "";
 
-      let lhs, rhs;
-
-      if (anchorIsMechanism) {
-        // mechanism-to-meaning: anchor is code, content is text
-        lhs = anchor ? `<pre>${escapeMarkdown(anchor)}</pre>` : "";
-        // Build content cell with optional details and url
-        const rhsParts = [];
-        if (content) rhsParts.push(escapeMarkdown(content));
-        if (details) rhsParts.push(escapeMarkdown(details));
-        if (url) rhsParts.push(`[Link](${escapeMarkdown(url)})`);
-        rhs = rhsParts.join("<br>");
-      } else {
-        // intent-to-mechanism: anchor is text, content is code
-        // Build anchor cell with optional details and url
-        const lhsParts = [];
-        if (anchor) lhsParts.push(escapeMarkdown(anchor));
-        if (details) lhsParts.push(escapeMarkdown(details));
-        if (url) lhsParts.push(`[Link](${escapeMarkdown(url)})`);
-        lhs = lhsParts.join("<br>");
-        rhs = content ? `<pre>${escapeMarkdown(content)}</pre>` : "";
+      // Render anchor cell
+      const anchorParts = [];
+      if (anchor) anchorParts.push(renderTextForCLI(anchor, anchorFormat));
+      if (details && anchorFormat !== "code") {
+        anchorParts.push(escapeMarkdown(details));
       }
+      if (url && anchorFormat !== "code") {
+        anchorParts.push(`[Link](${escapeMarkdown(url)})`);
+      }
+      const lhs = anchorParts.join("<br>");
+
+      // Render content cell
+      const contentParts = [];
+      if (content) contentParts.push(renderTextForCLI(content, contentFormat));
+      if (details && contentFormat !== "code") {
+        contentParts.push(escapeMarkdown(details));
+      }
+      if (url && contentFormat !== "code") {
+        contentParts.push(`[Link](${escapeMarkdown(url)})`);
+      }
+      const rhs = contentParts.join("<br>");
 
       lines.push(`| ${lhs} | ${rhs} |`);
     }
