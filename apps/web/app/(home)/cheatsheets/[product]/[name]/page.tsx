@@ -15,6 +15,7 @@ import {
 import { ExternalLink, Home } from 'lucide-react'
 import { CheatsheetRenderer } from 'components/chson/renderers/CheatsheetRenderer'
 import { ChecklistRenderer } from 'components/chson/renderers/ChecklistRenderer'
+import { BookmarksRenderer } from 'components/chson/renderers/BookmarksRenderer'
 
 import type { Cheatsheet } from 'lib/cheatsheets'
 
@@ -54,6 +55,10 @@ function renderDocument(data: Cheatsheet, product: string, name: string) {
     case 'checklist':
       return (
         <ChecklistRenderer data={data} product={product} name={name} />
+      )
+    case 'bookmarks':
+      return (
+        <BookmarksRenderer data={data} product={product} name={name} />
       )
     case 'cheatsheet':
     default:
