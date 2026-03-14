@@ -30,6 +30,10 @@ export type Cheatsheet = {
   retrievalDirection?: 'intent-to-mechanism' | 'mechanism-to-meaning';
   anchorLabel?: string;
   contentLabel?: string;
+  formatHints?: {
+    anchor?: 'text' | 'markdown' | 'code';
+    content?: 'text' | 'markdown' | 'code';
+  };
   metadata?: Record<string, unknown>;
   sections: CheatsheetSection[];
 };
