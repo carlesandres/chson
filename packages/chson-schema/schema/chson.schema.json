@@ -78,6 +78,23 @@
       "maxLength": 50,
       "description": "Display name for the content column (default: 'Content', max 50 chars). Use 'Description' for explanations, 'Action' for intent-based lookups, etc."
     },
+    "formatHints": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Optional rendering hints for how to format anchor and content fields. When not specified, format is inferred from retrievalDirection: mechanism columns use 'code' format, intent columns use 'text' format. Markdown format supports inline code (`code`), bold (**text**), italics (*text*), and links ([text](url)).",
+      "properties": {
+        "anchor": {
+          "type": "string",
+          "enum": ["text", "markdown", "code"],
+          "description": "Format hint for the anchor column. 'text': plain text. 'markdown': inline markdown (code, bold, italics, links). 'code': monospace code block."
+        },
+        "content": {
+          "type": "string",
+          "enum": ["text", "markdown", "code"],
+          "description": "Format hint for the content column. 'text': plain text. 'markdown': inline markdown (code, bold, italics, links). 'code': monospace code block."
+        }
+      }
+    },
     "metadata": {
       "type": "object",
       "additionalProperties": true,
