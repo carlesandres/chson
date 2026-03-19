@@ -3,7 +3,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build"],
-      "outputs": ["dist/**", "types/**", ".astro/**", ".next/**", "!.next/cache/**"]
+      "outputs": ["dist/**", "types/**", "index.json", ".next/**", "!.next/cache/**"]
     },
     "typecheck": {
       "dependsOn": ["^build"],

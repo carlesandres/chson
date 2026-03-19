@@ -1,6 +1,7 @@
 {
   "name": "@chson/example-shadcn-registry",
   "private": true,
+  "license": "MIT",
   "scripts": {
     "registry:build": "shadcn build",
     "registry:serve": "serve . -l 3000",
