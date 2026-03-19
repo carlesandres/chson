@@ -1,13 +1,41 @@
 {
   "name": "@chson/cli",
-  "version": "0.0.1",
-  "private": true,
-  "description": "ChSON CLI tools (validate, render)",
+  "version": "1.0.0",
+  "description": "CLI for validating, rendering, and distributing ChSON cheatsheet files",
   "license": "MIT",
+  "author": "Carles Andres",
+  "type": "module",
   "bin": {
     "chson": "./src/chson.js"
   },
-  "type": "module",
+  "files": [
+    "src/chson.js",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carlesandres/chson.git",
+    "directory": "packages/chson-cli"
+  },
+  "homepage": "https://chson.dev",
+  "bugs": {
+    "url": "https://github.com/carlesandres/chson/issues"
+  },
+  "keywords": [
+    "chson",
+    "cli",
+    "cheatsheet",
+    "validate",
+    "render",
+    "json",
+    "schema"
+  ],
+  "engines": {
+    "node": ">=20"
+  },
   "scripts": {
     "build": "echo 'CLI requires no build step'",
     "typecheck": "tsc -p tsconfig.json",
