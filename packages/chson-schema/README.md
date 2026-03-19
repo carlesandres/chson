@@ -1,89 +1,103 @@
 # @chson/schema
 
-ChSON JSON Schema and TypeScript type definitions.
+[![npm version](https://img.shields.io/npm/v/@chson/schema)](https://www.npmjs.com/package/@chson/schema)
+[![license](https://img.shields.io/npm/l/@chson/schema)](https://github.com/carlesandres/chson/blob/main/LICENSE)
 
-## Source of Truth
+[ChSON](https://chson.dev) JSON Schema and TypeScript type definitions.
 
-This package is the **canonical source** for the ChSON JSON Schema:
+This is the **canonical source** for the ChSON format specification. It
+provides the JSON Schema for validation and auto-generated TypeScript types
+for type-safe consumption.
 
-- **Schema file**: `schema/chson.schema.json`
-- **Public URL**: `https://chson.dev/api/schema.json` (served by the web app)
-- **Types**: Auto-generated TypeScript definitions in `types/`
+## Install
+
+```bash
+npm install @chson/schema
+```
 
 ## Usage
 
-### In Node.js/CLI tools
+### Validate ChSON files (Node.js)
 
 ```javascript
 import schema from "@chson/schema" with { type: "json" };
-// schema is the parsed JSON Schema object
+
+// Use with any JSON Schema validator (e.g. Ajv)
+import Ajv from "ajv/dist/2020.js";
+const ajv = new Ajv();
+const validate = ajv.compile(schema);
+
+const isValid = validate(myCheatsheet);
 ```
 
-### In TypeScript
+### TypeScript types
 
 ```typescript
 import type { ChsonDocument, ChsonSection, ChsonEntry } from "@chson/schema/types";
+
+const doc: ChsonDocument = {
+  title: "Git Essentials",
+  publicationDate: "2026-01-16",
+  description: "Essential git commands for day-to-day development.",
+  sections: [
+    {
+      title: "Basics",
+      entries: [
+        { anchor: "git status", content: "Show staged, unstaged, and untracked files." }
+      ]
+    }
+  ]
+};
 ```
 
-### In .chson.json files
+### IDE support in `.chson.json` files
+
+Add the `$schema` field to get autocompletion and validation in VS Code and
+other editors:
 
 ```json
 {
   "$schema": "https://chson.dev/api/schema.json",
   "title": "My Cheatsheet",
-  ...
+  "publicationDate": "2026-01-01",
+  "description": "A short description.",
+  "sections": []
 }
 ```
 
-## How the Web App Serves the Schema
+## What's Included
 
-The web app at `apps/web` has an API route (`app/api/schema.json/route.ts`) that:
-
-1. Imports the schema from this package: `import schema from "@chson/schema"`
-2. Serves it at `https://chson.dev/api/schema.json`
-3. Includes caching headers for performance
-
-This architecture ensures there's only one schema file to maintain.
-
-## Structure
-
-- `schema/chson.schema.json` - JSON Schema (Draft 2020-12)
-- `types/index.d.ts` - Generated TypeScript types (auto-generated, gitignored)
-- `scripts/build-types.js` - Type generation script
+| Export | Path | Description |
+|--------|------|-------------|
+| Default | `@chson/schema` | The JSON Schema object (Draft 2020-12) |
+| Types | `@chson/schema/types` | TypeScript type definitions |
+| Schema file | `@chson/schema/chson.schema.json` | Direct schema file import |
 
 ## Character Limits
 
-ChSON enforces `maxLength` constraints on text fields based on cognitive science principles and current usage analysis. These limits reduce cognitive load and ensure content remains scannable while allowing flexibility where needed.
+ChSON enforces `maxLength` constraints on text fields based on cognitive
+science principles (Cowan 2001) and usage analysis:
 
 | Field | Max Length | Rationale |
 |-------|-----------|-----------|
-| `title` | 80 | Fits typical editor widths, scannable at a glance |
-| `description` | 150 | Brief summary without overwhelming working memory |
+| `title` | 80 | Fits typical editor widths |
+| `description` | 150 | Brief summary |
 | `entry.anchor` | 100 | Commands/shortcuts should be concise |
-| `entry.content` | 150 | Descriptive but focused explanations |
-| `section.title` | 100 | Section headings should be scannable |
-| `anchorLabel` | 50 | Short metadata labels (e.g., "Command", "Shortcut") |
-| `contentLabel` | 50 | Short metadata labels (e.g., "Description", "Action") |
+| `entry.content` | 150 | Focused explanations |
+| `section.title` | 100 | Scannable headings |
+| `anchorLabel` | 50 | Short metadata labels |
+| `contentLabel` | 50 | Short metadata labels |
 
-**Note**: `entry.details` has **NO maxLength limit** - it supports progressive disclosure for extended explanations (see `research/cognitive-foundations.md`).
+`entry.details` has **no limit** — it supports progressive disclosure for
+extended explanations.
 
-These limits are based on:
-- Analysis of existing cheatsheets (2x current maximum + buffer)
-- Working memory research (Cowan 2001: ~4 chunks)
-- Alignment with cognitive science principles documented in the research folder
+## Related Packages
 
-## Development
+- [`@chson/cli`](https://www.npmjs.com/package/@chson/cli) — CLI for
+  validating and rendering ChSON files
+- [`@chson/registry`](https://www.npmjs.com/package/@chson/registry) — Curated
+  collection of ChSON cheatsheets
 
-Generate TypeScript types from schema:
+## License
 
-```bash
-npm run build
-```
-
-Type-check generated types:
-
-```bash
-npm run typecheck
-```
-
-The build script uses `json-schema-to-typescript` to generate type definitions.
+MIT
