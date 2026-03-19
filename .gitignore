@@ -10,8 +10,12 @@ build/
 # Generated TypeScript types
 packages/chson-schema/types/
 
+# Generated cheatsheet index
+packages/chson-registry/index.json
+
 # Turborepo cache
 .turbo/
 
 # Vercel
 .vercel/
+.opencode/
