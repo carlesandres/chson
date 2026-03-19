@@ -1,22 +1,45 @@
 {
   "name": "@chson/registry",
   "version": "1.0.0",
-  "private": true,
-  "description": "ChSON cheatsheet registry - source of truth for example cheatsheets",
+  "description": "Curated collection of ChSON cheatsheets — structured data files for developer reference.",
+  "license": "MIT",
+  "author": "Carles Andres",
   "type": "module",
+  "main": "./index.json",
   "exports": {
-    "./cheatsheets": "./cheatsheets",
+    ".": "./index.json",
     "./cheatsheets/*": "./cheatsheets/*"
   },
   "files": [
-    "cheatsheets"
+    "index.json",
+    "cheatsheets",
+    "LICENSE"
+  ],
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/carlesandres/chson.git",
+    "directory": "packages/chson-registry"
+  },
+  "homepage": "https://chson.dev",
+  "bugs": {
+    "url": "https://github.com/carlesandres/chson/issues"
+  },
+  "keywords": [
+    "chson",
+    "cheatsheet",
+    "cheatsheets",
+    "registry",
+    "reference",
+    "json",
+    "data"
   ],
   "scripts": {
+    "build": "node scripts/build-index.js",
     "validate": "node ../chson-cli/src/chson.js validate cheatsheets",
     "render": "node ../chson-cli/src/chson.js render markdown cheatsheets",
     "render:build": "node ../chson-cli/src/chson.js render markdown cheatsheets --out ../../build/registry-md"
-  },
-  "dependencies": {
-    "@chson/schema": "*"
   }
 }
