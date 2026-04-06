@@ -13,11 +13,8 @@ import {
   BreadcrumbSeparator,
 } from 'components/ui/breadcrumb'
 import { ExternalLink, Home } from 'lucide-react'
-import { CheatsheetRenderer } from 'components/chson/renderers/CheatsheetRenderer'
 import { ChecklistRenderer } from 'components/chson/renderers/ChecklistRenderer'
-import { BookmarksRenderer } from 'components/chson/renderers/BookmarksRenderer'
-import { TldrRenderer } from 'components/chson/renderers/TldrRenderer'
-import { RunbookRenderer } from 'components/chson/renderers/RunbookRenderer'
+import { Bookmarks, Cheatsheet as CheatsheetView, Runbook, Tldr } from '@chson/ui'
 
 import type { Cheatsheet } from 'lib/cheatsheets'
 
@@ -59,22 +56,14 @@ function renderDocument(data: Cheatsheet, product: string, name: string) {
         <ChecklistRenderer data={data} product={product} name={name} />
       )
     case 'bookmarks':
-      return (
-        <BookmarksRenderer data={data} product={product} name={name} />
-      )
+      return <Bookmarks data={data} />
     case 'tldr':
-      return (
-        <TldrRenderer data={data} product={product} name={name} />
-      )
+      return <Tldr data={data} />
     case 'runbook':
-      return (
-        <RunbookRenderer data={data} product={product} name={name} />
-      )
+      return <Runbook data={data} />
     case 'cheatsheet':
     default:
-      return (
-        <CheatsheetRenderer data={data} product={product} name={name} />
-      )
+      return <CheatsheetView data={data} />
   }
 }
 

@@ -1,0 +1,1 @@
+{"version":3,"file":"tldr.d.ts","sourceRoot":"","sources":["../../../src/react/renderers/tldr.tsx"],"names":[],"mappings":"AAEA,OAAO,KAAK,EAAE,aAAa,EAAE,MAAM,eAAe,CAAA;AAMlD,MAAM,WAAW,SAAS;IACxB,IAAI,EAAE,aAAa,CAAA;IACnB,SAAS,CAAC,EAAE,MAAM,CAAA;CACnB;AAED;;GAEG;AACH,wBAAgB,IAAI,CAAC,EAAE,IAAI,EAAE,SAAS,EAAE,EAAE,SAAS,2CAwClD"}
