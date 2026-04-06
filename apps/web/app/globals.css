@@ -5,6 +5,9 @@
 
 @source '../../../node_modules/streamdown/dist/*.js';
 
+/* Tailwind v4 source scanning for workspace package classnames */
+@source '../../../packages/chson-ui/src/**/*.{ts,tsx}';
+
 @plugin 'tailwindcss-animate';
 
 @custom-variant dark (&:is(.dark *));

@@ -1,48 +1,15 @@
 import fs from 'node:fs';
 import path from 'node:path';
 
-export type CheatsheetEntry = {
-  anchor: string;
-  content: string;
-  details?: string;
-  url?: string;
-  comments?: unknown;
-};
+import type { ChSONDocument } from '@chson/schema'
 
-export type CheatsheetSection = {
-  title: string;
-  description?: string;
-  entries: CheatsheetEntry[];
-};
-
-export type Cheatsheet = {
-  $schema?: string;
-  title: string;
-  version?: string;
-  publicationDate: string;
-  description: string;
-  documentType?: 'cheatsheet' | 'checklist' | 'runbook' | 'tldr' | 'bookmarks';
-  author?: string;
-  license?: string;
-  homepage?: string;
-  icon?: string;
-  tags?: string[];
-  retrievalDirection?: 'intent-to-mechanism' | 'mechanism-to-meaning';
-  anchorLabel?: string;
-  contentLabel?: string;
-  formatHints?: {
-    anchor?: 'text' | 'markdown' | 'code';
-    content?: 'text' | 'markdown' | 'code';
-  };
-  metadata?: Record<string, unknown>;
-  sections: CheatsheetSection[];
-};
+export type Cheatsheet = ChSONDocument
 
 export type CheatsheetRef = {
   product: string;
   name: string;
   filePath: string;
-  data: Cheatsheet;
+  data: ChSONDocument;
 };
 
 /**
