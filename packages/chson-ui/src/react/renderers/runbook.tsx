@@ -4,9 +4,9 @@ import type { ChSONDocument } from '@chson/schema'
 
 import { looksLikeCommand } from '../../core/runbook'
 import { getEntries, getSections } from '../../core/normalize'
-import { Badge } from '../ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
-import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../ui/accordion'
+import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../shadcn/accordion'
+import { Badge } from '../../shadcn/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
 import { Preformatted } from '../primitives/preformatted'
 import { cn } from '../utils/cn'
 

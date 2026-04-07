@@ -6,8 +6,8 @@ import { inferColumnFormats } from '../../core/format'
 import { getLabels } from '../../core/document'
 import { getEntries, getSections } from '../../core/normalize'
 import { cn } from '../utils/cn'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
+import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
+import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../shadcn/table'
 import { Cell } from './_cell'
 
 export interface CheatsheetProps {

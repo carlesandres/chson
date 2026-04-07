@@ -2,7 +2,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from 'react';
 import { getEntries, getSections } from '../../core/normalize';
 import { cn } from '../utils/cn';
-import { Separator } from '../ui/separator';
+import { Separator } from '../../shadcn/separator';
 /**
  * TLDR renderer: compact Q&A layout.
  */

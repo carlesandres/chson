@@ -13,10 +13,10 @@ import {
 } from '../../core/checklist'
 import { getEntries, getSections } from '../../core/normalize'
 import { cn } from '../utils/cn'
-import { Badge } from '../ui/badge'
-import { Card, CardContent, CardHeader, CardTitle } from '../ui/card'
-import { Checkbox } from '../ui/checkbox'
-import { Progress } from '../ui/progress'
+import { Badge } from '../../shadcn/badge'
+import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
+import { Checkbox } from '../../shadcn/checkbox'
+import { Progress } from '../../shadcn/progress'
 
 export interface ChecklistProps {
   data: ChSONDocument

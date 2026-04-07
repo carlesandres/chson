@@ -1,8 +1,8 @@
 import Link from 'next/link';
 import type { Metadata } from 'next';
 import { getAllCheatsheets } from 'lib/cheatsheets';
-import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Badge } from 'components/ui/badge';
+import { Badge } from '@chson/ui/shadcn/badge';
+import { Card, CardContent, CardHeader, CardTitle } from '@chson/ui/shadcn/card';
 
 export const metadata: Metadata = {
   title: 'Use Cases | ChSON',

@@ -2,8 +2,8 @@ import Link from 'next/link'
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { getAllCheatsheets, loadCheatsheet } from 'lib/cheatsheets'
-import { Badge } from 'components/ui/badge'
-import { Button } from 'components/ui/button'
+import { Badge } from '@chson/ui/shadcn/badge'
+import { Button } from '@chson/ui/shadcn/button'
 import {
   Breadcrumb,
   BreadcrumbItem,
@@ -11,7 +11,7 @@ import {
   BreadcrumbList,
   BreadcrumbPage,
   BreadcrumbSeparator,
-} from 'components/ui/breadcrumb'
+} from '@chson/ui/shadcn/breadcrumb'
 import { ExternalLink, Home } from 'lucide-react'
 import { ChecklistRenderer } from 'components/chson/renderers/ChecklistRenderer'
 import { Bookmarks, Cheatsheet as CheatsheetView, Runbook, Tldr } from '@chson/ui'
