@@ -1,6 +1,5 @@
 {
   "compilerOptions": {
-    "baseUrl": ".",
     "paths": {
       "@/*": ["./*"],
       "@/.source/*": ["./.source/*"],
@@ -14,7 +13,7 @@
       "providers/*": ["./providers/*"],
       "app/*": ["./app/*"]
     },
-    "target": "es5",
+    "target": "es2015",
     "lib": [
       "dom",
       "dom.iterable",
