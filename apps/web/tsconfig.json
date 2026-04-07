@@ -4,6 +4,8 @@
     "paths": {
       "@/*": ["./*"],
       "@/.source/*": ["./.source/*"],
+      "@chson/ui/shadcn": ["../../packages/chson-ui/src/shadcn/index.ts"],
+      "@chson/ui/shadcn/*": ["../../packages/chson-ui/src/shadcn/*"],
       "components/*": ["./components/*"],
       "lib/*": ["./lib/*"],
       "hooks/*": ["./hooks/*"],

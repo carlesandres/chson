@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import { getAllCheatsheets } from 'lib/cheatsheets';
-import { Card, CardContent, CardHeader, CardTitle } from 'components/ui/card';
-import { Button } from 'components/ui/button';
+import { Button } from '@chson/ui/shadcn/button';
+import { Card, CardContent, CardHeader, CardTitle } from '@chson/ui/shadcn/card';
 import { CodeBlockStatic } from 'components/chson';
 import {
   ArrowRight,
