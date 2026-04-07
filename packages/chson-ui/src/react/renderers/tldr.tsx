@@ -4,7 +4,7 @@ import type { ChSONDocument } from '@chson/schema'
 
 import { getEntries, getSections } from '../../core/normalize'
 import { cn } from '../utils/cn'
-import { Separator } from '../ui/separator'
+import { Separator } from '../../shadcn/separator'
 
 export interface TldrProps {
   data: ChSONDocument

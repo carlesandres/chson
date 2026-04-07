@@ -4,8 +4,8 @@ import { getHostname } from '../../core/bookmarks';
 import { safeExternalUrl } from '../../core/url';
 import { getEntries, getSections } from '../../core/normalize';
 import { ExternalLinkIcon } from '../icons';
-import { Badge } from '../ui/badge';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../ui/card';
+import { Badge } from '../../shadcn/badge';
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../shadcn/card';
 import { cn } from '../utils/cn';
 /**
  * Bookmarks renderer: card grid of external links.
