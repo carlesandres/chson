@@ -8,7 +8,7 @@ const config: NextConfig = {
   webpack: (config) => {
     config.resolve = config.resolve ?? {};
     config.resolve.alias = {
-      ...(config.resolve.alias ?? {}),
+      ...config.resolve.alias,
       // Resolve to workspace source for HMR.
       '@chson/ui/shadcn': path.resolve(__dirname, '../../packages/chson-ui/src/shadcn'),
     };
