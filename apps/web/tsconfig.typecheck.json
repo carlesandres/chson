@@ -1,0 +1,26 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "paths": {
+      "@/*": ["./*"],
+      "@/.source/*": ["./.source/*", "./.source-stub/*"],
+      "@chson/ui/shadcn": ["../../packages/chson-ui/src/shadcn/index.ts"],
+      "@chson/ui/shadcn/*": ["../../packages/chson-ui/src/shadcn/*"],
+      "components/*": ["./components/*"],
+      "lib/*": ["./lib/*"],
+      "hooks/*": ["./hooks/*"],
+      "stores/*": ["./stores/*"],
+      "utils/*": ["./utils/*"],
+      "providers/*": ["./providers/*"],
+      "app/*": ["./app/*"]
+    }
+  },
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": ["node_modules", ".source"]
+}
