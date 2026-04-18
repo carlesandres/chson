@@ -36,7 +36,7 @@ function CodeBlockRenderer({
         <div
           className={cn(
             // Hide streamdown's internal border and header
-            'chson-code-block overflow-auto text-[13px]',
+            'chson-code-block overflow-auto text-xs',
             '[&_[data-streamdown="code-block"]]:my-0 [&_[data-streamdown="code-block"]]:border-0 [&_[data-streamdown="code-block"]]:rounded-none',
             '[&_[data-streamdown="code-block-header"]]:hidden',
             '[&_pre]:m-0 [&_pre]:bg-transparent [&_pre]:p-0',

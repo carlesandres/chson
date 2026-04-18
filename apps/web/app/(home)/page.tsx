@@ -66,12 +66,12 @@ export default function Home() {
     <section className="space-y-10">
       {/* Hero */}
       <div>
-        <h1 className="font-display text-[clamp(34px,6vw,56px)] font-semibold leading-[1.05] tracking-[-0.03em]">
+        <h1 className="font-display text-[length:var(--text-display-hero)] font-semibold leading-[var(--leading-display)] tracking-[var(--tracking-display)]">
           Structured knowledge,
           <br />
           <span className="text-muted-foreground">designed for retrieval.</span>
         </h1>
-        <p className="mt-4 max-w-[60ch] text-lg text-muted-foreground">
+        <p className="mt-4 max-w-[var(--max-w-prose-sm)] text-lg text-muted-foreground">
           ChSON is a JSON format for writing cheatsheets, checklists, runbooks,
           and more. Built around how people actually scan and look up
           information.
