@@ -106,7 +106,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
 
       <div className="flex flex-wrap items-start justify-between gap-4">
         <div>
-          <h1 className="font-display text-[clamp(28px,4.2vw,44px)] font-semibold leading-[1.08] tracking-[-0.03em]">
+          <h1 className="font-display text-[length:var(--text-display-title)] font-semibold leading-[var(--leading-display)] tracking-[var(--tracking-display)]">
             {title}
           </h1>
           <div className="mt-3 flex flex-wrap gap-2 text-xs text-muted-foreground">
@@ -126,11 +126,11 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
                 </strong>
               </span>
             )}
-            <Badge variant="outline" className="font-mono text-[11px]">
+            <Badge variant="outline" className="font-mono text-[length:var(--text-badge)]">
               {ref.product}/{ref.name}
             </Badge>
           </div>
-          <p className="mt-4 max-w-[80ch] text-muted-foreground">
+          <p className="mt-4 max-w-[var(--max-w-prose-lg)] text-muted-foreground">
             {data.description}
           </p>
         </div>

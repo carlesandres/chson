@@ -115,6 +115,23 @@
   /* Custom shadow */
   --shadow-soft: 0 18px 50px rgb(15 15 15 / 8%);
 
+  /* Display typography tokens */
+  --text-display-hero: clamp(34px, 6vw, 56px);
+  --text-display-title: clamp(28px, 4vw, 44px);
+  --leading-display: 1.08;
+  --tracking-display: -0.03em;
+
+  /* Prose max-width tokens */
+  --max-w-prose-sm: 60ch;
+  --max-w-prose: 75ch;
+  --max-w-prose-lg: 80ch;
+
+  /* Small text for badges and metadata */
+  --text-badge: 11px;
+
+  /* Layout bleed for ambient effects */
+  --spacing-bleed: 20vh;
+
   /* Custom animations */
   --animate-slide-in: slide-in 420ms ease-out both;
   --animate-fade-up: fade-up 520ms 80ms ease-out both;
@@ -280,4 +297,30 @@
 
 .prose em {
   @apply italic;
+}
+
+/* Decorative background gradient */
+.bg-gradient-ambient {
+  --gradient-blue: rgba(11, 91, 211, 0.18);
+  --gradient-orange: rgba(216, 75, 42, 0.16);
+  --gradient-dark: rgba(0, 0, 0, 0.05);
+  background: radial-gradient(
+      900px 500px at 20% 10%,
+      var(--gradient-blue),
+      transparent 60%
+    ),
+    radial-gradient(
+      800px 520px at 85% 15%,
+      var(--gradient-orange),
+      transparent 62%
+    ),
+    radial-gradient(
+      900px 700px at 50% 85%,
+      var(--gradient-dark),
+      transparent 65%
+    );
+}
+
+.dark .bg-gradient-ambient {
+  opacity: 0.5;
 }

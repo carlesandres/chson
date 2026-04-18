@@ -69,10 +69,10 @@ export default function UseCasesPage() {
   return (
     <section className="space-y-8">
       <div>
-        <h1 className="font-display text-[clamp(28px,4vw,40px)] font-semibold tracking-[-0.03em]">
+        <h1 className="font-display text-[length:var(--text-display-title)] font-semibold tracking-[var(--tracking-display)]">
           Use cases
         </h1>
-        <p className="mt-3 max-w-[75ch] text-muted-foreground">
+        <p className="mt-3 max-w-[var(--max-w-prose)] text-muted-foreground">
           ChSON supports multiple document patterns. Each section below maps to
           a `documentType` value and is populated directly from files in the
           registry.
