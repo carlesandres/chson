@@ -11,6 +11,7 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 - **`packages/chson-schema/`** — JSON Schema + auto-generated TypeScript types
 - **`packages/chson-registry/`** — Example cheatsheets (source of truth)
 - **`packages/chson-cli/`** — Node.js CLI for validation and rendering
+- **`packages/chson-ui/`** — React component library (renderers for all document types)
 - **`apps/web/`** — Next.js 16 website with shadcn/ui and Fumadocs
 
 ### Package Dependencies
@@ -18,9 +19,16 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 ```
 @chson/schema (builds types)
   ├── @chson/cli (validates/renders)
+  ├── @chson/ui (renders in React)
   └── @chson/registry (validates its cheatsheets)
         └── @chson/web (displays cheatsheets)
 ```
+
+## Environment Requirements
+
+- **Node.js**: `^20.19.0 || >=22.12.0` (`.nvmrc` = `20.19`)
+- **npm**: pinned to `11.10.1` via `packageManager` field — corepack-enforced
+- **TypeScript**: forced to `6.0.2` monorepo-wide via root `package.json` `overrides`
 
 ## Commands
 
@@ -28,7 +36,7 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 # Install dependencies
 npm install
 
-# Build all packages (schema types → cli/registry → site)
+# Build all packages (schema types → cli/registry/ui → site)
 npm run build
 
 # Validate all cheatsheets against schema
@@ -41,8 +49,8 @@ npm run typecheck
 turbo run build --filter=@chson/schema
 turbo run build --filter=@chson/web
 
-# Clean build
-rm -rf .turbo build packages/chson-schema/types && npm run build
+# Clean build (also clear ui artifacts)
+rm -rf .turbo build packages/chson-schema/types packages/chson-ui/dist packages/chson-ui/types && npm run build
 ```
 
 ### Website Commands (apps/web)
@@ -52,8 +60,8 @@ cd apps/web
 
 npm run dev           # Start dev server
 npm run build         # Production build
-npm run typecheck     # TypeScript check
-npm run lint          # Run oxlint + stylelint
+npm run typecheck     # TypeScript check (uses tsconfig.typecheck.json, not tsconfig.json)
+npm run lint          # Runs typecheck + oxlint --fix (NOT just linting)
 npm run prettify      # Format with Prettier
 
 # Tests
@@ -81,55 +89,19 @@ node packages/chson-cli/src/chson.js render markdown packages/chson-registry/che
 
 ## Code Style
 
-### TypeScript/React (apps/web)
+### TypeScript/React (apps/web, packages/chson-ui)
 
-- **Single quotes** (configured in `.prettierrc`)
+- **Single quotes** (configured in `apps/web/.prettierrc`)
 - **2-space indent**
-- **No semicolons** at end of statements (Prettier default with config)
 - **`moduleResolution: "bundler"`** — Required for Fumadocs. Do NOT change to `"node"`
 - **Path aliases**: Use `components/`, `lib/`, `hooks/` etc. (not relative `../`)
-
-**Import order** (blank lines between groups):
-```typescript
-// 1. React/Next.js
-import { useState } from 'react';
-import Link from 'next/link';
-
-// 2. Third-party
-import { cn } from 'lib/utils';
-
-// 3. Local components/types
-import { Button } from 'components/ui/button';
-import type { CheatsheetData } from '@chson/schema';
-```
-
-**Component structure**:
-```typescript
-'use client'; // Only if needed
-
-import { cn } from 'lib/utils';
-
-interface ComponentProps {
-  children: React.ReactNode;
-  className?: string;
-}
-
-/**
- * JSDoc description for the component.
- */
-export function Component({ children, className }: ComponentProps) {
-  return (
-    <div className={cn('base-classes', className)}>
-      {children}
-    </div>
-  );
-}
-```
+- **`verbatimModuleSyntax: true`** in `@chson/ui` — must use `import type` for type-only imports
 
 ### JavaScript (packages/chson-cli)
 
 - **ES modules**, Node 20+
 - **2-space indent**, **double quotes**
+- `"moduleResolution": "NodeNext"` — differs from all other packages
 - Import order: `node:*` builtins → third-party → local
 
 ### JSON (packages/chson-schema, packages/chson-registry)
@@ -139,7 +111,25 @@ export function Component({ children, className }: ComponentProps) {
 
 ## Architecture
 
-**Data flow**: `.chson.json` files → CLI validates against schema → CLI renders → site serves pages
+### Data Flow (`.chson.json` → website)
+
+```
+packages/chson-registry/cheatsheets/<product>/<name>.chson.json
+  │
+  │  direct fs.readFileSync at build time (NOT via index.json or CLI)
+  ▼
+apps/web/lib/cheatsheets.ts :: getAllCheatsheets()
+  │
+  │  generateStaticParams → static site generation
+  ▼
+apps/web/app/(home)/cheatsheets/[product]/[name]/page.tsx
+  │
+  │  dispatches by data.documentType
+  ▼
+@chson/ui renderers: Cheatsheet | Checklist | Runbook | Tldr | Bookmarks
+```
+
+`packages/chson-registry/index.json` is **not used by the website** — it is a pre-built metadata index for external consumers only.
 
 ### Fumadocs Layouts
 
@@ -154,6 +144,28 @@ export function Component({ children, className }: ComponentProps) {
 - **Public URL**: `https://chson.dev/api/schema.json`
 - **Served by**: `apps/web/app/api/schema.json/route.ts`
 
+### `@chson/schema` Dual Export
+
+Same package resolves differently depending on context:
+- `import "@chson/schema"` → raw `schema/chson.schema.json` (used by CLI, API route)
+- `import type { ChSONDocument } from "@chson/schema"` → `types/index.d.ts` (generated)
+
+### `@chson/ui` in Next.js
+
+- `transpilePackages: ['@chson/ui']` — Next.js transpiles it from source (not pre-built for SSR)
+- Webpack alias: `@chson/ui/shadcn` → workspace TypeScript source for HMR; bypasses built `dist/`
+- `@chson/ui` has three export paths: `.` (full), `./core`, `./shadcn`, `./shadcn/*`
+- React is a `peerDependency` (>=18), not a direct dep
+
+## Generated Artifacts — Do NOT Edit Manually
+
+| File | Generated by |
+|---|---|
+| `packages/chson-schema/types/index.d.ts` | `json-schema-to-typescript` from `schema/chson.schema.json` |
+| `packages/chson-registry/index.json` | `scripts/build-index.js` (walks `cheatsheets/`) |
+| `apps/web/.source/` | Fumadocs MDX at build time (gitignored) |
+| `apps/web/types/supabase.ts` | `npm run gen-types` (requires Supabase CLI + linked project) |
+
 ## Important Constraints
 
 ### Fumadocs Requirements
@@ -163,9 +175,14 @@ export function Component({ children, className }: ComponentProps) {
 3. **`.source/`** directory is auto-generated at build time (gitignored).
 4. Import from `@/.source/server` not `@/.source`.
 
+### Two tsconfig Files in `apps/web`
+
+- `tsconfig.json` — used by Next.js dev server and build; includes `.source/`
+- `tsconfig.typecheck.json` — used by `typecheck` and `lint` scripts; excludes `.source/` and uses `.source-stub/` as a fallback so typecheck works before Fumadocs generates `.source/`
+
 ### Zod Version
 
-This project uses **Zod 4.x** (not 3.x) for Fumadocs compatibility.
+This project uses **Zod 4.x** (not 3.x). Zod 4 API differs from v3 (error shapes, `.parse` format, etc.).
 
 ### Testing
 
@@ -173,6 +190,11 @@ This project uses **Zod 4.x** (not 3.x) for Fumadocs compatibility.
 - Test files: `**/*.{test,spec}.{ts,tsx}`
 - Setup file: `vitest.setup.ts`
 - Globals enabled (`describe`, `it`, `expect` available without imports)
+- **`console.error` and `console.warn` are globally silenced** in `vitest.setup.ts` — React warnings and prop errors will NOT appear in test output
+
+### No Pre-commit Hooks
+
+Husky is a devDep of `apps/web` but no hooks are configured. There is no automated pre-commit enforcement.
 
 ## Workflow
 
@@ -186,9 +208,16 @@ This project uses **Zod 4.x** (not 3.x) for Fumadocs compatibility.
 
 ## CI
 
-GitHub Actions (`.github/workflows/ci.yml`) runs on PRs and pushes to main:
-1. `npm run validate` — Schema validation
-2. `npm run typecheck` — TypeScript checking (shared packages)
+GitHub Actions (`.github/workflows/ci.yml`) runs on PRs and pushes to main — two separate jobs:
+
+**`validate` job**:
+1. `npm run validate` — validates all `.chson.json` files against schema
+2. `npx turbo run typecheck --filter=@chson/schema --filter=@chson/cli` — **only these two packages** are typechecked in CI (`@chson/ui` and `@chson/web` are not)
+
+**`registry-prototype` job**:
+1. `npm install` (root)
+2. `npm --prefix examples/chson-shadcn-registry install` — separate install (standalone sub-project, NOT in workspaces)
+3. `npm --prefix examples/chson-shadcn-registry run registry:check`
 
 ## ChSON Schema Structure
 
@@ -224,5 +253,3 @@ Based on cognitive retrieval theory:
 - `section.title`: 100 chars
 - `anchorLabel`, `contentLabel`: 50 chars
 - `entry.details`: **UNBOUNDED** (supports progressive disclosure)
-
-Limits based on cognitive science (working memory ~4 chunks, Cowan 2001) + 2x current max usage analysis.
