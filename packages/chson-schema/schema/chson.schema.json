@@ -156,9 +156,6 @@
           "type": "string",
           "format": "uri",
           "description": "Reference link to learn more about this entry."
-        },
-        "comments": {
-          "description": "Optional notes, warnings, or additional context."
         }
       }
     }

@@ -17,7 +17,7 @@ A ChSON file is a single JSON document with:
 - Optional `metadata` for custom fields
 - A `sections[]` array, each containing `entries[]` (the individual cheats)
 - Each entry has an `anchor` (what users scan for), `content` (what they need),
-  and optional `label` (human-readable description when the anchor is cryptic)
+  and optional `details` and `url` for deeper context
 
 Files use the extension `.chson.json`.
 
@@ -194,8 +194,9 @@ what users scan for (command, shortcut, keyword), and `content` represents what 
 context and reference links. See `research/cognitive-foundations.md` for details.
 
 If you want to build a renderer (PDF, flashcards, etc.), the current schema is intentionally
-minimal — the `comments` field can hold any extra structure you need while the standard
-stays small.
+minimal. Use `details` for extended explanations (including warnings and caveats),
+and `metadata` for custom top-level fields. See `apps/web/content/docs/schema-reference.mdx`
+for field semantics.
 
 ## Contributing
 

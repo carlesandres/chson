@@ -98,10 +98,11 @@ Brief summaries of topics, concepts, or documentation. Useful for quick referenc
 
 ## Bookmarks
 
-Curated link collections. The content field typically contains the URL, with optional description in comments.
+Curated link collections. Put the URL in `content` and use `details` for a longer description.
 
 - **anchor**: Title or name of the resource
-- **content**: URL (and optionally, a brief description)
+- **content**: URL
+- **details**: Optional description of the resource
 
 ```json title="Bookmarks example"
 {
@@ -112,8 +113,16 @@ Curated link collections. The content field typically contains the URL, with opt
   "sections": [{
     "title": "Official",
     "entries": [
-      { "anchor": "TypeScript Handbook", "content": "https://www.typescriptlang.org/docs/handbook/" },
-      { "anchor": "Playground", "content": "https://www.typescriptlang.org/play" }
+      {
+        "anchor": "TypeScript Handbook",
+        "content": "https://www.typescriptlang.org/docs/handbook/",
+        "details": "Official language guide and reference."
+      },
+      {
+        "anchor": "Playground",
+        "content": "https://www.typescriptlang.org/play",
+        "details": "Online editor for trying TypeScript snippets."
+      }
     ]
   }]
 }

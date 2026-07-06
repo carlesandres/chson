@@ -362,8 +362,7 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
       "anchor": "git status",
       "content": "Show working tree status",
       "details": "Displays staged, unstaged, and untracked files. Use -s for short format.",
-      "url": "https://git-scm.com/docs/git-status",
-      "comments": "Most commonly used command"
+      "url": "https://git-scm.com/docs/git-status"
     }
   ]
 }
@@ -377,7 +376,6 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
 | `content`  | `string` | Yes      | The associated content—what users need. Max 150 characters.           |
 | `details`  | `string` | No       | Extended explanation (no length limit). Typically markdown.           |
 | `url`      | `string` | No       | Reference link to learn more (URI format).                            |
-| `comments` | `any`    | No       | Additional notes, warnings, or context.                               |
 
 ### `anchor`
 
@@ -445,20 +443,6 @@ Reference link to external documentation or resources.
 - Reference tutorials or guides
 - Point to related tools or resources
 
-### `comments`
-
-Additional context that doesn't fit in the content field. Can be any JSON type, though strings are most common.
-
-```json
-{
-  "anchor": "git push --force",
-  "content": "Force push to remote (overwrites history)",
-  "comments": "WARNING: Never use on shared branches"
-}
-```
-
----
-
 ## Complete Example
 
 ```json
@@ -496,7 +480,7 @@ Additional context that doesn't fit in the content field. Can be any JSON type, 
         {
           "anchor": "git status",
           "content": "Show working tree status",
-          "comments": "Use -s for short format"
+          "details": "Use -s for short format."
         },
         {
           "anchor": "git add <file>",

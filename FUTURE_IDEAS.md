@@ -14,7 +14,7 @@ can iterate without losing context.
 - **Core structure** — based on cognitive retrieval theory (see `research/cognitive-foundations.md`):
   - Top-level: `title`, optional `version`, `publicationDate`, `description`, `retrievalDirection`, `metadata`, `sections`
   - Section: `title`, optional `description`, `entries`
-  - Entry: `anchor` (retrieval anchor), `content` (associated content), optional `details`, `url`, `comments`
+  - Entry: `anchor` (retrieval anchor), `content` (associated content), optional `details` (extended text), `url`
 - **Retrieval direction**: `"mechanism-to-meaning"` (scan by command/syntax) or `"intent-to-mechanism"` (scan by action/intent)
 - **Keep flexibility**: allow unknown fields (`additionalProperties: true`) everywhere.
 - **Dates**: `publicationDate` accepts either `date` or `date-time`.
@@ -43,8 +43,8 @@ Rationale: enables deep links, deduplication, diffing, sync, and references.
 
 ### 3) Standard extension mechanism
 
-We currently use free-form `metadata` and `comments`, but we may later define an
-extension convention such as:
+We currently use free-form `metadata` for custom top-level fields. We may later
+define a formal extension convention such as:
 
 - `x-...` fields (OpenAPI-style)
 - `_...` fields (JSON Feed-style)

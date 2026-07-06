@@ -89,7 +89,7 @@ science principles (Cowan 2001) and usage analysis:
 | `contentLabel` | 50 | Short metadata labels |
 
 `entry.details` has **no limit** — it supports progressive disclosure for
-extended explanations.
+extended explanations, warnings, and caveats.
 
 ## Related Packages
 

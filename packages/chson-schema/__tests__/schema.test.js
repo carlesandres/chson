@@ -130,6 +130,7 @@ describe('ChSON Schema', () => {
       // details should NOT have maxLength to support extended explanations
       expect(schema.$defs.entry.properties.details.maxLength).toBeUndefined()
     })
+
   })
 
   describe('Format validation', () => {
