@@ -11,9 +11,9 @@ layer around it.
 ## Current Status
 
 The monorepo ships a working schema, CLI, registry, `@chson/ui` renderers, and
-website. Organic growth has blurred boundaries between the format, the component
-library, and the demo app. Documentation and the schema have drifted apart. The
-project is pausing feature work to reset architecture before launch.
+website. Phase 1 architecture reset is in progress: doc/schema alignment and
+`comments` removal are done; layer ADR, progressive disclosure, and `@chson/ui`
+simplification are underway.
 
 ## Phases
 
@@ -24,14 +24,11 @@ with the cognitive model before adding features or publishing.
 
 **Tasks (in order):**
 
-1. **Audit and fix doc/schema inconsistencies** — align README, docs, and schema;
-   resolve doc/schema drift; standardize bookmarks conventions.
-2. **Draft layer-boundary ADR** — document what belongs in the format, renderers,
-   and apps; freeze the v1 core; defer nesting, IDs, and item typing to v2.
-3. **Implement progressive disclosure in renderers** — `details` should collapse/expand,
-   not render as always-visible secondary text.
-4. **Refactor `@chson/ui`** — extract hooks (e.g. checklist persistence) into the
-   package; stop scope creep from the vendored shadcn surface.
+1. ~~**Audit and fix doc/schema inconsistencies**~~ — done.
+2. ~~**Draft layer-boundary ADR**~~ — `docs/adr/001-layers.md`.
+3. ~~**Implement progressive disclosure in renderers**~~ — `EntryDetails` collapsible.
+4. **Refactor `@chson/ui`** — `useChecklistState` extracted; trim unused shadcn
+   components and duplicate app dependencies (Radix removed from `apps/web`).
 
 Definition of done:
 

@@ -3,6 +3,7 @@ import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import * as React from 'react';
 import { countChecklistEntries, countCheckedEntries, defaultChecklistKey, progressPercent, } from '../../core/checklist';
 import { getEntries, getSections } from '../../core/normalize';
+import { EntryDetails } from '../primitives/entry-details';
 import { cn } from '../utils/cn';
 import { Badge } from '../../shadcn/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card';
@@ -61,7 +62,7 @@ export function Checklist({ data, className, checkedKeys, defaultCheckedKeys, on
                                     });
                                     const isChecked = checked.has(key);
                                     const id = `chson-check-${sectionIndex}-${entryIndex}`;
-                                    return (_jsxs("div", { className: cn('flex items-start gap-3 rounded-md px-3 py-3 transition-colors', entryIndex % 2 === 0 ? 'bg-muted/30' : '', isChecked && 'opacity-60'), children: [_jsx(Checkbox, { id: id, checked: isChecked, onCheckedChange: () => toggle(key), className: "mt-0.5" }), _jsxs("label", { htmlFor: id, className: "flex-1 cursor-pointer select-none", children: [_jsx("div", { className: cn('text-sm font-medium leading-snug', isChecked && 'line-through'), children: entry.anchor }), _jsx("div", { className: "mt-0.5 text-sm text-muted-foreground leading-snug", children: entry.content }), entry.details && (_jsx("div", { className: "mt-1 text-xs text-muted-foreground/70", children: entry.details }))] })] }, entryIndex));
+                                    return (_jsxs("div", { className: cn('flex items-start gap-3 rounded-md px-3 py-3 transition-colors', entryIndex % 2 === 0 ? 'bg-muted/30' : '', isChecked && 'opacity-60'), children: [_jsx(Checkbox, { id: id, checked: isChecked, onCheckedChange: () => toggle(key), className: "mt-0.5" }), _jsxs("label", { htmlFor: id, className: "flex-1 cursor-pointer select-none", children: [_jsx("div", { className: cn('text-sm font-medium leading-snug', isChecked && 'line-through'), children: entry.anchor }), _jsx("div", { className: "mt-0.5 text-sm text-muted-foreground leading-snug", children: entry.content }), entry.details && (_jsx("div", { className: "mt-1", children: _jsx(EntryDetails, { details: entry.details, className: "text-xs" }) }))] })] }, entryIndex));
                                 }) }) })] }, sectionIndex));
             })] }));
 }

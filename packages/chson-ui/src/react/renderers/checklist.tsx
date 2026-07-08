@@ -12,6 +12,7 @@ import {
   type ChecklistKeyArgs,
 } from '../../core/checklist'
 import { getEntries, getSections } from '../../core/normalize'
+import { EntryDetails } from '../primitives/entry-details'
 import { cn } from '../utils/cn'
 import { Badge } from '../../shadcn/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
@@ -185,8 +186,8 @@ export function Checklist({
                           {entry.content}
                         </div>
                         {entry.details && (
-                          <div className="mt-1 text-xs text-muted-foreground/70">
-                            {entry.details}
+                          <div className="mt-1">
+                            <EntryDetails details={entry.details} className="text-xs" />
                           </div>
                         )}
                       </label>

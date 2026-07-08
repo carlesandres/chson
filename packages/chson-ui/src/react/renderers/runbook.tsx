@@ -7,6 +7,7 @@ import { getEntries, getSections } from '../../core/normalize'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../shadcn/accordion'
 import { Badge } from '../../shadcn/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
+import { EntryDetails } from '../primitives/entry-details'
 import { Preformatted } from '../primitives/preformatted'
 import { cn } from '../utils/cn'
 
@@ -68,9 +69,7 @@ export function Runbook({ data, className }: RunbookProps) {
                               {entry.content}
                             </p>
                           )}
-                          {entry.details && (
-                            <p className="text-xs text-muted-foreground/70">{entry.details}</p>
-                          )}
+                          {entry.details && <EntryDetails details={entry.details} className="text-xs" />}
                           {entry.url && (
                             <a
                               href={entry.url}

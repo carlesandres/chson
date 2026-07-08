@@ -1,0 +1,1 @@
+{"version":3,"file":"entry-details.d.ts","sourceRoot":"","sources":["../../../src/react/primitives/entry-details.tsx"],"names":[],"mappings":"AAYA,MAAM,WAAW,iBAAiB;IAChC,OAAO,EAAE,MAAM,CAAA;IACf,SAAS,CAAC,EAAE,MAAM,CAAA;IAClB,gBAAgB,CAAC,EAAE,MAAM,CAAA;CAC1B;AAED;;GAEG;AACH,wBAAgB,YAAY,CAAC,EAAE,OAAO,EAAE,SAAS,EAAE,gBAAgB,EAAE,EAAE,iBAAiB,kDA8BvF"}

@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { fireEvent, render, screen } from '@testing-library/react'
 import { describe, expect, it } from 'vitest'
 
 import type { ChSONDocument } from '@chson/schema'
@@ -33,6 +33,8 @@ describe('Cheatsheet', () => {
     expect(screen.getByText('git status')).toBeInTheDocument()
     expect(screen.getByText('status')).toBeInTheDocument()
     expect(screen.getByText('changes')).toBeInTheDocument()
+    expect(screen.queryByText('Details')).not.toBeInTheDocument()
+    fireEvent.click(screen.getByRole('button', { name: 'More' }))
     expect(screen.getByText('Details')).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Link' })).toHaveAttribute('href')
     expect(screen.getByRole('link', { name: 'Link' }).getAttribute('href')).toMatch(

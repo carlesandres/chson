@@ -5,6 +5,7 @@ import type { Entry } from '@chson/schema'
 import type { CellFormat } from '../../core/format'
 import { safeExternalUrl } from '../../core/url'
 import { ExternalLinkIcon } from '../icons'
+import { EntryDetails } from '../primitives/entry-details'
 import { InlineMarkdown } from '../primitives/inline-markdown'
 import { Preformatted } from '../primitives/preformatted'
 import { cn } from '../utils/cn'
@@ -22,7 +23,7 @@ function TextCell({ text, details, url, className }: Omit<CellProps, 'format'>) 
   return (
     <div className={cn('space-y-1', className)}>
       <div className="whitespace-pre-wrap">{text}</div>
-      {details && <div className="text-sm text-muted-foreground">{details}</div>}
+      {details && <EntryDetails details={details} />}
       {safeUrl && (
         <a
           href={safeUrl}
@@ -43,7 +44,7 @@ function MarkdownCell({ text, details, url, className }: Omit<CellProps, 'format
   return (
     <div className={cn('space-y-1', className)}>
       <InlineMarkdown text={text} />
-      {details && <div className="text-sm text-muted-foreground">{details}</div>}
+      {details && <EntryDetails details={details} />}
       {safeUrl && (
         <a
           href={safeUrl}

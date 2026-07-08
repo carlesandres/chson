@@ -26,5 +26,6 @@ export function Page({ data }: { data: ChSONDocument }) {
 
 ## Exports
 
-- `@chson/ui`: React renderers and primitives
+- `@chson/ui`: React renderers, primitives, and hooks (`useChecklistState`)
 - `@chson/ui/core`: headless helpers (format inference, normalization, etc.)
+- `@chson/ui/shadcn/*`: internal UI primitives used by renderers and the reference app
