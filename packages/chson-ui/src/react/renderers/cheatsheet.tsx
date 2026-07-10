@@ -5,6 +5,7 @@ import type { ChSONDocument } from '@chson/schema'
 import { inferColumnFormats } from '../../core/format'
 import { getLabels } from '../../core/document'
 import { getEntries, getSections } from '../../core/normalize'
+import { EntryMorePopover } from '../primitives/entry-more-popover'
 import { cn } from '../utils/cn'
 import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '../../shadcn/table'
@@ -16,7 +17,7 @@ export interface CheatsheetProps {
 }
 
 /**
- * Cheatsheet renderer: section cards with a 2-column table for quick lookup.
+ * Cheatsheet renderer: section cards with anchor | content | optional More (popover).
  */
 export function Cheatsheet({ data, className }: CheatsheetProps) {
   const { anchorLabel, contentLabel } = getLabels(data)
@@ -46,25 +47,25 @@ export function Cheatsheet({ data, className }: CheatsheetProps) {
                       <TableRow>
                         <TableHead className="w-[40%]">{anchorLabel}</TableHead>
                         <TableHead>{contentLabel}</TableHead>
+                        <TableHead className="w-14">
+                          <span className="sr-only">More</span>
+                        </TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
                       {entries.map((entry, entryIdx) => (
                         <TableRow key={entryIdx}>
                           <TableCell className={cn('align-middle', anchorFormat === 'code' && 'p-0')}>
-                            <Cell
-                              text={entry.anchor}
-                              format={anchorFormat}
-                              details={anchorFormat !== 'code' ? entry.details : undefined}
-                              url={anchorFormat !== 'code' ? entry.url : undefined}
-                            />
+                            <Cell text={entry.anchor} format={anchorFormat} />
                           </TableCell>
                           <TableCell className={cn('align-middle', contentFormat === 'code' && 'p-0')}>
-                            <Cell
-                              text={entry.content}
-                              format={contentFormat}
-                              details={contentFormat !== 'code' ? entry.details : undefined}
-                              url={contentFormat !== 'code' ? entry.url : undefined}
+                            <Cell text={entry.content} format={contentFormat} />
+                          </TableCell>
+                          <TableCell className="align-middle text-right">
+                            <EntryMorePopover
+                              details={entry.details}
+                              url={entry.url}
+                              label={entry.anchor}
                             />
                           </TableCell>
                         </TableRow>

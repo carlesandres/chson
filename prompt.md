@@ -1,4 +1,15 @@
-I want to create a standard for writing software cheatsheets that allows developers to create 
+# Historical note
+
+This file captures an early product brainstorm for what became **ChSON**.
+It is **not** the schema or documentation source of truth.
+
+- Schema: `packages/chson-schema/schema/chson.schema.json`
+- Docs: `apps/web/content/docs/`
+- Agents guide: `AGENTS.md`
+
+---
+
+I want to create a standard for writing software cheatsheets that allows developers to create
 and share cheatsheets for their software products.
 
 The standard should be a JSON schema that can be used to ensure cheatsheets
@@ -20,11 +31,12 @@ The basic of the standard is:
   - Each section should have:
    - A title
    - An optional description
-   - An items array: containing the individual cheats.
-    - Each item should have:
-      - A title
-      - A description
-      - An optional comments field
+   - An entries array: containing the individual cheats.
+    - Each entry should have:
+      - An anchor (what users scan for)
+      - Content (what they need once found)
+      - Optional details (always markdown; progressive disclosure)
+      - Optional url (reference link)
 
 The standard should allow for different types of use cases, such as:
 

@@ -374,7 +374,7 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
 | ---------- | -------- | -------- | --------------------------------------------------------------------- |
 | `anchor`   | `string` | Yes      | The retrieval anchor—what users scan for. Max 100 characters.         |
 | `content`  | `string` | Yes      | The associated content—what users need. Max 150 characters.           |
-| `details`  | `string` | No       | Extended explanation (no length limit). Typically markdown.           |
+| `details`  | `string` | No       | Extended explanation (no length limit). Always markdown (GFM in `@chson/ui`). |
 | `url`      | `string` | No       | Reference link to learn more (URI format).                            |
 
 ### `anchor`
@@ -399,7 +399,7 @@ The associated content is what users need once they find the anchor.
 
 ### `details`
 
-Extended explanation beyond the brief content. Renderers typically interpret this as markdown, allowing for formatted text, lists, and code blocks.
+Extended explanation beyond the brief content. Always markdown — `@chson/ui` renders GitHub-Flavored Markdown (lists, code blocks, tables, links, etc.). Other renderers should treat the string as markdown source.
 
 ```json
 {
@@ -412,12 +412,15 @@ Extended explanation beyond the brief content. Renderers typically interpret thi
 **Constraints:**
 
 - Type: `string`
-- Maximum length: **No limit** (supports progressive disclosure)
+- Maximum length: **No limit** (supports progressive disclosure on most document types)
 - Required: No
 
 **When to use:**
 - Entries with multiple options or modes
 - Runbook steps requiring detailed instructions
+- Bookmark cards: longer description of a link (see rendering note below)
+
+**Rendering note:** Most `@chson/ui` document types keep `details` off the primary scan path (cheatsheet **More** popover; checklist / runbook / tldr collapsed disclosure). **`documentType: "bookmarks"` is different:** `content` is the URL and `details` is the **always-visible** card description — not behind More/Less.
 
 ### `url`
 

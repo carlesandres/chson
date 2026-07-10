@@ -24,6 +24,14 @@ export function Page({ data }: { data: ChSONDocument }) {
 }
 ```
 
+## Document types
+
+| `documentType` | Layout notes |
+| -------------- | ------------ |
+| `cheatsheet` | Table: anchor \| content \| optional **More** popover (`details` / `url`) |
+| `checklist`, `runbook`, `tldr` | Inline progressive disclosure for `details` (may change later) |
+| `bookmarks` | Cards: `anchor` title, `content` URL, **`details` always visible** on the card |
+
 ## Exports
 
 - `@chson/ui`: React renderers, primitives, and hooks (`useChecklistState`)

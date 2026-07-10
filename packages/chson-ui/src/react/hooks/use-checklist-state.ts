@@ -33,6 +33,13 @@ export interface UseChecklistStateOptions {
   getKey?: (args: ChecklistKeyArgs) => string
 }
 
+/**
+ * Persist checklist checked keys in localStorage for a given scope.
+ *
+ * Hydration: state starts as `[]` on the first client render, then loads from
+ * localStorage in an effect. Expect a brief flash of unchecked UI when stored
+ * progress exists (SSR/CSR safe; not a silent data loss).
+ */
 export function useChecklistState(scope: string, options: UseChecklistStateOptions = {}) {
   const { getKey = defaultChecklistKey } = options
   const storageKey = checklistStorageKey(scope)

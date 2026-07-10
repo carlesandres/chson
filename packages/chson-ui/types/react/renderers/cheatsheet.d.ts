@@ -4,7 +4,7 @@ export interface CheatsheetProps {
     className?: string;
 }
 /**
- * Cheatsheet renderer: section cards with a 2-column table for quick lookup.
+ * Cheatsheet renderer: section cards with anchor | content | optional More (popover).
  */
 export declare function Cheatsheet({ data, className }: CheatsheetProps): import("react/jsx-runtime").JSX.Element;
 //# sourceMappingURL=cheatsheet.d.ts.map

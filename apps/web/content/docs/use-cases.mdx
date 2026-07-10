@@ -98,11 +98,13 @@ Brief summaries of topics, concepts, or documentation. Useful for quick referenc
 
 ## Bookmarks
 
-Curated link collections. Put the URL in `content` and use `details` for a longer description.
+Curated link collections. Field mapping differs from other document types:
 
-- **anchor**: Title or name of the resource
-- **content**: URL
-- **details**: Optional description of the resource
+- **anchor**: Title or name of the resource (card title)
+- **content**: Destination **URL** (not a prose description)
+- **details**: Optional description of the resource — **always visible** on the card
+
+Unlike cheatsheets and checklists, bookmarks do **not** hide `details` behind a More control. Because `content` is only the URL, the card needs an on-face blurb; that role is `details` (markdown). `@chson/ui` renders it on the card body, not in a popover.
 
 ```json title="Bookmarks example"
 {
@@ -132,13 +134,13 @@ Curated link collections. Put the URL in `content` and use `details` for a longe
 
 All these use cases share the same underlying pattern: users scan for an **anchor** (what they're looking for) to retrieve **content** (what they need). The `documentType` field signals to renderers how to present the data, but the core structure remains consistent.
 
-| Document Type | Anchor Is...         | Content Is...              |
-|---------------|----------------------|----------------------------|
-| cheatsheet    | Command/shortcut     | Meaning/effect             |
-| checklist     | Task/step            | Details/criteria           |
-| runbook       | Step/action          | Expected result/notes      |
-| tldr          | Topic/term           | Brief explanation          |
-| bookmarks     | Title/name           | URL + description          |
+| Document Type | Anchor Is...     | Content Is...        | `details` typically…                          |
+|---------------|------------------|----------------------|-----------------------------------------------|
+| cheatsheet    | Command/shortcut | Meaning/effect       | Behind **More** (popover in `@chson/ui`)      |
+| checklist     | Task/step        | Notes/criteria       | Collapsed progressive disclosure              |
+| runbook       | Step/action      | Expected result/notes| Collapsed progressive disclosure              |
+| tldr          | Topic/term       | Brief explanation    | Collapsed progressive disclosure              |
+| bookmarks     | Title/name       | URL                  | **Always visible** card description           |
 
 ## Next Steps
 

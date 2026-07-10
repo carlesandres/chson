@@ -88,6 +88,14 @@ describe('ChSON Schema', () => {
       expect(entryDef.required).toContain('content')
     })
 
+    it('does not document a comments field on entries', () => {
+      // Removed from v1 documented fields; additionalProperties still allows
+      // unknown keys so legacy documents validate, but the field is not standard.
+      expect(schema.$defs.entry.properties.comments).toBeUndefined()
+      expect(schema.$defs.entry.properties).toHaveProperty('details')
+      expect(schema.$defs.entry.properties).toHaveProperty('url')
+    })
+
     it('requires at least one section', () => {
       expect(schema.properties.sections.minItems).toBe(1)
     })

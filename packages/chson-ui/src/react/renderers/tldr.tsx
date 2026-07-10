@@ -46,7 +46,11 @@ export function Tldr({ data, className }: TldrProps) {
                   </div>
                   {entry.details && (
                     <div className="mt-1">
-                      <EntryDetails details={entry.details} className="text-xs" />
+                      <EntryDetails
+                        details={entry.details}
+                        label={entry.anchor}
+                        className="text-xs"
+                      />
                     </div>
                   )}
                 </div>

@@ -25,7 +25,7 @@ Entries can include additional optional fields for deeper information.
 
 ### Details
 
-When a brief `content` isn't enough, use `details` for extended explanation. Renderers typically interpret this as markdown.
+When a brief `content` isn't enough, use `details` for extended explanation. `details` is always markdown (GitHub-Flavored Markdown in `@chson/ui`).
 
 ```json title="Entry with details"
 {
@@ -35,9 +35,19 @@ When a brief `content` isn't enough, use `details` for extended explanation. Ren
 }
 ```
 
+**How renderers show it** depends on `documentType`:
+
+| Document type | Typical treatment of `details` |
+| ------------- | ------------------------------ |
+| cheatsheet | Behind a single **More** control (popover in `@chson/ui`) |
+| checklist, runbook, tldr | Progressive disclosure (collapsed until expanded) |
+| **bookmarks** | **Always visible** on the card — this is the link blurb, not a “More” panel |
+
+Bookmarks are the intentional exception: `content` holds the URL, so `details` is the description users should read without an extra click. See [Use Cases](/docs/use-cases#bookmarks) and [Rendering Tips](/docs/rendering-tips).
+
 ### URL
 
-Link to external documentation or resources with the `url` field.
+Link to external documentation or resources with the `url` field. (For bookmarks, the destination URL lives in **`content`**, not `url`.)
 
 ```json title="Entry with url"
 {

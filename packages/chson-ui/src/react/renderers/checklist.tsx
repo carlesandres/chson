@@ -173,24 +173,30 @@ export function Checklist({
                         onCheckedChange={() => toggle(key)}
                         className="mt-0.5"
                       />
-                      <label htmlFor={id} className="flex-1 cursor-pointer select-none">
-                        <div
-                          className={cn(
-                            'text-sm font-medium leading-snug',
-                            isChecked && 'line-through',
-                          )}
-                        >
-                          {entry.anchor}
-                        </div>
-                        <div className="mt-0.5 text-sm text-muted-foreground leading-snug">
-                          {entry.content}
-                        </div>
+                      <div className="min-w-0 flex-1">
+                        <label htmlFor={id} className="block cursor-pointer select-none">
+                          <div
+                            className={cn(
+                              'text-sm font-medium leading-snug',
+                              isChecked && 'line-through',
+                            )}
+                          >
+                            {entry.anchor}
+                          </div>
+                          <div className="mt-0.5 text-sm text-muted-foreground leading-snug">
+                            {entry.content}
+                          </div>
+                        </label>
                         {entry.details && (
                           <div className="mt-1">
-                            <EntryDetails details={entry.details} className="text-xs" />
+                            <EntryDetails
+                              details={entry.details}
+                              label={entry.anchor}
+                              className="text-xs"
+                            />
                           </div>
                         )}
-                      </label>
+                      </div>
                     </div>
                   )
                 })}

@@ -69,7 +69,13 @@ export function Runbook({ data, className }: RunbookProps) {
                               {entry.content}
                             </p>
                           )}
-                          {entry.details && <EntryDetails details={entry.details} className="text-xs" />}
+                          {entry.details && (
+                            <EntryDetails
+                              details={entry.details}
+                              label={entry.anchor}
+                              className="text-xs"
+                            />
+                          )}
                           {entry.url && (
                             <a
                               href={entry.url}

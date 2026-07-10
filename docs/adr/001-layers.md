@@ -54,8 +54,10 @@ document composition inside a single file, localization.
 
 **Renderer contract:**
 
-- `details` renders behind progressive disclosure (collapsed by default).
-- `url` renders as an unobtrusive external link.
+- `details` is progressive disclosure (not part of the primary scan path).
+- Cheatsheet: at most one **More** control per row in an extra column; opens a popover with markdown `details` and/or `url`.
+- Checklist / tldr / runbook: collapsed inline disclosure for now (may be revisited).
+- `url` is an unobtrusive external link (in the cheatsheet popover when present).
 - `documentType` selects the renderer; all types share the same entry shape.
 - Bookmarks treat `content` as the URL and `details` as the visible description on cards.
 

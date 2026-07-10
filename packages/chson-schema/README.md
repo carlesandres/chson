@@ -89,7 +89,8 @@ science principles (Cowan 2001) and usage analysis:
 | `contentLabel` | 50 | Short metadata labels |
 
 `entry.details` has **no limit** — it supports progressive disclosure for
-extended explanations, warnings, and caveats.
+extended explanations, warnings, and caveats. The field is always markdown
+(GitHub-Flavored Markdown in `@chson/ui`).
 
 ## Related Packages
 
