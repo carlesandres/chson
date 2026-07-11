@@ -54,9 +54,11 @@ document composition inside a single file, localization.
 
 **Renderer contract:**
 
-- `details` is progressive disclosure (not part of the primary scan path).
-- Cheatsheet: at most one **More** control per row in an extra column; opens a popover with markdown `details` and/or `url`.
-- Checklist / tldr / runbook: collapsed inline disclosure for now (may be revisited).
+- `details` is progressive disclosure in the **cognitive** sense: not part of the
+  primary scan path (except bookmarks). Presentation is **document-type-specific**;
+  a single shared disclosure control is not a v1 requirement (revisit in Phase 5).
+- Cheatsheet: at most one **More** control per row in an extra column; opens a popover with markdown `details` and/or `url`. The More column is omitted per section when no entry has `details` or a safe `url`.
+- Checklist / tldr / runbook: collapsed inline **More/Less** disclosure for now.
 - `url` is an unobtrusive external link (in the cheatsheet popover when present).
 - `documentType` selects the renderer; all types share the same entry shape.
 - Bookmarks treat `content` as the URL and `details` as the visible description on cards.

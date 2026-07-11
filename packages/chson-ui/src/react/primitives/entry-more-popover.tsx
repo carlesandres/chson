@@ -14,13 +14,20 @@ export interface EntryMorePopoverProps {
   label?: string
 }
 
+/** True when EntryMorePopover would render (details or a safe external url). */
+export function hasEntryMore(details?: string, url?: string): boolean {
+  if (details) return true
+  if (url && safeExternalUrl(url)) return true
+  return false
+}
+
 /**
  * Single "More" control for cheatsheet rows: opens a popover with markdown
  * details and/or a reference link. At most one per entry.
  */
 export function EntryMorePopover({ details, url, className, label }: EntryMorePopoverProps) {
   const safeUrl = url ? safeExternalUrl(url) : null
-  if (!details && !safeUrl) return null
+  if (!hasEntryMore(details, url)) return null
 
   const accessibleName = label ? `More about ${label}` : 'More'
 

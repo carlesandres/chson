@@ -138,8 +138,8 @@ Optional `details` and `url` sit beside the required **`anchor` + `content`** pa
 
 This is what the official React package does:
 
-1. **Cheatsheet** — two scan columns (`anchor` | `content`) plus an optional third column with a single **More** button. More opens a **popover** with markdown `details` and/or a quiet reference link. At most one More per row.
-2. **Checklist, tldr, runbook** — `details` still uses inline progressive disclosure (collapsed **More / Less** under the entry). Layout for these types may be revisited later.
+1. **Cheatsheet** — two scan columns (`anchor` | `content`) plus an optional third column with a single **More** button. More opens a **popover** with markdown `details` and/or a quiet reference link. At most one More per row. Omit the More column for a section when no entry in that section has `details` or a safe `url`.
+2. **Checklist, tldr, runbook** — `details` uses inline progressive disclosure (collapsed **More / Less** under the entry). This is intentional for now; converging with the cheatsheet popover (or other patterns) is a later consumption-experience pass, not required for v1.
 3. **`url`** — with cheatsheet More, the link lives in the popover; elsewhere, an unobtrusive external link.
 4. **Bookmarks** — special case: `content` is the destination URL; `details` is the **always-visible** card description (not behind More). The card title is still `anchor`.
 

@@ -77,7 +77,7 @@ describe('Cheatsheet', () => {
     expect(screen.getAllByText('Extra explanation')).toHaveLength(1)
   })
 
-  it('omits the More control when there is no details or url', () => {
+  it('omits the More control and column when there is no details or url', () => {
     const data: ChSONDocument = {
       title: 'Git',
       publicationDate: '2026-01-01' as ChSONDocument['publicationDate'],
@@ -91,6 +91,62 @@ describe('Cheatsheet', () => {
     }
 
     render(<Cheatsheet data={data} />)
+    expect(screen.queryByRole('button', { name: /More/i })).not.toBeInTheDocument()
+    expect(screen.queryByRole('columnheader', { name: 'More' })).not.toBeInTheDocument()
+  })
+
+  it('omits the More column only for sections without secondary content', () => {
+    const data: ChSONDocument = {
+      title: 'Git',
+      publicationDate: '2026-01-01' as ChSONDocument['publicationDate'],
+      description: 'Core git commands',
+      sections: [
+        {
+          title: 'With more',
+          entries: [
+            {
+              anchor: 'git status',
+              content: 'Show status',
+              details: 'Extra',
+            },
+          ],
+        },
+        {
+          title: 'Scan only',
+          entries: [{ anchor: 'git log', content: 'History' }],
+        },
+      ],
+    }
+
+    render(<Cheatsheet data={data} />)
+
+    // One section has a More column header; the scan-only section does not add a second.
+    expect(screen.getAllByRole('columnheader', { name: 'More' })).toHaveLength(1)
+    expect(screen.getByRole('button', { name: 'More about git status' })).toBeInTheDocument()
+    expect(screen.queryByRole('button', { name: /More about git log/i })).not.toBeInTheDocument()
+  })
+
+  it('does not show a More column for unsafe url alone', () => {
+    const data: ChSONDocument = {
+      title: 'Git',
+      publicationDate: '2026-01-01' as ChSONDocument['publicationDate'],
+      description: 'Core git commands',
+      sections: [
+        {
+          title: 'Basics',
+          entries: [
+            {
+              anchor: 'git status',
+              content: 'Show status',
+              url: 'javascript:alert(1)',
+            },
+          ],
+        },
+      ],
+    }
+
+    render(<Cheatsheet data={data} />)
+    expect(screen.queryByRole('columnheader', { name: 'More' })).not.toBeInTheDocument()
     expect(screen.queryByRole('button', { name: /More/i })).not.toBeInTheDocument()
   })
 })

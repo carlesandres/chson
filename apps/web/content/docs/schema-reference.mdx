@@ -377,6 +377,11 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
 | `details`  | `string` | No       | Extended explanation (no length limit). Always markdown (GFM in `@chson/ui`). |
 | `url`      | `string` | No       | Reference link to learn more (URI format).                            |
 
+<Callout type="warn">
+**Removed from the v1 documented model:** `entry.comments` is no longer a standard field.
+Unknown keys still validate because entries allow `additionalProperties`, so legacy files do not fail validation — but **renderers ignore `comments`**. Migrate warnings and caveats into `details` (markdown) or fold short notes into `content`. Prefer `metadata` only for non-rendered machine data.
+</Callout>
+
 ### `anchor`
 
 The retrieval anchor is what users visually scan for when looking up information. It should be distinctive and easy to spot.

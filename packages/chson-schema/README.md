@@ -92,6 +92,13 @@ science principles (Cowan 2001) and usage analysis:
 extended explanations, warnings, and caveats. The field is always markdown
 (GitHub-Flavored Markdown in `@chson/ui`).
 
+### Migration: `entry.comments` (removed from documented v1)
+
+Older drafts mentioned an entry `comments` field. It is **not** part of the
+documented entry properties. Files that still include `comments` continue to
+**validate** (`additionalProperties` on entries), but official renderers do
+**not** display it. Move human-facing notes into `details` (or `content`).
+
 ## Related Packages
 
 - [`@chson/cli`](https://www.npmjs.com/package/@chson/cli) — CLI for
