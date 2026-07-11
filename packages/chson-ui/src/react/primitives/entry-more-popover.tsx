@@ -1,6 +1,7 @@
 'use client'
 
 import { safeExternalUrl } from '../../core/url'
+import { hasEntryMore } from '../../core/entry-more'
 import { Popover, PopoverContent, PopoverTrigger } from '../../shadcn/popover'
 import { ExternalLinkIcon } from '../icons'
 import { cn } from '../utils/cn'
@@ -14,12 +15,7 @@ export interface EntryMorePopoverProps {
   label?: string
 }
 
-/** True when EntryMorePopover would render (details or a safe external url). */
-export function hasEntryMore(details?: string, url?: string): boolean {
-  if (details) return true
-  if (url && safeExternalUrl(url)) return true
-  return false
-}
+export { hasEntryMore } from '../../core/entry-more'
 
 /**
  * Single "More" control for cheatsheet rows: opens a popover with markdown

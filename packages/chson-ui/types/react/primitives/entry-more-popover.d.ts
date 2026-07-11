@@ -5,8 +5,7 @@ export interface EntryMorePopoverProps {
     /** Used for a clearer accessible name, e.g. entry.anchor */
     label?: string;
 }
-/** True when EntryMorePopover would render (details or a safe external url). */
-export declare function hasEntryMore(details?: string, url?: string): boolean;
+export { hasEntryMore } from '../../core/entry-more';
 /**
  * Single "More" control for cheatsheet rows: opens a popover with markdown
  * details and/or a reference link. At most one per entry.

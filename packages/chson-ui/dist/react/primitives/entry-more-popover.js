@@ -1,18 +1,12 @@
 'use client';
 import { jsx as _jsx, jsxs as _jsxs } from "react/jsx-runtime";
 import { safeExternalUrl } from '../../core/url';
+import { hasEntryMore } from '../../core/entry-more';
 import { Popover, PopoverContent, PopoverTrigger } from '../../shadcn/popover';
 import { ExternalLinkIcon } from '../icons';
 import { cn } from '../utils/cn';
 import { Markdown } from './markdown';
-/** True when EntryMorePopover would render (details or a safe external url). */
-export function hasEntryMore(details, url) {
-    if (details)
-        return true;
-    if (url && safeExternalUrl(url))
-        return true;
-    return false;
-}
+export { hasEntryMore } from '../../core/entry-more';
 /**
  * Single "More" control for cheatsheet rows: opens a popover with markdown
  * details and/or a reference link. At most one per entry.
