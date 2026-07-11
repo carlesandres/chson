@@ -545,26 +545,34 @@ function renderMarkdownTable(chson) {
       const details = entry.details ?? "";
       const url = entry.url ?? "";
 
-      // Render anchor cell
+      // Primary cells only (anchor | content).
       const anchorParts = [];
       if (anchor) anchorParts.push(renderTextForCLI(anchor, anchorFormat));
-      if (details && anchorFormat !== "code") {
-        anchorParts.push(escapeMarkdown(details));
-      }
-      if (url && anchorFormat !== "code") {
-        anchorParts.push(`[Link](${escapeMarkdown(url)})`);
-      }
-      const lhs = anchorParts.join("<br>");
 
-      // Render content cell
       const contentParts = [];
       if (content) contentParts.push(renderTextForCLI(content, contentFormat));
-      if (details && contentFormat !== "code") {
-        contentParts.push(escapeMarkdown(details));
+
+      // Attach details/url once: prefer content side; if content is code and
+      // anchor is not, use anchor so code cells stay scannable. details is
+      // markdown source — only neutralize table breakers (do not full-escape).
+      const secondaryParts = [];
+      if (details) {
+        secondaryParts.push(escapeMarkdownTableChars(details));
       }
-      if (url && contentFormat !== "code") {
-        contentParts.push(`[Link](${escapeMarkdown(url)})`);
+      if (url) {
+        secondaryParts.push(`[Link](${escapeMarkdownTableChars(url)})`);
       }
+      if (secondaryParts.length > 0) {
+        const preferContent =
+          contentFormat !== "code" || anchorFormat === "code";
+        if (preferContent) {
+          contentParts.push(...secondaryParts);
+        } else {
+          anchorParts.push(...secondaryParts);
+        }
+      }
+
+      const lhs = anchorParts.join("<br>");
       const rhs = contentParts.join("<br>");
 
       lines.push(`| ${lhs} | ${rhs} |`);

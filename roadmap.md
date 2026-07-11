@@ -39,6 +39,8 @@ with the cognitive model before adding features or publishing.
 **Tasks:**
 
 1. ~~**Audit and fix doc/schema inconsistencies**~~ — done (`comments` removed; docs aligned).
+   CLI markdown tables attach `details`/`url` **once** (prefer content; table-safe
+   only, not full escape) so they match rendering-tips.
 2. ~~**Draft layer-boundary ADR**~~ — `docs/adr/001-layers.md`.
 3. ~~**Implement progressive disclosure in renderers**~~ — done for Phase 1 scope:
    `details` off the primary scan path (except bookmarks). **Presentation is
