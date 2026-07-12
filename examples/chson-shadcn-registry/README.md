@@ -23,8 +23,8 @@ npm run registry:serve
 Then install an item in another project:
 
 ```bash
-npx shadcn@latest add http://localhost:3000/r/git-core.json
-npx shadcn@latest add http://localhost:3000/r/git-pack.json
+npx shadcn@latest add https://chson-registry.localhost/r/git-core.json
+npx shadcn@latest add https://chson-registry.localhost/r/git-pack.json
 ```
 
 The file is installed into `~/chson-files/...` based on each item's `target` path.

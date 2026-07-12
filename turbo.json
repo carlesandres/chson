@@ -9,6 +9,13 @@
       "dependsOn": ["^build"],
       "outputs": []
     },
+    "lint:check": {
+      "outputs": []
+    },
+    "test": {
+      "dependsOn": ["^build"],
+      "outputs": []
+    },
     "validate": {
       "dependsOn": ["^build"],
       "outputs": []

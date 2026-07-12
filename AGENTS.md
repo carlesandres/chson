@@ -27,7 +27,7 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 
 ## Environment Requirements
 
-- **Node.js**: `^20.19.0 || >=22.12.0` (`.nvmrc` = `20.19`)
+- **Node.js**: `>=24` (`.nvmrc` = `24`)
 - **npm**: pinned to `11.10.1` via `packageManager` field — corepack-enforced
 - **TypeScript**: forced to `6.0.2` monorepo-wide via root `package.json` `overrides`
 
