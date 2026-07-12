@@ -362,8 +362,7 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
       "anchor": "git status",
       "content": "Show working tree status",
       "details": "Displays staged, unstaged, and untracked files. Use -s for short format.",
-      "url": "https://git-scm.com/docs/git-status",
-      "comments": "Most commonly used command"
+      "url": "https://git-scm.com/docs/git-status"
     }
   ]
 }
@@ -375,9 +374,13 @@ Entries are the atomic units of a cheatsheet—individual anchor-content pairs.
 | ---------- | -------- | -------- | --------------------------------------------------------------------- |
 | `anchor`   | `string` | Yes      | The retrieval anchor—what users scan for. Max 100 characters.         |
 | `content`  | `string` | Yes      | The associated content—what users need. Max 150 characters.           |
-| `details`  | `string` | No       | Extended explanation (no length limit). Typically markdown.           |
+| `details`  | `string` | No       | Extended explanation (no length limit). Always markdown (GFM in `@chson/ui`). |
 | `url`      | `string` | No       | Reference link to learn more (URI format).                            |
-| `comments` | `any`    | No       | Additional notes, warnings, or context.                               |
+
+<Callout type="warn">
+**Removed from the v1 documented model:** `entry.comments` is no longer a standard field.
+Unknown keys still validate because entries allow `additionalProperties`, so legacy files do not fail validation — but **renderers ignore `comments`**. Migrate warnings and caveats into `details` (markdown) or fold short notes into `content`. Prefer `metadata` only for non-rendered machine data.
+</Callout>
 
 ### `anchor`
 
@@ -401,7 +404,7 @@ The associated content is what users need once they find the anchor.
 
 ### `details`
 
-Extended explanation beyond the brief content. Renderers typically interpret this as markdown, allowing for formatted text, lists, and code blocks.
+Extended explanation beyond the brief content. Always markdown — `@chson/ui` renders GitHub-Flavored Markdown (lists, code blocks, tables, links, etc.). Other renderers should treat the string as markdown source.
 
 ```json
 {
@@ -414,12 +417,15 @@ Extended explanation beyond the brief content. Renderers typically interpret thi
 **Constraints:**
 
 - Type: `string`
-- Maximum length: **No limit** (supports progressive disclosure)
+- Maximum length: **No limit** (supports progressive disclosure on most document types)
 - Required: No
 
 **When to use:**
 - Entries with multiple options or modes
 - Runbook steps requiring detailed instructions
+- Bookmark cards: longer description of a link (see rendering note below)
+
+**Rendering note:** Most `@chson/ui` document types keep `details` off the primary scan path (cheatsheet **More** popover; checklist / runbook / tldr collapsed disclosure). **`documentType: "bookmarks"` is different:** `content` is the URL and `details` is the **always-visible** card description — not behind More/Less.
 
 ### `url`
 
@@ -444,20 +450,6 @@ Reference link to external documentation or resources.
 - Link to official documentation
 - Reference tutorials or guides
 - Point to related tools or resources
-
-### `comments`
-
-Additional context that doesn't fit in the content field. Can be any JSON type, though strings are most common.
-
-```json
-{
-  "anchor": "git push --force",
-  "content": "Force push to remote (overwrites history)",
-  "comments": "WARNING: Never use on shared branches"
-}
-```
-
----
 
 ## Complete Example
 
@@ -496,7 +488,7 @@ Additional context that doesn't fit in the content field. Can be any JSON type, 
         {
           "anchor": "git status",
           "content": "Show working tree status",
-          "comments": "Use -s for short format"
+          "details": "Use -s for short format."
         },
         {
           "anchor": "git add <file>",

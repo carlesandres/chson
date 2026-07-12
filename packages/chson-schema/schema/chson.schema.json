@@ -150,15 +150,12 @@
         },
         "details": {
           "type": "string",
-          "description": "Extended explanation beyond the brief content (no length limit to support progressive disclosure). Typically interpreted as markdown by renderers."
+          "description": "Extended explanation beyond the brief content (no length limit; progressive disclosure). Always markdown (GitHub-Flavored Markdown in @chson/ui)."
         },
         "url": {
           "type": "string",
           "format": "uri",
           "description": "Reference link to learn more about this entry."
-        },
-        "comments": {
-          "description": "Optional notes, warnings, or additional context."
         }
       }
     }

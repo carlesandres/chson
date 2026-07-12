@@ -44,3 +44,4 @@ tsconfig.*.tsbuildinfo
 Session.vim
 
 next-env.d.ts
+.env*.local

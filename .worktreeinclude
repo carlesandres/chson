@@ -1,0 +1,8 @@
+.env.local
+.vercel/
+.vercel/project.json
+.vercel/README.txt
+apps/web/.env.local
+apps/web/.vercel/
+apps/web/.vercel/project.json
+apps/web/.vercel/README.txt

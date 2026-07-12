@@ -4,9 +4,11 @@ import type { ChSONDocument } from '@chson/schema'
 
 import { looksLikeCommand } from '../../core/runbook'
 import { getEntries, getSections } from '../../core/normalize'
+import { safeExternalUrl } from '../../core/url'
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '../../shadcn/accordion'
 import { Badge } from '../../shadcn/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
+import { EntryDetails } from '../primitives/entry-details'
 import { Preformatted } from '../primitives/preformatted'
 import { cn } from '../utils/cn'
 
@@ -44,6 +46,7 @@ export function Runbook({ data, className }: RunbookProps) {
               <Accordion type="multiple" className="w-full">
                 {entries.map((entry, entryIdx) => {
                   const isCommand = looksLikeCommand(entry.content)
+                  const safeUrl = entry.url ? safeExternalUrl(entry.url) : null
 
                   return (
                     <AccordionItem
@@ -69,18 +72,22 @@ export function Runbook({ data, className }: RunbookProps) {
                             </p>
                           )}
                           {entry.details && (
-                            <p className="text-xs text-muted-foreground/70">{entry.details}</p>
+                            <EntryDetails
+                              details={entry.details}
+                              label={entry.anchor}
+                              className="text-xs"
+                            />
                           )}
-                          {entry.url && (
+                          {safeUrl ? (
                             <a
-                              href={entry.url}
+                              href={safeUrl}
                               target="_blank"
                               rel="noopener noreferrer"
                               className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
                             >
                               Documentation →
                             </a>
-                          )}
+                          ) : null}
                         </div>
                       </AccordionContent>
                     </AccordionItem>

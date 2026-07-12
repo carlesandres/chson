@@ -12,6 +12,7 @@ import {
   type ChecklistKeyArgs,
 } from '../../core/checklist'
 import { getEntries, getSections } from '../../core/normalize'
+import { EntryDetails } from '../primitives/entry-details'
 import { cn } from '../utils/cn'
 import { Badge } from '../../shadcn/badge'
 import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
@@ -172,24 +173,30 @@ export function Checklist({
                         onCheckedChange={() => toggle(key)}
                         className="mt-0.5"
                       />
-                      <label htmlFor={id} className="flex-1 cursor-pointer select-none">
-                        <div
-                          className={cn(
-                            'text-sm font-medium leading-snug',
-                            isChecked && 'line-through',
-                          )}
-                        >
-                          {entry.anchor}
-                        </div>
-                        <div className="mt-0.5 text-sm text-muted-foreground leading-snug">
-                          {entry.content}
-                        </div>
+                      <div className="min-w-0 flex-1">
+                        <label htmlFor={id} className="block cursor-pointer select-none">
+                          <div
+                            className={cn(
+                              'text-sm font-medium leading-snug',
+                              isChecked && 'line-through',
+                            )}
+                          >
+                            {entry.anchor}
+                          </div>
+                          <div className="mt-0.5 text-sm text-muted-foreground leading-snug">
+                            {entry.content}
+                          </div>
+                        </label>
                         {entry.details && (
-                          <div className="mt-1 text-xs text-muted-foreground/70">
-                            {entry.details}
+                          <div className="mt-1">
+                            <EntryDetails
+                              details={entry.details}
+                              label={entry.anchor}
+                              className="text-xs"
+                            />
                           </div>
                         )}
-                      </label>
+                      </div>
                     </div>
                   )
                 })}

@@ -11,7 +11,8 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 - **`packages/chson-schema/`** — JSON Schema + auto-generated TypeScript types
 - **`packages/chson-registry/`** — Example cheatsheets (source of truth)
 - **`packages/chson-cli/`** — Node.js CLI for validation and rendering
-- **`packages/chson-ui/`** — React component library (renderers for all document types)
+- **`packages/chson-ui/`** — React renderers, hooks, and headless core for ChSON
+- **`docs/adr/`** — Architecture decision records (see `001-layers.md`)
 - **`apps/web/`** — Next.js 16 website with shadcn/ui and Fumadocs
 
 ### Package Dependencies
@@ -26,7 +27,7 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 
 ## Environment Requirements
 
-- **Node.js**: `^20.19.0 || >=22.12.0` (`.nvmrc` = `20.19`)
+- **Node.js**: `>=24` (`.nvmrc` = `24`)
 - **npm**: pinned to `11.10.1` via `packageManager` field — corepack-enforced
 - **TypeScript**: forced to `6.0.2` monorepo-wide via root `package.json` `overrides`
 

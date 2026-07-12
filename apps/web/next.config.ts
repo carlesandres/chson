@@ -4,6 +4,7 @@ import path from 'node:path';
 
 const config: NextConfig = {
   reactStrictMode: true,
+  allowedDevOrigins: ['chson.localhost', '*.chson.localhost'],
   transpilePackages: ['@chson/ui'],
   webpack: (config) => {
     config.resolve = config.resolve ?? {};

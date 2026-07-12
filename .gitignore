@@ -19,3 +19,8 @@ packages/chson-registry/index.json
 # Vercel
 .vercel/
 .opencode/
+.vercel
+.env*.local
+
+# Turborepo
+.turbo

@@ -4,10 +4,11 @@
   "license": "MIT",
   "scripts": {
     "registry:build": "shadcn build",
-    "registry:serve": "serve . -l 3000",
+    "registry:serve": "portless chson-registry serve .",
     "registry:check": "npm run registry:build && node scripts/check-built-registry.mjs"
   },
   "devDependencies": {
+    "portless": "0.15.1",
     "serve": "^14.2.5",
     "shadcn": "^3.5.0"
   }

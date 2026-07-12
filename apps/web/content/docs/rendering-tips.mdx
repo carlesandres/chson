@@ -5,6 +5,8 @@ description: Practical advice for building ChSON renderers.
 
 This guide covers common challenges when building renderers for ChSON documents, whether you're outputting Markdown, HTML, PDF, or another format.
 
+Every entry has **`anchor`** and **`content`**. Optional **`details`** (always markdown) and **`url`** add depth and a reference link. For most document types, keep the anchor/content pair scannable and treat `details` as secondary. **Bookmarks are the exception:** `content` is the URL and `details` is the always-visible card description (see [Bookmarks layout](#bookmarks-layout)).
+
 ## Escaping Code Fences in Markdown
 
 When rendering ChSON to Markdown, you may wrap `anchor` or `content` values in code fences. This creates a problem if the content itself contains triple backticks.
@@ -87,7 +89,7 @@ ChSON content may contain characters that need escaping depending on your output
 
 ### Markdown
 
-Escape these characters to prevent unwanted formatting:
+Escape these characters to prevent unwanted formatting **in plain table cells**. Do **not** blindly escape `details`: that field is markdown source and must keep `*`, `` ` ``, lists, and links intact so a markdown renderer can parse them.
 
 | Character | Escape As | Reason |
 | --------- | --------- | ------ |
@@ -97,7 +99,7 @@ Escape these characters to prevent unwanted formatting:
 | `*` `_` | `\*` `\_` | Bold/italic |
 | `[` `]` | `\[` `\]` | Links |
 
-Example escape function:
+Example escape function (for `anchor` / plain `content`, not for `details`):
 
 ```javascript
 function escapeMarkdown(str) {
@@ -108,7 +110,7 @@ function escapeMarkdown(str) {
 
 ### HTML
 
-Use standard HTML entity encoding:
+Use standard HTML entity encoding for plain-text fields. For `details`, parse markdown to HTML with a trusted pipeline (for example Streamdown / GFM) instead of string-concatenating unescaped markdown into the page.
 
 ```javascript
 function escapeHtml(str) {
@@ -123,38 +125,100 @@ function escapeHtml(str) {
 
 ## Rendering `details` and `url` Fields
 
-The optional `details` and `url` fields provide supplementary information. How you render them depends on your format and design goals.
+Optional `details` and `url` sit beside the required **`anchor` + `content`** pair. Never drop the anchor when sketching layouts.
 
-### Markdown Tables
+| Field | Role |
+| ----- | ---- |
+| `anchor` | What users scan for (command, shortcut, term, link title, …) |
+| `content` | What they need once they find the anchor (or the URL for bookmarks) |
+| `details` | Extended explanation — **always markdown**; keep out of the primary scan path |
+| `url` | Optional reference link |
 
-Append details and URL to the content cell using line breaks:
+### `@chson/ui` contract
+
+This is what the official React package does:
+
+1. **Cheatsheet** — two scan columns (`anchor` | `content`) plus an optional third column with a single **More** button. More opens a **popover** with markdown `details` and/or a quiet reference link. At most one More per row. Omit the More column for a section when no entry in that section has `details` or a safe `url`.
+2. **Checklist, tldr, runbook** — `details` uses inline progressive disclosure (collapsed **More / Less** under the entry). This is intentional for now; converging with the cheatsheet popover (or other patterns) is a later consumption-experience pass, not required for v1.
+3. **`url`** — with cheatsheet More, the link lives in the popover; elsewhere, an unobtrusive external link.
+4. **Bookmarks** — special case: `content` is the destination URL; `details` is the **always-visible** card description (not behind More). The card title is still `anchor`.
+
+CLI Markdown tables are a simpler surface: they may **inline** escaped `details` text in a cell. Full parity with the React progressive-disclosure UI is not a v1 goal.
+
+### Markdown tables
+
+Render a full two-column row. Prefer attaching `details` and `url` to the **content** side once so they are not duplicated:
 
 ```javascript
-const parts = [content];
-if (details) parts.push(details);
-if (url) parts.push(`[Link](${url})`);
-const cell = parts.join('<br>');
+// One table row: anchor | content (+ optional details/url)
+const contentParts = [content];
+if (details) contentParts.push(details); // markdown source; do not over-escape
+if (url) contentParts.push(`[Link](${url})`);
+
+const row = `| ${escapeMarkdown(anchor)} | ${contentParts.join('<br>')} |`;
 ```
 
-### HTML/Web
+Example output:
 
-Display details as secondary text and URL as an external link icon:
+```markdown
+| Command | Description |
+| --- | --- |
+| <pre>git push</pre> | Push local commits to remote<br>Uploads commits from the current branch to its upstream.<br>[Link](https://git-scm.com/docs/git-push) |
+```
+
+### HTML / web — cheatsheet (popover)
+
+Keep **anchor** and **content** as stable scan columns. Put **at most one** secondary control in its own column; open depth in a popover (not under both cells).
 
 ```html
-<div class="entry">
-  <div class="content">Push local commits to remote</div>
-  <div class="details">Uploads commits from the current branch</div>
-  <a href="https://git-scm.com/docs/git-push" target="_blank">
-    <ExternalLinkIcon />
-  </a>
-</div>
+<table>
+  <thead>
+    <tr>
+      <th>Command</th>
+      <th>Description</th>
+      <th><span class="sr-only">More</span></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><code>git push</code></td>
+      <td>Push local commits to remote</td>
+      <td>
+        <button type="button" aria-label="More about git push" aria-expanded="false">More</button>
+        <!-- popover: rendered markdown details + optional Link -->
+      </td>
+    </tr>
+  </tbody>
+</table>
 ```
+
+In `@chson/ui`, that control is `EntryMorePopover`.
+
+### HTML / web — other document types
+
+For checklist, tldr, and runbook, `@chson/ui` still uses inline **More / Less** under the entry (`EntryDetails`). Prefer the same rule: **one** disclosure per entry, not duplicated under multiple fields.
+
+### Bookmarks layout
+
+Do not use the table or More/Less pattern for `documentType: "bookmarks"`:
+
+```html
+<a class="bookmark-card" href="https://www.typescriptlang.org/docs/" target="_blank" rel="noopener noreferrer">
+  <h3><!-- anchor -->TypeScript Handbook</h3>
+  <div class="details"><!-- always visible; markdown -->Official language guide and reference.</div>
+  <span class="hostname">typescriptlang.org</span>
+</a>
+```
+
+Here `content` is only the href (or the value you resolve to a safe URL), not a second text column.
 
 ### Considerations
 
-- **Keep primary content scannable** — Don't let details overwhelm the main content
-- **Make URLs unobtrusive** — Use icons or "Link" text rather than full URLs
-- **Consider progressive disclosure** — Show details on hover or expand
+- **Keep primary content scannable** — Anchor + content stay visible; details must not dominate the first pass
+- **One disclosure per entry** — Do not render the same `details` twice (for example under both table columns)
+- **Make URLs unobtrusive** — Icons or short “Link” text, not long raw URLs in the scan path
+- **Match document type** — Progressive disclosure for most types; always-visible `details` on bookmark cards
+- **Treat `details` as markdown** — Parse it; do not show raw `**markers**` unless you are deliberately dumping source (CLI)
 
 ## Respecting Retrieval Direction
 
@@ -181,14 +245,18 @@ if (anchorIsMechanism) {
 }
 ```
 
+Optional `formatHints.anchor` / `formatHints.content` (`text` | `markdown` | `code`) override inference when present.
+
 ## Testing Your Renderer
 
-Create test cheatsheets with edge cases:
+Create test documents with edge cases. Include required document fields (`title`, `publicationDate`, `description`, `sections`):
 
 ```json
 {
   "$schema": "https://chson.dev/api/schema.json",
   "title": "Renderer Test Cases",
+  "publicationDate": "2026-01-01",
+  "description": "Edge cases for renderer implementations.",
   "sections": [
     {
       "title": "Special Characters",
@@ -207,6 +275,17 @@ Create test cheatsheets with edge cases:
       ]
     },
     {
+      "title": "Details and URL",
+      "entries": [
+        {
+          "anchor": "git push",
+          "content": "Push local commits to remote",
+          "details": "Uploads commits from the current branch.\n\n- Use `--force-with-lease` instead of `--force` when rewriting history.",
+          "url": "https://git-scm.com/docs/git-push"
+        }
+      ]
+    },
+    {
       "title": "Unicode",
       "entries": [
         { "anchor": "ctrl + ->", "content": "Arrow symbol" },
@@ -217,4 +296,9 @@ Create test cheatsheets with edge cases:
 }
 ```
 
-Run your renderer against this file and verify the output renders correctly in your target format.
+Run your renderer against this file and verify:
+
+- Anchor and content always appear for each entry
+- `details` stays secondary (collapsed in rich UIs; inlined carefully in Markdown tables)
+- Markdown in `details` formats correctly when expanded
+- Special characters and fences do not break the target format

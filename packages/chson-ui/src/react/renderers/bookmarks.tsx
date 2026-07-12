@@ -6,8 +6,9 @@ import { getHostname } from '../../core/bookmarks'
 import { safeExternalUrl } from '../../core/url'
 import { getEntries, getSections } from '../../core/normalize'
 import { ExternalLinkIcon } from '../icons'
+import { Markdown } from '../primitives/markdown'
 import { Badge } from '../../shadcn/badge'
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '../../shadcn/card'
+import { Card, CardContent, CardHeader, CardTitle } from '../../shadcn/card'
 import { cn } from '../utils/cn'
 
 export interface BookmarksProps {
@@ -59,9 +60,9 @@ export function Bookmarks({ data, className }: BookmarksProps) {
                           <ExternalLinkIcon className="h-4 w-4 shrink-0 text-muted-foreground group-hover:text-primary transition-colors" />
                         </div>
                         {entry.details && (
-                          <CardDescription className="line-clamp-3 text-sm leading-relaxed">
-                            {entry.details}
-                          </CardDescription>
+                          <div className="line-clamp-3 pt-1.5">
+                            <Markdown content={entry.details} />
+                          </div>
                         )}
                       </CardHeader>
                       <CardContent className="pt-0">

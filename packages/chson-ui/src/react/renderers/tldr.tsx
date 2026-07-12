@@ -3,6 +3,7 @@ import * as React from 'react'
 import type { ChSONDocument } from '@chson/schema'
 
 import { getEntries, getSections } from '../../core/normalize'
+import { EntryDetails } from '../primitives/entry-details'
 import { cn } from '../utils/cn'
 import { Separator } from '../../shadcn/separator'
 
@@ -44,7 +45,13 @@ export function Tldr({ data, className }: TldrProps) {
                     {entry.content}
                   </div>
                   {entry.details && (
-                    <div className="mt-1 text-xs text-muted-foreground/70">{entry.details}</div>
+                    <div className="mt-1">
+                      <EntryDetails
+                        details={entry.details}
+                        label={entry.anchor}
+                        className="text-xs"
+                      />
+                    </div>
                   )}
                 </div>
               ))}
