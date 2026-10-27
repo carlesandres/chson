@@ -66,7 +66,6 @@ describe('CLI Validation', () => {
         version: '1.0',
         publicationDate: '2024-01-01',
         description: 'A complete test cheatsheet',
-        documentType: 'cheatsheet',
         author: 'Test Author',
         license: 'MIT',
         homepage: 'https://example.com',
@@ -254,31 +253,6 @@ describe('CLI Validation', () => {
         publicationDate: '2024-01-01',
         description: 'Test',
         retrievalDirection: 'invalid-direction',
-        sections: [{ title: 'S', entries: [{ anchor: 'a', content: 'b' }] }]
-      }
-      expect(validate(invalid)).toBe(false)
-    })
-
-    it('accepts valid documentType values', () => {
-      const types = ['cheatsheet', 'checklist', 'runbook', 'tldr', 'bookmarks']
-      for (const docType of types) {
-        const valid = {
-          title: 'Test',
-          publicationDate: '2024-01-01',
-          description: 'Test',
-          documentType: docType,
-          sections: [{ title: 'S', entries: [{ anchor: 'a', content: 'b' }] }]
-        }
-        expect(validate(valid)).toBe(true)
-      }
-    })
-
-    it('rejects invalid documentType', () => {
-      const invalid = {
-        title: 'Test',
-        publicationDate: '2024-01-01',
-        description: 'Test',
-        documentType: 'invalid-type',
         sections: [{ title: 'S', entries: [{ anchor: 'a', content: 'b' }] }]
       }
       expect(validate(invalid)).toBe(false)

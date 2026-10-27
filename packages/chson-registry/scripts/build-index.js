@@ -47,7 +47,6 @@ function buildIndex() {
       description: data.description,
       version: data.version ?? null,
       publicationDate: data.publicationDate,
-      documentType: data.documentType ?? null,
       retrievalDirection: data.retrievalDirection ?? null,
       tags: data.tags ?? [],
     });

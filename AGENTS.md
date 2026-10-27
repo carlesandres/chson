@@ -11,7 +11,7 @@ ChSON is a JSON-based format for software cheatsheets. This repo is a Turborepo 
 - **`packages/chson-schema/`** — JSON Schema + auto-generated TypeScript types
 - **`packages/chson-registry/`** — Example cheatsheets (source of truth)
 - **`packages/chson-cli/`** — Node.js CLI for validation and rendering
-- **`packages/chson-ui/`** — React renderers, hooks, and headless core for ChSON
+- **`packages/chson-ui/`** — React cheatsheet renderer and headless core for ChSON
 - **`docs/adr/`** — Architecture decision records (see `001-layers.md`)
 - **`apps/web/`** — Next.js 16 website with shadcn/ui and Fumadocs
 
@@ -125,9 +125,8 @@ apps/web/lib/cheatsheets.ts :: getAllCheatsheets()
   ▼
 apps/web/app/(home)/cheatsheets/[product]/[name]/page.tsx
   │
-  │  dispatches by data.documentType
   ▼
-@chson/ui renderers: Cheatsheet | Checklist | Runbook | Tldr | Bookmarks
+@chson/ui: Cheatsheet
 ```
 
 `packages/chson-registry/index.json` is **not used by the website** — it is a pre-built metadata index for external consumers only.
@@ -205,7 +204,7 @@ Husky is a devDep of `apps/web` but no hooks are configured. There is no automat
 3. Run `npm run validate`
 4. Run `npm run build`
 
-**Schema changes**: Keep backwards-compatible.
+**Schema changes**: The format is a draft (ADR 002); breaking changes are allowed but must migrate every registry file in the same change.
 
 ## CI
 

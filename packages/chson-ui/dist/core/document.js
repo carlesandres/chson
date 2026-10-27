@@ -1,6 +1,3 @@
-export function getDocumentType(data) {
-    return (data.documentType ?? 'cheatsheet');
-}
 export function getLabels(data) {
     return {
         anchorLabel: data.anchorLabel || 'Anchor',

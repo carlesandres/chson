@@ -1,23 +1,22 @@
 ---
 title: Use Cases
-description: How ChSON adapts to cheatsheets, checklists, runbooks, TLDRs, and bookmarks.
+description: The kinds of software cheatsheets ChSON is designed for.
 ---
 
-ChSON's anchor-content model generalizes beyond cheatsheets. The same cognitive principle—scanning for something you recognize to find related information—applies to many structured knowledge formats.
+ChSON describes software cheatsheets. Every kind below uses the same shape: users scan for an **anchor** they recognize to retrieve the **content** they need. What changes is what the anchor and content hold, and which direction users look things up.
 
-Use the `documentType` field to indicate how your document should be interpreted and rendered.
+## Commands and shortcuts
 
-## Cheatsheets
+Quick reference for CLI commands or keyboard shortcuts.
 
-The original use case. Quick reference for commands, shortcuts, or syntax.
+- **anchor**: Command or key combination
+- **content**: What it does
 
-- **anchor**: Command, shortcut, or syntax
-- **content**: What it does or means
-
-```json title="Cheatsheet example"
+```json title="Command cheatsheet excerpt"
 {
-  "documentType": "cheatsheet",
   "title": "Git Basics",
+  "anchorLabel": "Command",
+  "contentLabel": "Description",
   "sections": [{
     "title": "Staging",
     "entries": [
@@ -27,62 +26,15 @@ The original use case. Quick reference for commands, shortcuts, or syntax.
 }
 ```
 
-## Checklists
+## Reference tables
 
-Ordered tasks or steps to complete. ChSON defines the template—actual checkbox state is handled by consuming applications.
+Status codes, config keys, syntax and API members: anything users look up by name.
 
-- **anchor**: Task or step name
-- **content**: Details, criteria, or instructions
+- **anchor**: Code, key, syntax or member name
+- **content**: Meaning or effect
 
-```json title="Checklist example"
+```json title="Reference cheatsheet excerpt"
 {
-  "documentType": "checklist",
-  "title": "Production Deployment",
-  "anchorLabel": "Task",
-  "contentLabel": "Details",
-  "sections": [{
-    "title": "Pre-deployment",
-    "entries": [
-      { "anchor": "Run test suite", "content": "All tests must pass before proceeding" },
-      { "anchor": "Update changelog", "content": "Document breaking changes and new features" }
-    ]
-  }]
-}
-```
-
-## Runbooks
-
-Step-by-step operational procedures. Array order defines execution sequence. Conditionals are described in the content—no built-in branching logic.
-
-- **anchor**: Step or action
-- **content**: Expected result, notes, or next action
-
-```json title="Runbook example"
-{
-  "documentType": "runbook",
-  "title": "Database Failover",
-  "anchorLabel": "Step",
-  "contentLabel": "Expected Result",
-  "sections": [{
-    "title": "Initiate Failover",
-    "entries": [
-      { "anchor": "Check replica lag", "content": "Should be < 100ms. If higher, wait or investigate." },
-      { "anchor": "Promote replica", "content": "Run: pg_ctl promote -D /data" }
-    ]
-  }]
-}
-```
-
-## TLDRs
-
-Brief summaries of topics, concepts, or documentation. Useful for quick reference cards or study guides.
-
-- **anchor**: Topic, term, or concept
-- **content**: Brief explanation or summary
-
-```json title="TLDR example"
-{
-  "documentType": "tldr",
   "title": "HTTP Status Codes",
   "anchorLabel": "Code",
   "contentLabel": "Meaning",
@@ -96,51 +48,37 @@ Brief summaries of topics, concepts, or documentation. Useful for quick referenc
 }
 ```
 
-## Bookmarks
+## Task lookups
 
-Curated link collections. Field mapping differs from other document types:
+When users know what they want to do but not how, flip the direction with `"retrievalDirection": "intent-to-mechanism"`.
 
-- **anchor**: Title or name of the resource (card title)
-- **content**: Destination **URL** (not a prose description)
-- **details**: Optional description of the resource — **always visible** on the card
+- **anchor**: The goal, phrased the way users think of it
+- **content**: The command or shortcut that achieves it
 
-Unlike cheatsheets and checklists, bookmarks do **not** hide `details` behind a More control. Because `content` is only the URL, the card needs an on-face blurb; that role is `details` (markdown). `@chson/ui` renders it on the card body, not in a popover.
-
-```json title="Bookmarks example"
+```json title="Intent-first cheatsheet excerpt"
 {
-  "documentType": "bookmarks",
-  "title": "TypeScript Resources",
-  "anchorLabel": "Resource",
-  "contentLabel": "Link",
+  "title": "Vim Editing",
+  "retrievalDirection": "intent-to-mechanism",
+  "anchorLabel": "Task",
+  "contentLabel": "Keys",
   "sections": [{
-    "title": "Official",
+    "title": "Editing",
     "entries": [
-      {
-        "anchor": "TypeScript Handbook",
-        "content": "https://www.typescriptlang.org/docs/handbook/",
-        "details": "Official language guide and reference."
-      },
-      {
-        "anchor": "Playground",
-        "content": "https://www.typescriptlang.org/play",
-        "details": "Online editor for trying TypeScript snippets."
-      }
+      { "anchor": "Delete the current line", "content": "dd" }
     ]
   }]
 }
 ```
 
-## The Cognitive Model
+## Summary
 
-All these use cases share the same underlying pattern: users scan for an **anchor** (what they're looking for) to retrieve **content** (what they need). The `documentType` field signals to renderers how to present the data, but the core structure remains consistent.
+| Kind                   | Anchor is...               | Content is...       |
+|------------------------|----------------------------|---------------------|
+| Commands and shortcuts | Command or key combination | What it does        |
+| Reference tables       | Code, key or name          | Meaning or effect   |
+| Task lookups           | Goal                       | Command or shortcut |
 
-| Document Type | Anchor Is...     | Content Is...        | `details` typically…                          |
-|---------------|------------------|----------------------|-----------------------------------------------|
-| cheatsheet    | Command/shortcut | Meaning/effect       | Behind **More** (popover in `@chson/ui`)      |
-| checklist     | Task/step        | Notes/criteria       | Collapsed progressive disclosure              |
-| runbook       | Step/action      | Expected result/notes| Collapsed progressive disclosure              |
-| tldr          | Topic/term       | Brief explanation    | Collapsed progressive disclosure              |
-| bookmarks     | Title/name       | URL                  | **Always visible** card description           |
+In every kind, optional `details` sit behind a **More** control (a popover in `@chson/ui`), off the primary scan path.
 
 ## Next Steps
 
