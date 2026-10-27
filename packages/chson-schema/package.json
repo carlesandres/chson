@@ -52,6 +52,6 @@
     "ajv-formats": "^3.0.1",
     "json-schema-to-typescript": "^15.0.4",
     "typescript": "6.0.2",
-    "vitest": "^4.0.18"
+    "vitest": "^5.0.5"
   }
 }
