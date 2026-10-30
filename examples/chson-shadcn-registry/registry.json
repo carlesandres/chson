@@ -31,34 +31,6 @@
       ]
     },
     {
-      "name": "devops-release-checklist",
-      "type": "registry:item",
-      "title": "Release Checklist",
-      "description": "Pre-release, release, and post-release checks for safe production deployments.",
-      "categories": [
-        "checklist",
-        "devops"
-      ],
-      "keywords": [
-        "devops",
-        "release",
-        "checklist"
-      ],
-      "meta": {
-        "publicationDate": "2026-02-23",
-        "retrievalDirection": "intent-to-mechanism",
-        "version": "1.0",
-        "documentType": "checklist"
-      },
-      "files": [
-        {
-          "path": "registry/default/devops/release-checklist.chson.json",
-          "type": "registry:file",
-          "target": "~/chson-files/devops/release-checklist.chson.json"
-        }
-      ]
-    },
-    {
       "name": "docker-core",
       "type": "registry:item",
       "title": "Docker Essentials",
@@ -108,62 +80,6 @@
           "path": "registry/default/git/core.chson.json",
           "type": "registry:file",
           "target": "~/chson-files/git/core.chson.json"
-        }
-      ]
-    },
-    {
-      "name": "git-rebase-tldr",
-      "type": "registry:item",
-      "title": "Git Rebase TLDR",
-      "description": "Quick reference for when and how to use git rebase safely.",
-      "categories": [
-        "tldr",
-        "git"
-      ],
-      "keywords": [
-        "git",
-        "tldr",
-        "version-control"
-      ],
-      "meta": {
-        "publicationDate": "2026-02-23",
-        "retrievalDirection": "intent-to-mechanism",
-        "version": "2.x",
-        "documentType": "tldr"
-      },
-      "files": [
-        {
-          "path": "registry/default/git/rebase-tldr.chson.json",
-          "type": "registry:file",
-          "target": "~/chson-files/git/rebase-tldr.chson.json"
-        }
-      ]
-    },
-    {
-      "name": "kubernetes-pod-troubleshooting-runbook",
-      "type": "registry:item",
-      "title": "Kubernetes Pod Troubleshooting Runbook",
-      "description": "Operational runbook for diagnosing and recovering unhealthy Kubernetes pods.",
-      "categories": [
-        "runbook",
-        "kubernetes"
-      ],
-      "keywords": [
-        "kubernetes",
-        "ops",
-        "runbook"
-      ],
-      "meta": {
-        "publicationDate": "2026-02-23",
-        "retrievalDirection": "intent-to-mechanism",
-        "version": "1.29+",
-        "documentType": "runbook"
-      },
-      "files": [
-        {
-          "path": "registry/default/kubernetes/pod-troubleshooting-runbook.chson.json",
-          "type": "registry:file",
-          "target": "~/chson-files/kubernetes/pod-troubleshooting-runbook.chson.json"
         }
       ]
     },
@@ -218,52 +134,6 @@
           "type": "registry:file",
           "target": "~/chson-files/vim/core.chson.json"
         }
-      ]
-    },
-    {
-      "name": "web-performance-bookmarks",
-      "type": "registry:item",
-      "title": "Web Performance Bookmarks",
-      "description": "Curated references for measuring and improving frontend performance.",
-      "categories": [
-        "bookmarks",
-        "web"
-      ],
-      "keywords": [
-        "web",
-        "performance",
-        "bookmarks"
-      ],
-      "meta": {
-        "publicationDate": "2026-02-23",
-        "retrievalDirection": "intent-to-mechanism",
-        "version": "2026",
-        "documentType": "bookmarks"
-      },
-      "files": [
-        {
-          "path": "registry/default/web/performance-bookmarks.chson.json",
-          "type": "registry:file",
-          "target": "~/chson-files/web/performance-bookmarks.chson.json"
-        }
-      ]
-    },
-    {
-      "name": "git-pack",
-      "type": "registry:item",
-      "title": "Git Pack",
-      "description": "Installs 2 ChSON files from git.",
-      "categories": [
-        "pack"
-      ],
-      "meta": {
-        "packStrategy": "by-directory",
-        "group": "git",
-        "itemCount": 2
-      },
-      "registryDependencies": [
-        "git-core",
-        "git-rebase-tldr"
       ]
     }
   ]

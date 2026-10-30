@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest'
 
 import type { ChSONDocument } from '@chson/schema'
 
-import { getDocumentType, getLabels, getRetrievalDirection } from './document'
+import { getLabels, getRetrievalDirection } from './document'
 
 function baseDoc(overrides: Partial<ChSONDocument> = {}): ChSONDocument {
   return {
@@ -15,10 +15,6 @@ function baseDoc(overrides: Partial<ChSONDocument> = {}): ChSONDocument {
 }
 
 describe('core/document', () => {
-  it('defaults documentType to cheatsheet', () => {
-    expect(getDocumentType(baseDoc())).toBe('cheatsheet')
-  })
-
   it('defaults labels', () => {
     expect(getLabels(baseDoc())).toEqual({ anchorLabel: 'Anchor', contentLabel: 'Content' })
   })

@@ -24,16 +24,12 @@ export function Page({ data }: { data: ChSONDocument }) {
 }
 ```
 
-## Document types
+## Layout
 
-| `documentType` | Layout notes |
-| -------------- | ------------ |
-| `cheatsheet` | Table: anchor \| content \| optional **More** popover (`details` / `url`) |
-| `checklist`, `runbook`, `tldr` | Inline progressive disclosure for `details` (may change later) |
-| `bookmarks` | Cards: `anchor` title, `content` URL, **`details` always visible** on the card |
+`Cheatsheet` renders each section as a table: anchor | content | an optional **More** popover for `details` and `url`.
 
 ## Exports
 
-- `@chson/ui`: React renderers, primitives, and hooks (`useChecklistState`)
+- `@chson/ui`: the `Cheatsheet` renderer and its primitives
 - `@chson/ui/core`: headless helpers (format inference, normalization, etc.)
 - `@chson/ui/shadcn/*`: internal UI primitives used by renderers and the reference app

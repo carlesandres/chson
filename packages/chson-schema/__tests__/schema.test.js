@@ -66,16 +66,6 @@ describe('ChSON Schema', () => {
       expect(enumValues.length).toBe(2)
     })
 
-    it('defines documentType enum correctly', () => {
-      const enumValues = schema.properties.documentType.enum
-      expect(enumValues).toContain('cheatsheet')
-      expect(enumValues).toContain('checklist')
-      expect(enumValues).toContain('runbook')
-      expect(enumValues).toContain('tldr')
-      expect(enumValues).toContain('bookmarks')
-      expect(enumValues.length).toBe(5)
-    })
-
     it('defines section with required title and entries', () => {
       const sectionDef = schema.$defs.section
       expect(sectionDef.required).toContain('title')

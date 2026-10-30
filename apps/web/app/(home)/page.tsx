@@ -3,21 +3,13 @@ import { getAllCheatsheets } from 'lib/cheatsheets';
 import { Button } from '@chson/ui/shadcn/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@chson/ui/shadcn/card';
 import { CodeBlockStatic } from 'components/chson';
-import {
-  ArrowRight,
-  BookOpen,
-  CheckSquare,
-  ClipboardList,
-  FileText,
-  Bookmark,
-} from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 
 const schemaUrl = 'https://chson.dev/api/schema.json';
 
 const exampleCode = `{
   "$schema": "${schemaUrl}",
   "title": "Git Essentials",
-  "documentType": "cheatsheet",
   "sections": [
     {
       "title": "Basics",
@@ -30,34 +22,6 @@ const exampleCode = `{
     }
   ]
 }`;
-
-const documentTypes = [
-  {
-    type: 'Cheatsheets',
-    icon: FileText,
-    description: 'Commands, shortcuts, syntax',
-  },
-  {
-    type: 'Checklists',
-    icon: CheckSquare,
-    description: 'Tasks and steps to complete',
-  },
-  {
-    type: 'Runbooks',
-    icon: ClipboardList,
-    description: 'Operational procedures',
-  },
-  {
-    type: 'TLDRs',
-    icon: BookOpen,
-    description: 'Quick summaries and guides',
-  },
-  {
-    type: 'Bookmarks',
-    icon: Bookmark,
-    description: 'Curated link collections',
-  },
-];
 
 export default function Home() {
   const sheets = getAllCheatsheets().slice(0, 3);
@@ -72,9 +36,8 @@ export default function Home() {
           <span className="text-muted-foreground">designed for retrieval.</span>
         </h1>
         <p className="mt-4 max-w-[var(--max-w-prose-sm)] text-lg text-muted-foreground">
-          ChSON is a JSON format for writing cheatsheets, checklists, runbooks,
-          and more. Built around how people actually scan and look up
-          information.
+          ChSON is a JSON format for writing software cheatsheets. Built around
+          how people actually scan and look up information.
         </p>
         <div className="mt-6 flex flex-wrap gap-3">
           <Button asChild size="lg">
@@ -142,41 +105,6 @@ export default function Home() {
           </p>
         </CardContent>
       </Card>
-
-      {/* Document Types */}
-      <div>
-        <h2 className="text-sm font-semibold tracking-wide text-muted-foreground">
-          One format, many uses
-        </h2>
-        <div className="mt-3 grid gap-3 sm:grid-cols-2 lg:grid-cols-5">
-          {documentTypes.map(({ type, icon: Icon, description }) => (
-            <Card
-              key={type}
-              className="border-border/50 bg-card/70 shadow-soft backdrop-blur"
-            >
-              <CardContent className="flex items-start gap-3 p-4">
-                <Icon className="mt-0.5 h-5 w-5 shrink-0 text-primary" />
-                <div>
-                  <div className="font-medium">{type}</div>
-                  <div className="text-sm text-muted-foreground">
-                    {description}
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-        <p className="mt-4 text-sm text-muted-foreground">
-          Learn how the anchor-content model adapts to each use case in{' '}
-          <Link
-            href="/docs/use-cases"
-            className="text-primary underline-offset-4 hover:underline"
-          >
-            the docs
-          </Link>
-          .
-        </p>
-      </div>
 
       {/* Explore the Docs */}
       <Card className="border-primary/20 bg-primary/5">
