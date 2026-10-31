@@ -102,7 +102,7 @@
     "react-hook-form": "^7.71.2",
     "react-resizable-panels": "^2.1.9",
     "sonner": "^1.7.4",
-    "streamdown": "2.5.0",
+    "streamdown": "2.7.1",
     "tailwind-merge": "^2.6.1",
     "vaul": "^0.9.9"
   },
@@ -113,6 +113,6 @@
     "@types/react-dom": "19.2.3",
     "jsdom": "27.4.0",
     "typescript": "6.0.2",
-    "vitest": "4.1.0"
+    "vitest": "5.0.5"
   }
 }
