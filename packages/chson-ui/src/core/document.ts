@@ -1,11 +1,5 @@
 import type { ChSONDocument } from '@chson/schema'
 
-export type DocumentType = NonNullable<ChSONDocument['documentType']> | 'cheatsheet'
-
-export function getDocumentType(data: ChSONDocument): DocumentType {
-  return (data.documentType ?? 'cheatsheet') as DocumentType
-}
-
 export function getLabels(data: ChSONDocument): {
   anchorLabel: string
   contentLabel: string

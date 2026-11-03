@@ -5,7 +5,7 @@ description: Practical advice for building ChSON renderers.
 
 This guide covers common challenges when building renderers for ChSON documents, whether you're outputting Markdown, HTML, PDF, or another format.
 
-Every entry has **`anchor`** and **`content`**. Optional **`details`** (always markdown) and **`url`** add depth and a reference link. For most document types, keep the anchor/content pair scannable and treat `details` as secondary. **Bookmarks are the exception:** `content` is the URL and `details` is the always-visible card description (see [Bookmarks layout](#bookmarks-layout)).
+Every entry has **`anchor`** and **`content`**. Optional **`details`** (always markdown) and **`url`** add depth and a reference link. Keep the anchor/content pair scannable and treat `details` as secondary.
 
 ## Escaping Code Fences in Markdown
 
@@ -129,8 +129,8 @@ Optional `details` and `url` sit beside the required **`anchor` + `content`** pa
 
 | Field | Role |
 | ----- | ---- |
-| `anchor` | What users scan for (command, shortcut, term, link title, …) |
-| `content` | What they need once they find the anchor (or the URL for bookmarks) |
+| `anchor` | What users scan for (command, shortcut, term, …) |
+| `content` | What they need once they find the anchor |
 | `details` | Extended explanation — **always markdown**; keep out of the primary scan path |
 | `url` | Optional reference link |
 
@@ -139,9 +139,7 @@ Optional `details` and `url` sit beside the required **`anchor` + `content`** pa
 This is what the official React package does:
 
 1. **Cheatsheet** — two scan columns (`anchor` | `content`) plus an optional third column with a single **More** button. More opens a **popover** with markdown `details` and/or a quiet reference link. At most one More per row. Omit the More column for a section when no entry in that section has `details` or a safe `url`.
-2. **Checklist, tldr, runbook** — `details` uses inline progressive disclosure (collapsed **More / Less** under the entry). This is intentional for now; converging with the cheatsheet popover (or other patterns) is a later consumption-experience pass, not required for v1.
-3. **`url`** — with cheatsheet More, the link lives in the popover; elsewhere, an unobtrusive external link.
-4. **Bookmarks** — special case: `content` is the destination URL; `details` is the **always-visible** card description (not behind More). The card title is still `anchor`.
+2. **`url`** — the link lives in the More popover as an unobtrusive external link.
 
 CLI Markdown tables are a simpler surface: they may **inline** escaped `details` text in a cell. Full parity with the React progressive-disclosure UI is not a v1 goal.
 
@@ -194,30 +192,11 @@ Keep **anchor** and **content** as stable scan columns. Put **at most one** seco
 
 In `@chson/ui`, that control is `EntryMorePopover`.
 
-### HTML / web — other document types
-
-For checklist, tldr, and runbook, `@chson/ui` still uses inline **More / Less** under the entry (`EntryDetails`). Prefer the same rule: **one** disclosure per entry, not duplicated under multiple fields.
-
-### Bookmarks layout
-
-Do not use the table or More/Less pattern for `documentType: "bookmarks"`:
-
-```html
-<a class="bookmark-card" href="https://www.typescriptlang.org/docs/" target="_blank" rel="noopener noreferrer">
-  <h3><!-- anchor -->TypeScript Handbook</h3>
-  <div class="details"><!-- always visible; markdown -->Official language guide and reference.</div>
-  <span class="hostname">typescriptlang.org</span>
-</a>
-```
-
-Here `content` is only the href (or the value you resolve to a safe URL), not a second text column.
-
 ### Considerations
 
 - **Keep primary content scannable** — Anchor + content stay visible; details must not dominate the first pass
 - **One disclosure per entry** — Do not render the same `details` twice (for example under both table columns)
 - **Make URLs unobtrusive** — Icons or short “Link” text, not long raw URLs in the scan path
-- **Match document type** — Progressive disclosure for most types; always-visible `details` on bookmark cards
 - **Treat `details` as markdown** — Parse it; do not show raw `**markers**` unless you are deliberately dumping source (CLI)
 
 ## Respecting Retrieval Direction

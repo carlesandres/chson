@@ -279,9 +279,6 @@ function buildRegistryItems(sources, { targetBase, packs, failOnCollision }) {
     const targetPath = `~/${toPosixPath(path.join(targetBase, `${entry.withoutExt}.chson.json`))}`;
 
     const categories = [];
-    if (chson.documentType) {
-      categories.push(chson.documentType);
-    }
     const productCategory = entry.withoutExt.split("/")[0];
     if (productCategory) {
       categories.push(productCategory);
@@ -299,7 +296,6 @@ function buildRegistryItems(sources, { targetBase, packs, failOnCollision }) {
         retrievalDirection: chson.retrievalDirection,
         version: chson.version,
         homepage: chson.homepage,
-        documentType: chson.documentType,
       },
       files: [
         {

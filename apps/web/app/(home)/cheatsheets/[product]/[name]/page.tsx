@@ -13,10 +13,7 @@ import {
   BreadcrumbSeparator,
 } from '@chson/ui/shadcn/breadcrumb'
 import { ExternalLink, Home } from 'lucide-react'
-import { ChecklistRenderer } from 'components/chson/renderers/ChecklistRenderer'
-import { Bookmarks, Cheatsheet as CheatsheetView, Runbook, Tldr } from '@chson/ui'
-
-import type { Cheatsheet } from 'lib/cheatsheets'
+import { Cheatsheet } from '@chson/ui'
 
 type Params = Promise<{ product: string; name: string }>
 
@@ -41,29 +38,6 @@ export async function generateMetadata({
   return {
     title: `${ref.data.title} | ChSON`,
     description: ref.data.description,
-  }
-}
-
-/**
- * Dispatches to the appropriate renderer based on documentType.
- */
-function renderDocument(data: Cheatsheet, product: string, name: string) {
-  const documentType = data.documentType || 'cheatsheet'
-
-  switch (documentType) {
-    case 'checklist':
-      return (
-        <ChecklistRenderer data={data} product={product} name={name} />
-      )
-    case 'bookmarks':
-      return <Bookmarks data={data} />
-    case 'tldr':
-      return <Tldr data={data} />
-    case 'runbook':
-      return <Runbook data={data} />
-    case 'cheatsheet':
-    default:
-      return <CheatsheetView data={data} />
   }
 }
 
@@ -151,7 +125,7 @@ export default async function CheatsheetPage({ params }: { params: Params }) {
         </div>
       </div>
 
-      {renderDocument(data, ref.product, ref.name)}
+      <Cheatsheet data={data} />
     </>
   )
 }

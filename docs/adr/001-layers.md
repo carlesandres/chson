@@ -1,6 +1,6 @@
 # ADR 001: Layer Boundaries
 
-**Status:** Accepted  
+**Status:** Accepted; partially superseded by [ADR 002](002-cheatsheets-only.md)  
 **Date:** 2026-07-06
 
 ## Context

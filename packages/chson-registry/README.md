@@ -6,8 +6,8 @@
 Curated collection of [ChSON](https://chson.dev) cheatsheets — structured
 JSON data files for developer reference.
 
-This is a **data package**. It contains `.chson.json` files (cheatsheets,
-runbooks, checklists, TLDRs, and bookmarks), not executable code.
+This is a **data package**. It contains `.chson.json` cheatsheet files, not
+executable code.
 
 ## Install
 
@@ -24,7 +24,7 @@ The package exports an `index.json` manifest listing all available cheatsheets:
 ```javascript
 import index from "@chson/registry" with { type: "json" };
 
-console.log(index.count);        // 9
+console.log(index.count);        // 5
 console.log(index.cheatsheets);  // [{ product, name, path, title, ... }, ...]
 ```
 
@@ -33,13 +33,12 @@ Each entry in `index.cheatsheets` contains:
 | Field | Description |
 |-------|-------------|
 | `product` | Product/tool grouping (e.g. `"git"`, `"docker"`) |
-| `name` | Cheatsheet name (e.g. `"core"`, `"rebase-tldr"`) |
+| `name` | Cheatsheet name (e.g. `"core"`, `"keybindings"`) |
 | `path` | Relative path to the file within the package |
 | `title` | Human-readable title |
 | `description` | Brief summary (max 150 chars) |
 | `version` | Subject matter version (e.g. `"2.x"`) or `null` |
 | `publicationDate` | ISO date string |
-| `documentType` | `"cheatsheet"`, `"checklist"`, `"runbook"`, `"tldr"`, `"bookmarks"`, or `null` |
 | `retrievalDirection` | `"mechanism-to-meaning"` or `"intent-to-mechanism"`, or `null` |
 | `tags` | Array of keyword strings |
 
@@ -65,17 +64,13 @@ const cheatsheet = require(`@chson/registry/${entry.path}`);
 
 ## Available Cheatsheets
 
-| Product | Name | Type | Title |
-|---------|------|------|-------|
-| atuin | keybindings | — | Atuin Keybindings |
-| devops | release-checklist | checklist | Release Checklist |
-| docker | core | — | Docker Essentials |
-| git | core | — | Git Essentials |
-| git | rebase-tldr | tldr | Git Rebase TLDR |
-| kubernetes | pod-troubleshooting-runbook | runbook | Kubernetes Pod Troubleshooting Runbook |
-| npm | core | — | npm Essentials |
-| vim | core | — | Vim Essentials |
-| web | performance-bookmarks | bookmarks | Web Performance Bookmarks |
+| Product | Name | Title |
+|---------|------|-------|
+| atuin | keybindings | Atuin Keybindings |
+| docker | core | Docker Essentials |
+| git | core | Git Essentials |
+| npm | core | npm Essentials |
+| vim | core | Vim Essentials |
 
 ## Schema
 

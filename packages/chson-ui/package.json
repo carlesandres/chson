@@ -45,11 +45,7 @@
     "chson",
     "react",
     "ui",
-    "cheatsheet",
-    "checklist",
-    "runbook",
-    "tldr",
-    "bookmarks"
+    "cheatsheet"
   ],
   "sideEffects": false,
   "scripts": {

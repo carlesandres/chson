@@ -42,7 +42,6 @@ The root object contains metadata about the cheatsheet and an array of sections.
 | -------------------- | ---------- | ---------------------------------------------------------------------------------- |
 | `$schema`            | `string`   | JSON Schema reference URL for validation.                                          |
 | `version`            | `string`   | Version of the software this document covers (e.g., `"3.2.1"`).                    |
-| `documentType`       | `string`   | Type of document: `cheatsheet`, `checklist`, `runbook`, `tldr`, or `bookmarks`.    |
 | `author`             | `string`   | The author or maintainer of this document.                                         |
 | `license`            | `string`   | License identifier (e.g., `"MIT"`, `"CC-BY-4.0"`).                                 |
 | `homepage`           | `string`   | URL of the official website or documentation for the subject matter.               |
@@ -52,6 +51,10 @@ The root object contains metadata about the cheatsheet and an array of sections.
 | `anchorLabel`        | `string`   | Display name for the anchor column. Default: `"Anchor"`.                           |
 | `contentLabel`       | `string`   | Display name for the content column. Default: `"Content"`.                         |
 | `metadata`           | `object`   | Additional freeform metadata.                                                      |
+
+<Callout type="warn">
+**Removed:** `documentType` is no longer a standard field. Every ChSON document is a cheatsheet. Legacy files that set it still validate because the root allows `additionalProperties`, but renderers ignore it.
+</Callout>
 
 ---
 
@@ -417,15 +420,13 @@ Extended explanation beyond the brief content. Always markdown — `@chson/ui` r
 **Constraints:**
 
 - Type: `string`
-- Maximum length: **No limit** (supports progressive disclosure on most document types)
+- Maximum length: **No limit** (supports progressive disclosure)
 - Required: No
 
 **When to use:**
 - Entries with multiple options or modes
-- Runbook steps requiring detailed instructions
-- Bookmark cards: longer description of a link (see rendering note below)
 
-**Rendering note:** Most `@chson/ui` document types keep `details` off the primary scan path (cheatsheet **More** popover; checklist / runbook / tldr collapsed disclosure). **`documentType: "bookmarks"` is different:** `content` is the URL and `details` is the **always-visible** card description — not behind More/Less.
+**Rendering note:** `@chson/ui` keeps `details` off the primary scan path, behind a **More** popover.
 
 ### `url`
 

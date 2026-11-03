@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://chson.dev/api/schema.json",
   "title": "ChSON Document",
-  "description": "A structured format for knowledge fragments based on cognitive science principles of retrieval and chunking. Supports cheatsheets, checklists, runbooks, TLDRs, bookmarks, and more.",
+  "description": "A structured format for software cheatsheets based on cognitive science principles of retrieval and chunking.",
   "type": "object",
   "additionalProperties": true,
   "required": ["title", "publicationDate", "description", "sections"],
@@ -35,11 +35,6 @@
       "minLength": 1,
       "maxLength": 150,
       "description": "A brief summary of what this document covers (max 150 chars)."
-    },
-    "documentType": {
-      "type": "string",
-      "enum": ["cheatsheet", "checklist", "runbook", "tldr", "bookmarks"],
-      "description": "The type of document, which may influence rendering. 'cheatsheet': quick reference for commands/shortcuts. 'checklist': ordered tasks to complete. 'runbook': step-by-step operational procedures. 'tldr': brief summaries of topics. 'bookmarks': curated link collections."
     },
     "author": {
       "type": "string",

@@ -60,7 +60,6 @@ describe('cheatsheets library', () => {
         version: '1.0',
         publicationDate: '2024-01-01',
         description: 'Complete cheatsheet',
-        documentType: 'cheatsheet',
         author: 'Test Author',
         license: 'MIT',
         homepage: 'https://example.com',
