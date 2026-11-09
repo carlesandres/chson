@@ -114,23 +114,6 @@ const { result } = renderHook(() => useMyHook(), {
 });
 ```
 
-### Mocking Supabase
-
-All Supabase client methods are mocked in test files:
-
-```tsx
-vi.mock('utils/supabaseClient', () => ({
-  supabase: {
-    from: vi.fn(),
-    auth: {
-      getSession: vi.fn(),
-      signInWithPassword: vi.fn(),
-      // ...
-    },
-  },
-}));
-```
-
 ## Test Configuration
 
 - **Framework**: Vitest
@@ -144,7 +127,7 @@ vi.mock('utils/supabaseClient', () => ({
 1. Create test file adjacent to the code being tested or in `__tests__/`
 2. Use `.test.tsx` or `.spec.tsx` extension
 3. Follow existing patterns for consistency
-4. Mock external dependencies (Supabase, Next.js, etc.)
+4. Mock external dependencies (Next.js, etc.)
 5. Test both success and error cases
 6. Ensure tests are isolated and don't depend on execution order
 

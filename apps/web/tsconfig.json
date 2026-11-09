@@ -9,7 +9,6 @@
       "lib/*": ["./lib/*"],
       "hooks/*": ["./hooks/*"],
       "stores/*": ["./stores/*"],
-      "utils/*": ["./utils/*"],
       "providers/*": ["./providers/*"],
       "app/*": ["./app/*"]
     },

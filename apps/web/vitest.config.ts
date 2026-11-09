@@ -11,7 +11,6 @@ export default defineConfig({
       stores: path.resolve(__dirname, './stores'),
       types: path.resolve(__dirname, './types'),
       app: path.resolve(__dirname, './app'),
-      utils: path.resolve(__dirname, './utils'),
       test: path.resolve(__dirname, './test'),
     },
   },

@@ -57,7 +57,7 @@ Implement TanStack Query (React Query) for efficient server state management.
 - [x] Install @tanstack/react-query
 - [x] Set up QueryClientProvider in app layout
 - [x] Configure React Query DevTools
-- [x] Create query hooks for Supabase data fetching
+- [x] Create query hooks for data fetching
 - [x] Implement mutations for data updates
 - [x] Add optimistic updates for better UX
 - [x] Configure caching strategies
