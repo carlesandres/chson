@@ -202,18 +202,12 @@ Husky is a devDep of `apps/web` but no hooks are configured. There is no automat
 
 ## CI
 
-GitHub Actions (`.github/workflows/ci.yml`) runs on PRs and pushes to main — two separate jobs:
+GitHub Actions (`.github/workflows/ci.yml`) runs a single `validate` job on PRs and pushes to main:
 
-**`validate` job**:
 1. `npm run validate` — validates all `.chson.json` files against schema
 2. `npm run typecheck` — all packages; `@chson/web` generates `.source/` with `fumadocs-mdx` first, so no build is needed
 3. `npm run lint:check`
 4. `npm test`
-
-**`registry-prototype` job**:
-1. `npm install` (root)
-2. `npm --prefix examples/chson-shadcn-registry install` — separate install (standalone sub-project, NOT in workspaces)
-3. `npm --prefix examples/chson-shadcn-registry run registry:check`
 
 ## ChSON Schema Structure
 
