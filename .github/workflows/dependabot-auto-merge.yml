@@ -1,0 +1,35 @@
+name: Dependabot auto-merge
+
+on: pull_request
+
+permissions: {}
+
+jobs:
+  auto-merge:
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'carlesandres/chson'
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+    steps:
+      - id: meta
+        uses: dependabot/fetch-metadata@25dd0e34f4fe68f24cc83900b1fe3fe149efef98 # v3.1.0
+      # Majors, unparsed updates and GitHub Actions updates stay manual; Action pin changes need a SHA compare review.
+      - id: decide
+        run: echo "eligible=$ELIGIBLE" >> "$GITHUB_OUTPUT"
+        env:
+          ELIGIBLE: >-
+            ${{ steps.meta.outputs.package-ecosystem == 'npm_and_yarn' &&
+            (steps.meta.outputs.update-type == 'version-update:semver-patch' ||
+            steps.meta.outputs.update-type == 'version-update:semver-minor') }}
+      - if: steps.decide.outputs.eligible == 'true'
+        run: gh pr merge --auto --squash "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      # Dependabot can recompute a PR into a major; turn off auto-merge enabled on an earlier push.
+      - if: steps.decide.outputs.eligible != 'true' && github.event.pull_request.auto_merge
+        run: gh pr merge --disable-auto "$PR_URL"
+        env:
+          PR_URL: ${{ github.event.pull_request.html_url }}
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}

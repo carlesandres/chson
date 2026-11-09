@@ -1,0 +1,34 @@
+version: 2
+updates:
+  - package-ecosystem: npm
+    directories: ["/"]
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    open-pull-requests-limit: 5
+    # Dependabot opens PRs unassigned, so they miss every "assigned to me" view.
+    assignees: [carlesandres]
+    ignore:
+      # Pinned monorepo-wide through root package.json overrides.
+      - dependency-name: typescript
+    groups:
+      security:
+        applies-to: security-updates
+        patterns: ["*"]
+      dependencies:
+        applies-to: version-updates
+        patterns: ["*"]
+        update-types: [minor, patch]
+
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: monthly
+    cooldown:
+      default-days: 7
+    assignees: [carlesandres]
+    groups:
+      actions:
+        patterns: ["*"]
+        update-types: [minor, patch]
