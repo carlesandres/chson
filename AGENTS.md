@@ -164,7 +164,6 @@ Same package resolves differently depending on context:
 | `packages/chson-schema/types/index.d.ts` | `json-schema-to-typescript` from `schema/chson.schema.json` |
 | `packages/chson-registry/index.json` | `scripts/build-index.js` (walks `cheatsheets/`) |
 | `apps/web/.source/` | `fumadocs-mdx`, run by `next dev`/`next build` and the web `typecheck` script (gitignored) |
-| `apps/web/types/supabase.ts` | `npm run gen-types` (requires Supabase CLI + linked project) |
 
 ## Important Constraints
 
