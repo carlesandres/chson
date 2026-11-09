@@ -26,14 +26,12 @@ We maintain a prototype repository here:
 
 - [carlesandres/chson-files/json-registry](https://github.com/carlesandres/chson-files/tree/main/json-registry)
 
-There is also an in-repo example under `examples/chson-shadcn-registry/` used by CI.
-
 ## Create a registry source from ChSON files
 
 Use the ChSON CLI to scaffold a shadcn-compatible registry source tree:
 
 ```bash
-node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev --packs by-directory
+node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out my-registry --namespace @chson --homepage https://chson.dev --packs by-directory
 ```
 
 Defaults:
@@ -67,14 +65,13 @@ Optional packs:
 
 ## Build and publish
 
-In your registry project:
+In the generated registry directory:
 
 ```bash
-npm install
-npm run registry:build
+npx shadcn@3 build
 ```
 
-This runs `shadcn build` and generates installable payloads in `public/r/` (for example `public/r/git-core.json`).
+This generates installable payloads in `public/r/` (for example `public/r/git-core.json`).
 
 Deploy that project and serve `public/r/*.json` over HTTPS.
 

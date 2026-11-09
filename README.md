@@ -91,7 +91,7 @@ You can distribute `.chson.json` collections using shadcn's registry format (`re
 Generate a shadcn-compatible registry source tree from ChSON files:
 
 ```bash
-node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out examples/chson-shadcn-registry --namespace @chson --homepage https://chson.dev --packs by-directory
+node packages/chson-cli/src/chson.js registry init packages/chson-registry/cheatsheets --out my-registry --namespace @chson --homepage https://chson.dev --packs by-directory
 ```
 
 Useful flags:
@@ -102,8 +102,8 @@ Useful flags:
 Then build installable registry payloads:
 
 ```bash
-npm --prefix examples/chson-shadcn-registry install
-npm --prefix examples/chson-shadcn-registry run registry:build
+cd my-registry
+npx shadcn@3 build
 ```
 
 Consumer projects can configure:
