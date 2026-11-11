@@ -98,7 +98,7 @@
     "react-hook-form": "^7.71.2",
     "react-resizable-panels": "^2.1.9",
     "sonner": "^2.0.8",
-    "streamdown": "2.5.0",
+    "streamdown": "2.7.1",
     "tailwind-merge": "^2.6.1",
     "vaul": "^0.9.9"
   },
