@@ -109,6 +109,6 @@
     "@types/react-dom": "19.2.3",
     "jsdom": "27.4.0",
     "typescript": "6.0.2",
-    "vitest": "4.1.0"
+    "vitest": "4.1.11"
   }
 }
