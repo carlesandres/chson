@@ -134,6 +134,10 @@ npm install
 npm run dev
 ```
 
+Open `https://chson.localhost:1355`. [Portless](https://github.com/vercel-labs/portless) serves it through a local HTTPS proxy on port 1355, so it needs no `sudo`, and the Next.js server accepts connections only from your own machine.
+
+If `npm run dev` asks for `sudo` or says no TTY is available, an older Portless setup saved port 443. Stop that proxy with `npx portless proxy stop` (prefix `sudo` if it was started as root), delete `~/.portless/proxy.port`, and run `npm run dev` again.
+
 ### Deploy (Vercel)
 
 - Production URL: `https://chson.carlesandres.com`

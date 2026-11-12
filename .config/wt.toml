@@ -5,4 +5,4 @@ copy_ignored = "wt step copy-ignored --require-include"
 install = "npm ci"
 
 [list]
-url = "https://{% if worktree_path != repo_path %}{{ branch | sanitize }}.{% endif %}chson.localhost"
+url = "https://{% if worktree_path != repo_path %}{{ branch | sanitize }}.{% endif %}chson.localhost:1355"
